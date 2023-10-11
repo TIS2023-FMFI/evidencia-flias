@@ -21,6 +21,10 @@ Systém je určený na evidenciu používaných plynových fliaš, zaznamenávan
 
 \subsection{Používané definície a skratky}
 
+\begin{enumerate}
+	\item manometer: prístroj na meranie tlaku, ciferník s ručičkou
+\end{enumerate}
+
 \subsection{Odkazy}
 
 \subsection{Prehľad zvyšnej časti dokumentu}
@@ -41,6 +45,21 @@ V časti \ref{reqs} uvedieme ucelený zoznam všetkých požiadaviek na systém.
 
 \subsection{Charakteristika používateľov}
 \label{gen:users}
+
+\subsubsection{Používateľ s prístupom iba na čítanie}
+\label{gen:users:ro}
+
+Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a filtrovať flaše, prezerať históriu. K systému má prístup iba na čítanie, nemôže do údajov zasahovať ani ich meniť.
+
+\subsubsection{Používateľ s prístupom na evidenciu tlaku}
+\label{gen:users:meter}
+
+Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať flašu alebo naskenovať čiarový kóď flaše a zadať pre danú flašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
+
+\subsubsection{Používateľ s administrátorským prístupom}
+\label{gen:users:admin}
+
+Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové flaše do systému a vyraďovať flaše zo systému.
 
 \subsection{Všeobecné obmedzenia}
 \label{gen:constraints}
