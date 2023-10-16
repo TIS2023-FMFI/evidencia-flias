@@ -17,13 +17,14 @@ Tento dokument slúži ako komplexný opis systému, ktorého cieľom je poskytn
 
 \subsection{Rozsah pôsobnosti systému}
 
-Systém je určený na evidenciu používaných plynových fliaš, zaznamenávanie ich umiestnenia vo forme skladovej evidencie a sledovanie spotrebu plynov prostredníctvom "odpisovania" tlaku vo flašiach.
+Systém je určený na evidenciu používaných plynových fliaš, zaznamenávanie ich umiestnenia vo forme skladovej evidencie a sledovanie spotrebu plynov prostredníctvom "odpisovania" tlaku vo fľašiach.
 
 \subsection{Používané definície a skratky}
 
 \begin{enumerate}
 	\item manometer: prístroj na meranie tlaku, ciferník s ručičkou
  	\item MP: Megapixel, milión pixelov (malé body tvoriace časť obrázka na obrazovke počítača), používaný na meranie množstva detailov v obrazoch vytvorených digitálnym fotoaparátom, obrazovkou počítača atď.
+ 	\item čítačka čiarový kódov s emuláciou klávesnice: čítačka čiarových kódov, ktorá naskenované kódy vypisuje na klávesnicu pripojeného počítača
 \end{enumerate}
 
 \subsection{Odkazy}
@@ -52,17 +53,17 @@ Systém bude schopný evidovať fľaše s rôznymi plynmi, spoločne s podrobnej
 \subsubsection{Používateľ s prístupom iba na čítanie}
 \label{gen:users:ro}
 
-Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a filtrovať flaše, prezerať históriu. K systému má prístup iba na čítanie, nemôže do údajov zasahovať ani ich meniť.
+Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a filtrovať fľaše, prezerať históriu. K systému má prístup iba na čítanie, nemôže do údajov zasahovať ani ich meniť.
 
 \subsubsection{Používateľ s prístupom na evidenciu tlaku}
 \label{gen:users:meter}
 
-Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať flašu alebo naskenovať čiarový kóď flaše a zadať pre danú flašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
+Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať fľašu alebo naskenovať čiarový kóď fľaše a zadať pre danú fľašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
 
 \subsubsection{Používateľ s administrátorským prístupom}
 \label{gen:users:admin}
 
-Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové flaše do systému a vyraďovať flaše zo systému.
+Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové fľaše do systému a vyraďovať fľaše zo systému.
 
 \subsection{Všeobecné obmedzenia}
 \label{gen:constraints}
@@ -76,28 +77,40 @@ Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobiln�
 
 \cleardoublepage
 \section{Špecifické požiadavky}
-1.	Nový používateľ môže byť do systému pridaný adminom systému.
-2.	Admin novému používateľovi nastaví e-mail, heslo a status.
-3.	Používatelia sa do systému prihlasujú pomocou e-mailu a hesla.
-4.	Používateľ dokáže zmeniť svoje heslo po prihlásení.
-5.	Používateľ s administrátorským statusom dokáže meniť práva ostatných používateľov bez administrátorského statusu.
-6.	Používateľ dokáže naskenovať čiarový kód fľaše.
-7.	Naskenovanej fľaši užívateľ dokáže pridávať a meniť parametre.
-8.	Používateľ dokáže odfotiť manometer.
-9.	Z fotky manometra systém automaticky získa aktuálny tlak fľaše.
-10.	Po skontrolovaní správnosti detekcie užívateľom systém automaticky prepíše parameter tlaku.
-11.	Pri nesprávnej detekcií je užívateľ schopný parameter tlaku prepísať ručne.
-12.	Používateľ s právami pre kalibráciu manometrov ich dokáže kalibrovať.
-13.	Databáza eviduje nasledujúce parametre plynu: majiteľ, čiarový kód, dodávateľ, plyn, čistota, objem, tlak, dátum prevzatia, dátum zapojenia, umiestnenie, dátum odovzdania, poznámka, č. objednávky, čas 	pobytu v sklade.
-14.	Databáza eviduje históriu parametrov jednotlivých fliaš. 
-15.	Používateľ s právami pre úpravu databázy môže meniť parametre jednotlivých fliaš v evidencii. 
-16.	Používateľ s právami pre úpravu databázy dokáže pridať nové možnosti umiestnenia, upraviť/odstrániť existujúce umiestnenia.
-17.	V rámci databázy obsahuje parameter umiestnenia pod parametre: budova, miestnosť zariadenie, zodpovedná osoba.
-18.	Používateľ s právami pre zobrazenie databázy dokáže filtrovať dáta databázy podľa jednotlivých parametrov fliaš alebo ich kombináciou.
-19.	Používateľ s právami pre zobrazenie databázy dokáže v databáze vyhľadávať pomocou textového pola.
-20.	Používateľ dokáže pristupovať k systému na počítači alebo na mobile.
-21.	Systém podporuje slovenský a anglický jazyk. 
-22.	Používateľ dokáže prepínať medzi jednotlivými jazykmi.
+
+\begin{enumerate}
+\item Používateľ s administrátorským prístupom môže do systému pridať nových používateľov.
+\item Administrátor môže používateľom nastaviť e-mail, heslo a úroveň prístupu.
+\item Používateľ sa do systému prihlasuje pomocou e-mailu a hesla.
+\item Používateľ môže zmeniť svoje heslo po prihlásení.
+\item Používateľ s administrátorským prístupom môže meniť práva ostatných používateľov.
+\item Systém eviduje plynové fľaše podľa ich čiarového kódu.
+\item Systém pre každú fľašu eviduje nasledujúce údaje a parametre: majiteľ, čiarový kód, dodávateľ, plyn, čistota, objem, tlak, dátum prevzatia, dátum zapojenia, umiestnenie, dátum odovzdania, poznámka.
+\item Systém by mal byť postavený tak, aby bolo možné jednoducho pridať nové parametre.
+\item Každá fľaša je buď v sklade, pripojená, vyskladnená alebo vyradená.
+\item Systém ukladá kompletnú históriu zmien údajov o fľaši.
+\item Používateľ s administrátorským prístupom môže upravovať hodnoty parametrov fľaše.
+\item Umiestnenie fľaše by malo podporovať štuktúru - budova, miestnosť, zariadenie.
+\item Umiestnenie fľaše má pridelenú zodpovednú osobu.
+\item Používateľ s administrátorským prístupom môže upravovať a pridávať umiestnenia.
+
+\item Používateľ s prístupom na čítanie má možnosť vyhľadávať fľaše pomocou textového poľa.
+\item Používateľ s prístupom na čítanie má možnosť filtrovať fľaše podľa jednotlivých parametrov a ich kombinácií.
+\item Používateľ s prístupom na čítanie má možnosť pozerať si historické dáta a históriu jednotlivých fliaš.
+\item Systém zobrazuje stav tlaku v čase pomocou grafov.
+\item Používateľ môže naskenovať čiarový kód fľaše čítačkou s emuláciou klávesnice alebo pomocou kamery mobilného telefónu na rýchly výber fľaše.
+
+\item Používateľ s prístupom na evidenciu tlaku môže upraviť aktuálny stav tlaku jednotlivým fľašiam.
+\item Používateľ s prístupom na evidenciu tlaku môže odfotiť manometer na fľaši.
+\item Z fotografie manometra systém rozpozná aktuálny tlak.
+\item Používateľ môže nakalibrovať manometer označením minimálnej a maximálnej hodnoty na manometri.
+\item Po skontrolovaní správnosti detekcie používateľom systém uloží stav tlaku.
+\item Používateľ môže v prípade nesprávnej automatickej detekcie tlak upraviť ručne.
+
+\item Systém je dostupný z počítača aj mobilných zariadení.
+\item Systém je dostupný v anglickom a slovenskom jazyku.
+\item Používateľ si môže medzi jazykmi prepínať.
+\end{enumerate}
 
 \label{reqs}
 
