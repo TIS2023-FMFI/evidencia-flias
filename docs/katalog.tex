@@ -73,39 +73,37 @@ Medzi obmedzenia systému patrí prístup k internetu a fotoaparát s kamerou as
 \subsection{Predpoklady a závislosti}
 \label{gen:deps}
 
-Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobilné zariadenia. Aplikácia bude vyžadovať pripojenie k internetu. Aplikácia bude závisieť od servera, ku ktorému sa pripojí. Aplikácia predpokladá, že každá fľaša s plynom bude mať práve jeden unikátny a nepoškodený čiarový kód. Aplikácia bude vyžadovať prístup k fotoaparátu mobilného zariadenia pri pokuse o skenovanie čiarového kódu.
+Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobilné zariadenia. Systém bude vyžadovať pripojenie k internetu. Systém bude závisieť od servera, ku ktorému sa pripojí. Systém predpokladá, že každá fľaša s plynom bude mať práve jeden unikátny a nepoškodený čiarový kód. Systém bude vyžadovať prístup k fotoaparátu mobilného zariadenia pri pokuse o skenovanie čiarového kódu.
 
 \cleardoublepage
 \section{Špecifické požiadavky}
 
 \begin{enumerate}
-\item Používateľ s administrátorským prístupom môže do systému pridať nových používateľov.
-\item Administrátor môže používateľom nastaviť e-mail, heslo a úroveň prístupu.
+\item Admin môže do systému pridať nových používateľov, pritom nastaví ich e-mail, heslo a úroveň prístupu.
+\item Admin dokáže deaktivovať existujúcich používateľov, stratia schopnosť prihlásiť sa, no ich účet a história ich aktivity bude naďalej existovať.
 \item Používateľ sa do systému prihlasuje pomocou e-mailu a hesla.
-\item Používateľ môže zmeniť svoje heslo po prihlásení.
-\item Používateľ s administrátorským prístupom môže meniť práva ostatných používateľov.
+\item Používateľ môže zmeniť svoje heslo po prihlásení alebo žiadosťou o zmenu hesla zaslaním formulára na e-mail.
+\item Admin môže meniť práva ostatných používateľov.
 \item Systém eviduje plynové fľaše podľa ich čiarového kódu.
-\item Systém pre každú fľašu eviduje nasledujúce údaje a parametre: majiteľ, čiarový kód, dodávateľ, plyn, čistota, objem, tlak, dátum prevzatia, dátum zapojenia, umiestnenie, dátum odovzdania, poznámka.
+\item Systém pre každú fľašu eviduje nasledujúce parametre: majiteľ, čiarový kód, dodávateľ, plyn, čistota, objem, tlak, dátum prevzatia, dátum zapojenia, umiestnenie, dátum odovzdania, poznámka.
 \item Systém by mal byť postavený tak, aby bolo možné jednoducho pridať nové parametre.
 \item Každá fľaša je buď v sklade, pripojená, vyskladnená alebo vyradená.
-\item Systém ukladá kompletnú históriu zmien údajov o fľaši.
-\item Používateľ s administrátorským prístupom môže upravovať hodnoty parametrov fľaše.
+\item Systém ukladá kompletnú históriu zmien parametrov o fľaši.
+\item Admin môže upravovať hodnoty parametrov fľaše.
 \item Umiestnenie fľaše by malo podporovať štuktúru - budova, miestnosť, zariadenie.
 \item Umiestnenie fľaše má pridelenú zodpovednú osobu.
-\item Používateľ s administrátorským prístupom môže upravovať a pridávať umiestnenia.
-
-\item Používateľ s prístupom na čítanie má možnosť vyhľadávať fľaše pomocou textového poľa.
-\item Používateľ s prístupom na čítanie má možnosť filtrovať fľaše podľa jednotlivých parametrov a ich kombinácií.
-\item Používateľ s prístupom na čítanie má možnosť pozerať si historické dáta a históriu jednotlivých fliaš.
+\item Admin môže upravovať a pridávať umiestnenia.
+\item Používateľ má možnosť vyhľadávať fľaše pomocou fulltext search.
+\item Používateľ má možnosť filtrovať fľaše podľa jednotlivých parametrov a ich kombinácií.
+\item Používateľ má možnosť pozerať si historické dáta a históriu jednotlivých fliaš.
 \item Systém zobrazuje stav tlaku v čase pomocou grafov.
-\item Používateľ môže naskenovať čiarový kód fľaše čítačkou s emuláciou klávesnice alebo pomocou kamery mobilného telefónu na rýchly výber fľaše.
+\item Editor môže naskenovať čiarový kód fľaše čítačkou s emuláciou klávesnice alebo pomocou kamery mobilného telefónu na rýchly výber fľaše.
 
-\item Používateľ s prístupom na evidenciu tlaku môže upraviť aktuálny stav tlaku jednotlivým fľašiam.
-\item Používateľ s prístupom na evidenciu tlaku môže odfotiť manometer na fľaši.
-\item Z fotografie manometra systém rozpozná aktuálny tlak.
-\item Používateľ môže nakalibrovať manometer označením minimálnej a maximálnej hodnoty na manometri.
+\item Editor môže upraviť aktuálny stav tlaku jednotlivým fľašiam.
+\item Editor môže odfotiť manometer na fľaši, z fotografie manometra systém rozpozná aktuálny tlak.
+\item Editor môže nakalibrovať manometer označením minimálnej a maximálnej hodnoty na manometri.
 \item Po skontrolovaní správnosti detekcie používateľom systém uloží stav tlaku.
-\item Používateľ môže v prípade nesprávnej automatickej detekcie tlak upraviť ručne.
+\item Editor môže v prípade nesprávnej automatickej detekcie tlak upraviť ručne.
 
 \item Systém je dostupný z počítača aj mobilných zariadení.
 \item Systém je dostupný v anglickom a slovenskom jazyku.
