@@ -45,22 +45,24 @@ Systém bude implementovaný ako webové rozhranie ktoré búde slúžiť k evid
 
 \subsection{Funkcie systému}
 \label{gen:functions}
-Systém bude schopný evidovať fľaše s rôznymi plynmi, spoločne s podrobnejšími informáciami o fľašiach ako sú typ plynu, miesto uskladnenia, aktuálna poloha a podobne. Pri každej fľaši bude aj priestor na pridávanie komentáru ku danej fľaši. Systém musí byť schopný zachovať históriu fliaš ako naplnenie fliaš, pohyb fliaš, status fliaš(vyradená, pripojená, vyskladnená, vyradená), umiestnenie a tak isto aj ďalšie parametre. Systém bude implementovaný ako webové rozhranie. Každá fľaša disponuje svojim jednoznačným číselným kódom, ktorý je reprezentovaný ako čiarový kód načitateľný systémom. Všetky vlastnosti fliaš budú editovateľné používateľmi. Systém bude mať rôznych používateľov s rôznymi oprávneniami so zásahom do údajov. Systém bude optimalizovaný pre mobilné aj pre desktop prostredia. Systém bude disponovať aj anglickou verziou webového rozhrania. Dáta v systéme bude používateľ schopný filtrovať pomocou predom nastavených filtrov, ako napríklad typ plynu, miestnosť, status fľaše a podobne a taktiež systém bude disponovať aj full-textovým vyhľadávaním. Tlak vo fľašiach bude pridávaní pomocou odfotenia stavu manometra používateľom alebo manuálnym zadaním údajov. Pri odfotení bude jeho stav automaticky vyhodnotení systémom. Pri prípadnej zlej detekcie stavu manometra bude možnosť manuálneho upravenia.
+Systém bude schopný evidovať fľaše s rôznymi plynmi, spoločne s podrobnejšími informáciami o fľašiach ako sú typ plynu, miesto uskladnenia, aktuálna poloha a podobne. Pri každej fľaši bude aj priestor na pridávanie komentáru ku danej fľaši. Systém musí byť schopný zachovať históriu fliaš ako naplnenie fliaš, pohyb fliaš, status fliaš(vyradená, pripojená, vyskladnená, vyradená), umiestnenie a tak isto aj ďalšie parametre. Systém bude implementovaný ako webové rozhranie. Každá fľaša disponuje svojim jednoznačným číselným kódom, ktorý je reprezentovaný ako čiarový kód načitateľný systémom. Všetky vlastnosti fliaš budú editovateľné používateľmi. Systém bude mať používateľov s rôznym prístupom k systému (Čitateľ, Editor, Administrátor). Systém bude optimalizovaný pre mobilné aj pre desktop prostredia. Systém bude disponovať aj anglickou verziou webového rozhrania. Dáta v systéme bude používateľ schopný filtrovať pomocou predom nastavených filtrov, ako napríklad typ plynu, miestnosť, status fľaše a podobne a taktiež systém bude disponovať aj full-textovým vyhľadávaním. Tlak vo fľašiach bude pridávaní pomocou odfotenia stavu manometra používateľom alebo manuálnym zadaním údajov. Pri odfotení bude jeho stav automaticky vyhodnotení systémom. Pri prípadnej zlej detekcie stavu manometra bude možnosť manuálneho upravenia.
 
 \subsection{Charakteristika používateľov}
 \label{gen:users}
 
-\subsubsection{Používateľ s prístupom iba na čítanie}
+Systém podporuje nasledujúce druhy používateľov. Môže existovať viacero rôznych používateľov rovnakého druhu.
+
+\subsubsection{Používateľ s prístupom iba na čítanie (Čitateľ)}
 \label{gen:users:ro}
 
 Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a filtrovať fľaše, prezerať históriu. K systému má prístup iba na čítanie, nemôže do údajov zasahovať ani ich meniť.
 
-\subsubsection{Používateľ s prístupom na evidenciu tlaku}
+\subsubsection{Používateľ s prístupom na evidenciu tlaku (Editor)}
 \label{gen:users:meter}
 
 Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať fľašu alebo naskenovať čiarový kóď fľaše a zadať pre danú fľašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
 
-\subsubsection{Používateľ s administrátorským prístupom}
+\subsubsection{Používateľ s administrátorským prístupom (Administrátor)}
 \label{gen:users:admin}
 
 Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové fľaše do systému, vyraďovať fľaše zo systému, pridávať a upravovať používateľov do systému.
