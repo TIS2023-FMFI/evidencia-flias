@@ -1,4 +1,4 @@
-\documentclass[hreffootnote]{zah}
+\documentclass{zah}
 
 \title{Evidencia plynových fliaš}
 \author{Oliver Laštík, Šimon Strieška, Jozef Špirka, Adam Zahradník}
@@ -29,6 +29,11 @@ Systém je určený na evidenciu používaných plynových fliaš, zaznamenávan
 
 \subsection{Odkazy}
 
+\begin{enumerate}
+	\item \href{https://github.com/TIS2023-FMFI/evidencia-flias}{Repozitár s kódom systému}
+	\item {\color{red} TODO: Aktuálne používaný Excel na evidenciu fliaš}
+\end{enumerate}
+
 \subsection{Prehľad zvyšnej časti dokumentu}
 
 V časti \ref{general} popíšeme situáciu, do ktorej je systém zasadený (\ref{gen:perspective}), aké funkcie má poskytovať (\ref{gen:functions}), aké typy používateľov bude mať (\ref{gen:users}), aké existujúce postupy/procesy/predpisy v systéme vystupujú (\ref{gen:constraints}) a popis rozhrania systému s okolitým svetom, prípadne inými systémami (\ref{gen:deps}).
@@ -41,7 +46,16 @@ V časti \ref{reqs} uvedieme ucelený zoznam všetkých požiadaviek na systém.
 
 \subsection{Perspektíva systému}
 \label{gen:perspective}
-Systém bude implementovaný ako webové rozhranie ktoré búde slúžiť k evidencii fľiaš s plynmi ktorých parametre budú uchovávané v databáze. Bude slúžiť ako uľahčenie evidencie fľiaš v laboratóriach na fakulte matematiky,fyziky a informatiky UK. Fľaše majú rôzne parametre ktoré užívateľ môže zadať pre ich jednoduché odlíšenie. Systém disponuje aj filtrom  kvôli jednoduchej navigácií v postredí systému. Taktiež uživatelia si budú môcť pozrieť pri jednotlivých fľašiach aj ich históriu pre jednoduché dohľadanie potrebných údajov. Programovací jazyk použitý pri tvorbe bude Python, presnejšie framework Django s prvkami HTML/CSS/JS.
+Systém slúží na uľahčenie evidencie plynových fliaš v laboratóriach na Fakulte matematiky, fyziky a informatiky UK.
+
+Plyny vo fľašiach majú rôzne parametre, ktoré chcú pracovníci evidovať v centrálnej databáze pre jednoduchú evidenciu.
+V systéme bude možné vyhľadávať a filtrovať fľaše podľa týchto parametrov.
+
+Fľaše disponujú čiarovými kódmi, pomocou ktorých je ich možné jednoznačne identifikovať. Pracovníci chcú využiť tieto kódy na rýchle vyhľadávanie v systéme.
+
+Fľaše sa zvyčajne prenajímajú od rôznych dodávateľov, ktorí ich plnia plynmi. Je potrebné mať prehľad o stave tlaku jednotlivých fliaš, ale aj o ich aktuálnom umiestnení. Sledovanie stavu tlaku je potrebné pre kontrolu spotreby, plánovanie objednávok a včasnej výmeny fľaše. Sledovanie tlaku je veľmi dôležité, aby sa predišlo úplnému vyprázdneniu fľaše, nakoľko potom by musela fľaša byť úplne prečistená, čo je finančne náročný proces.
+
+Pracovníci chcú mať k dispozícií celú históriu parametrov a stavu tlaku fľaší od ich prijatia na sklad až po ich vrátenie dodávateľovi.
 
 \subsection{Funkcie systému}
 \label{gen:functions}
@@ -138,7 +152,7 @@ Systém z poskytnutej fotografie odčíta aktuálny stav manometra. Používate�
 \end{enumerate}
 
 
-\cleardoublepage
-\section{Prílohy}
+% \cleardoublepage
+% \section{Prílohy}
 
 \end{document}
