@@ -1,0 +1,159 @@
+\documentclass{zah}
+
+\title{Evidencia plynových fliaš}
+\author{Oliver Laštík, Šimon Strieška, Jozef Špirka, Adam Zahradník}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\cleardoublepage
+
+\section{Úvod}
+
+\subsection{Účel tohto dokumentu}
+
+Tento dokument slúži ako komplexný opis systému, ktorého cieľom je poskytnúť súbor požiadaviek pre navrhovaný systém. Dokument je adresovaný všetkým zainteresovaným stranám systému. Slúži vývojovému tímu ako jednotné miesto, v ktorom sú spísané všetky požiadavky na systém. Zároveň slúži pre zadávateľa pre prehľad dohodnutých požiadavok a kontrolu ich naplnenia.
+
+\subsection{Rozsah pôsobnosti systému}
+
+Systém je určený na evidenciu používaných plynových fliaš, zaznamenávanie ich umiestnenia vo forme skladovej evidencie a sledovanie spotrebu plynov prostredníctvom "odpisovania" tlaku vo fľašiach.
+
+\subsection{Používané definície a skratky}
+
+\begin{enumerate}
+	\item manometer: prístroj na meranie tlaku, ciferník s ručičkou
+ 	\item MP: Megapixel, milión pixelov (malé body tvoriace časť obrázka na obrazovke počítača), používaný na meranie množstva detailov v obrazoch vytvorených digitálnym fotoaparátom, obrazovkou počítača atď.
+ 	\item čítačka čiarových kódov s emuláciou klávesnice: čítačka čiarových kódov, ktorá naskenované kódy vypisuje na klávesnicu pripojeného počítača
+\end{enumerate}
+
+\subsection{Odkazy}
+
+\begin{enumerate}
+	\item \href{https://github.com/TIS2023-FMFI/evidencia-flias}{Repozitár s kódom systému}
+	\item Aktuálne používaný Excel na evidenciu fliaš
+\end{enumerate}
+
+\subsection{Prehľad zvyšnej časti dokumentu}
+
+V časti \ref{general} popíšeme situáciu, do ktorej je systém zasadený (\ref{gen:perspective}), aké funkcie má poskytovať (\ref{gen:functions}), aké typy používateľov bude mať (\ref{gen:users}), aké existujúce postupy/procesy/predpisy v systéme vystupujú (\ref{gen:constraints}) a popis rozhrania systému s okolitým svetom, prípadne inými systémami (\ref{gen:deps}).
+
+V časti \ref{reqs} uvedieme ucelený zoznam všetkých požiadaviek na systém.
+
+\cleardoublepage
+\section{Všeobecný popis}
+\label{general}
+
+\subsection{Perspektíva systému}
+\label{gen:perspective}
+Systém slúží na uľahčenie evidencie plynových fliaš v laboratóriach na Fakulte matematiky, fyziky a informatiky UK.
+
+Plyny vo fľašiach majú rôzne parametre, ktoré chcú pracovníci evidovať v centrálnej databáze pre jednoduchú evidenciu.
+V systéme bude možné vyhľadávať a filtrovať fľaše podľa týchto parametrov.
+
+Fľaše disponujú čiarovými kódmi, pomocou ktorých je ich možné jednoznačne identifikovať. Pracovníci chcú využiť tieto kódy na rýchle vyhľadávanie v systéme.
+
+Fľaše sa zvyčajne prenajímajú od rôznych dodávateľov, ktorí ich plnia plynmi. Je potrebné mať prehľad o stave tlaku jednotlivých fliaš, ale aj o ich aktuálnom umiestnení. Sledovanie stavu tlaku je potrebné pre kontrolu spotreby, plánovanie objednávok a včasnej výmeny fľaše. Sledovanie tlaku je veľmi dôležité, aby sa predišlo úplnému vyprázdneniu fľaše, nakoľko potom by musela fľaša byť úplne prečistená, čo je finančne náročný proces.
+
+Pracovníci chcú mať k dispozícií celú históriu parametrov a stavu tlaku fľaší od ich prijatia na sklad až po ich vrátenie dodávateľovi.
+
+\subsection{Funkcie systému}
+\label{gen:functions}
+Systém bude schopný evidovať fľaše s rôznymi plynmi, spoločne s parametrami fliaš ako sú typ plynu, aktuálne umiestnenie, poznámky a podobne. Systém musí byť schopný zachovať históriu parametrov fliaš v čase - ich tlak, umiestnenie, stav fliaš (prijatá, vrátená, vyradená) ako aj ostatných parametrov.
+
+Zoznam fliaš v systéme bude používateľ schopný filtrovať pomocou hodnôt jednotlivých parametrov. Tiež bude možné fľaše vyhľadávať fulltextovým vyhľadávaním. Fľaše disponujú jednoznačným čiarovým kódom, ktorý môže používateľ naskenovať a otvoriť si informácie o danej fľaši.
+
+Systém má používateľov s rôznymi prístupovými právami (Čitateľ, Editor, Administrátor, viď \ref{gen:users}). Hodnoty parametrov jednotlivých fliaš sa dajú upravovať.
+
+Akutálny tlak vo fľašiach bude možné zadať pomocou odfotenia stavu manometra používateľom alebo manuálne. Pri odfotení manometra bude jeho hodnota automaticky vyhodnotená systémom. V prípade zlej detekcie stavu manometra bude mať používateľ možnosť manuálneho upravenia hodnoty.
+
+Systém bude optimalizovaný pre mobilné zariadenia aj pre počítače a bude poskytovať anglickú a slovenskú jazykovú verziu.
+
+\subsection{Charakteristika používateľov}
+\label{gen:users}
+
+Systém podporuje nasledujúce druhy používateľov. Môže existovať viacero rôznych používateľov rovnakého druhu.
+
+\subsubsection{Používateľ s prístupom iba na čítanie (Čitateľ)}
+\label{gen:users:ro}
+
+Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a filtrovať fľaše, prezerať históriu. K systému má prístup iba na čítanie, nemôže do údajov zasahovať ani ich meniť.
+
+\subsubsection{Používateľ s prístupom na evidenciu tlaku (Editor)}
+\label{gen:users:meter}
+
+Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať fľašu alebo naskenovať čiarový kóď fľaše a zadať pre danú fľašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
+
+\subsubsection{Používateľ s administrátorským prístupom (Administrátor)}
+\label{gen:users:admin}
+
+Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové fľaše do systému, vyraďovať fľaše zo systému, pridávať a upravovať používateľov v systéme.
+
+\subsection{Všeobecné obmedzenia}
+\label{gen:constraints}
+
+Medzi obmedzenia systému patrí prístup k internetu a fotoaparát s kamerou aspoň 5 MP pre zachovanie dostatočnej kvality fotografie na čítanie hodnôt na manometri. 
+
+\subsection{Predpoklady a závislosti}
+\label{gen:deps}
+
+Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobilné zariadenia. Systém bude vyžadovať pripojenie k internetu. Systém bude závisieť od servera, ku ktorému sa pripojí. Systém predpokladá, že každá fľaša s plynom bude mať práve jeden unikátny a nepoškodený čiarový kód. Systém bude vyžadovať prístup k fotoaparátu mobilného zariadenia pri pokuse o skenovanie čiarového kódu.
+
+\cleardoublepage
+\section{Špecifické požiadavky}
+\label{reqs}
+
+\begin{enumerate}
+\item Administrátor môže do systému pridať nových používateľov, pričom im nastaví meno, email, heslo a druh prístupu (\ref{gen:users}).
+\item Administrátor môže deaktivovať existujúcich používateľov.
+\item Deaktivovaný používateľ sa nemôže prihlásiť, ale ním vykonané zmeny (\ref{req:history}) sa v systéme zachovajú.
+\item Používateľ sa do systému prihlasuje pomocou emailu a hesla.
+\item Používateľ môže zmeniť svoje heslo po prihlásení.
+\item Používateľ môže (bez prihlásenia) požiadať o zaslanie emailu na obnovu hesla.
+\item Administrátor môže meniť meno, email, heslo a druh prístupu (\ref{gen:users}) používateľom.
+\item Systém pre každú fľašu eviduje nasledujúce parametre: 
+\begin{enumerate}
+	\tightlist
+	\item čiarový kód (text, unikátny identifikátor)
+	\item \label{req:param:owner} majiteľ (výber z možností)
+	\item \label{req:param:provider} dodávateľ (výber z možností)
+	\item \label{req:param:gas} plyn (výber z možností)
+	\item čistota (desatinné číslo)
+	\item objem (desatinné číslo)
+	\item \label{req:param:pressure} aktuálny tlak (desatinné číslo)
+	\item dátum prevzatia (dátum)
+	\item dátum zapojenia (dátum)
+	\item dátum odovzdania (dátum)
+	\item poznámka (text)
+	\item \label{req:param:location} umiestnenie (výber z možností)
+	\item stav (výber z možností - "prijatá", "vrátená", "vyradená")
+\end{enumerate}
+\item Administrátor môže vytvoriť novú fľašu. Môže ju vytvoriť aj bez uvedenia všetkých parametrov, pri vytváraní stačí uviesť jej čiarový kód.
+\item Administrátor môže kedykoľvek upravovať hodnoty parametrov fľaše.
+\item Administrátor môže pridávať, upravovať a mazať možnosti pre parametre "majiteľ" (\ref{req:param:owner}), "dodávateľ" (\ref{req:param:provider}), "plyn" (\ref{req:param:gas}).
+\item \label{req:location_details} Administrátor môže umiestneniu fľaše nastaviť budovu, pracovisko a zodpovednú osobu.
+\item Administrátor môže pridávať, upravovať a mazať možnosti pre "budova", "pracovisko" a "zodpovedná osoba" (\ref{req:location_details}).
+\item \label{req:history} Systém ukladá kompletnú históriu zmien parametrov o fľaši.
+\item Čitateľ si môže zobraziť zoznam fliaš v systéme.
+\item Čitateľ môže vyhľadávať v zozname fľaší pomocou fulltextového vyhľadávania.
+\item Čitateľ môže filtrovať v zozname fľaší podľa jednotlivých parametrov a ich kombinácií (napr. "fľaše s kyslíkom v miestnosti X").
+\item Čitateľ si môže pozerať históriu zmien parametrov konkrétnej fľaše.
+\item Čitateľ si môže zobraziť históriu zmien parametru "tlak" (\ref{req:param:pressure}) konkrétnej fľaše na čiarovom grafe.
+\item Čitateľ si môže zobraziť informácie o konkrétnej fľaši výberom zo zoznamu alebo naskenovaním jej čiarového kódu pomocou mobilného telefónu alebo čítačky čiarového kódu s emuláciou klávesnice.
+\item Editor môže zaevidovať stav tlaku danej fľaši manuálnym zadaním, nahraním fotografie manometra.
+Systém z poskytnutej fotografie odčíta aktuálny stav manometra. Používateľ môže skontrolovať správnosť hodnoty a v prípade potreby ju upraviť.
+\item Editor môže pri poskytovaní fotografie manometra označiť na ciferníku manometra minimálnu a maximálnu hodnotu a uviesť ich číselné hodnoty. Tieto hodnoty potom systém použije pri výpočte aktuálnej hodnoty podľa polohy ručicky.
+\end{enumerate}
+
+\subsection{Požiadavky nevzťahujúce sa na funkcionalitu}
+
+\begin{enumerate}
+\item Používateľ môže k systému pristupovať z mobilného zariadenia alebo počítača.
+\item Používateľ si môže prepínať medzi anglickou a slovenskou verziou jazyka.
+\end{enumerate}
+
+
+% \cleardoublepage
+% \section{Prílohy}
+
+\end{document}
