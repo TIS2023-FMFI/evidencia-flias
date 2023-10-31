@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "evidencia-flias"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "Unlicense"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.6"
+django-debug-toolbar = "^4.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
