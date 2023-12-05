@@ -3,12 +3,6 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User, Owner, Supplier, Building, Workplace, Location, Cylinder, Gas, CylinderLife, CylinderChange
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Owner)
-admin.site.register(Supplier)
-admin.site.register(Cylinder)
-admin.site.register(Gas)
-admin.site.register(CylinderLife)
-admin.site.register(CylinderChange)
 
 
 @admin.register(Building)
