@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Location, Building, Workplace
+from .models import User, Owner, Supplier, Building, Workplace, Location, Cylinder, Gas, CylinderLife, CylinderChange
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Owner)
