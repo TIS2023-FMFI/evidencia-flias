@@ -1,0 +1,9 @@
+<h1>Odstranenie ownera</h1>
+
+<p>Naozaj chces odstranit ownera {{ object.name }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Áno</button>
+</form>
+

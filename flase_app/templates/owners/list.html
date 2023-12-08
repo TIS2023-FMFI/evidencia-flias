@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <th>Názov</th>
+            <th>Akcie</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for owner in owner_list %}
+        <tr>
+            <td>{{ owner.name }}</td>
+            <td>
+                <a href="{% url 'owner_update' pk=owner.id %}">Upraviť</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'owner_create' %}">Pridať ownera</a>
