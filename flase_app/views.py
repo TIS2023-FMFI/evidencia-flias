@@ -66,6 +66,3 @@ class UserDisableView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("user_list")
-
-
-    
