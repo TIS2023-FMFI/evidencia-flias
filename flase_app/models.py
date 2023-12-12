@@ -4,7 +4,13 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    class Role(models.IntegerChoices):
+        ADMIN = 0, 'Admin'
+        EDITOR = 1, 'Editor'
+        READER = 2, 'Reader'
+
     email = models.EmailField(unique=True)
+    role = models.IntegerField(choices=Role.choices, default=Role.READER)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
