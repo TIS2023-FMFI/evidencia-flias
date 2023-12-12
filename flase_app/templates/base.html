@@ -1,9 +1,11 @@
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>{% block title %}{% endblock %}</title>
-
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	{% load static %}  
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
 
     </head>
 <body>
