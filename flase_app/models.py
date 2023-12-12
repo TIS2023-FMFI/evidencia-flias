@@ -4,7 +4,16 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    pass
+    username = models.CharField(max_length=128, unique=True)
+    password = models.CharField(max_length=128)
+    email = models.CharField(max_length=128, unique=False)
+    
+    class Role(models.IntegerChoices):
+        ADMIN = 0, 'Admin'
+        EDITOR = 1, 'Editor'
+        READER = 2, 'Reader'
+
+    role = models.IntegerField(choices=Role.choices, default=Role.READER)
 
 
 class Owner(models.Model):
