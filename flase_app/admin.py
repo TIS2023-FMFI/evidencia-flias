@@ -27,17 +27,17 @@ class OwnerAdmin(admin.ModelAdmin):
 class SupplierAdmin(admin.ModelAdmin):
     list_display = ["name"]
 
-@admin.register(Building)
-class BuildingAdmin(admin.ModelAdmin):
-    list_display = ["name"]
-
-@admin.register(Workplace)
-class WorkplaceAdmin(admin.ModelAdmin):
-    list_display = ["name", "building"]
-
-@admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
-    list_display = ["name", "workplace", "person_responsible"]
+# @admin.register(Building)
+# class BuildingAdmin(admin.ModelAdmin):
+#     list_display = ["name"]
+#
+# @admin.register(Workplace)
+# class WorkplaceAdmin(admin.ModelAdmin):
+#     list_display = ["name", "building"]
+#
+# @admin.register(Location)
+# class LocationAdmin(admin.ModelAdmin):
+#     list_display = ["name", "workplace", "person_responsible"]
 
 @admin.register(Cylinder)
 class CylinderAdmin(admin.ModelAdmin):
