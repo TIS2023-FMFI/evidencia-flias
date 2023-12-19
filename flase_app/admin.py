@@ -5,20 +5,6 @@ from .models import User, Owner, Supplier, Building, Workplace, Location, Cylind
 admin.site.register(User, UserAdmin)
 
 
-@admin.register(Building)
-class BuildingAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Workplace)
-class WorkplaceAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
-    list_display = ["name", "workplace"]
-	
 @admin.register(Owner)
 class OwnerAdmin(admin.ModelAdmin):
     list_display = ["name"]
@@ -27,17 +13,17 @@ class OwnerAdmin(admin.ModelAdmin):
 class SupplierAdmin(admin.ModelAdmin):
     list_display = ["name"]
 
-# @admin.register(Building)
-# class BuildingAdmin(admin.ModelAdmin):
-#     list_display = ["name"]
-#
-# @admin.register(Workplace)
-# class WorkplaceAdmin(admin.ModelAdmin):
-#     list_display = ["name", "building"]
-#
-# @admin.register(Location)
-# class LocationAdmin(admin.ModelAdmin):
-#     list_display = ["name", "workplace", "person_responsible"]
+@admin.register(Building)
+class BuildingAdmin(admin.ModelAdmin):
+    list_display = ["name"]
+
+@admin.register(Workplace)
+class WorkplaceAdmin(admin.ModelAdmin):
+    list_display = ["name", "building"]
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ["name", "workplace", "person_responsible"]
 
 @admin.register(Cylinder)
 class CylinderAdmin(admin.ModelAdmin):
