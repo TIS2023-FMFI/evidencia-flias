@@ -16,6 +16,7 @@
             <td>{{ owner.name }}</td>
             <td>
                 <a href="{% url 'owner_update' pk=owner.id %}">Upraviť</a>
+                <a href="{% url 'owner_delete' pk=owner.id %}">Odstrániť</a>
             </td>
         </tr>
         {% endfor %}
