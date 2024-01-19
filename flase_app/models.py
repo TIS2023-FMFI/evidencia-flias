@@ -4,10 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    pass
 
 
 class Owner(models.Model):
@@ -75,4 +72,14 @@ class CylinderChange(models.Model):
     location = models.ForeignKey(Location, on_delete=models.RESTRICT, blank=True, null=True)
     is_connected = models.BooleanField(blank=True, null=True)
     note = models.CharField(max_length=256, blank=True, null=True)
+
+class SpravaPlynov(models.Model):
+    nazov_plynu = models.CharField(max_length=100)
+    mnozstvo = models.DecimalField(max_digits=10, decimal_places=2)
+    datum_dodania = models.DateField()
+    poznamky = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.nazov_plynu
+
 

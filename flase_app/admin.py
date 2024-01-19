@@ -1,8 +1,25 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Owner, Supplier, Building, Workplace, Location, Cylinder, Gas, CylinderLife, CylinderChange
+from .models import User, Owner, Supplier, Building, Workplace, Location, Cylinder, Gas, CylinderLife, CylinderChange, \
+    SpravaPlynov
 
 admin.site.register(User, UserAdmin)
+admin.site.register(SpravaPlynov)
+
+
+@admin.register(Building)
+class BuildingAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Workplace)
+class WorkplaceAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ["name", "workplace"]
 
 
 @admin.register(Owner)
@@ -42,7 +59,8 @@ class GasAdmin(admin.ModelAdmin):
 
 @admin.register(CylinderLife)
 class CylinderLifeAdmin(admin.ModelAdmin):
-    list_display = ["cylinder", "volume", "supplier", "pressure", "location", "is_connected", "gas", "is_current", "start_date", "end_date"]
+    list_display = ["cylinder", "volume", "supplier", "pressure", "location", "is_connected", "gas", "is_current",
+                    "start_date", "end_date"]
 
 
 @admin.register(CylinderChange)
