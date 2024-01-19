@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Zoznam Plynov{% endblock %}
+
+{% block content %}
+<h2>Zoznam Plynov</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Názov plynu</th>
+            <th>Množstvo</th>
+            <th>Dátum dodania</th>
+            <th>Akcie</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for plyn in plynov %}
+        <tr>
+            <td>{{ plyn.nazov_plynu }}</td>
+            <td>{{ plyn.mnozstvo }}</td>
+            <td>{{ plyn.datum_dodania }}</td>
+            <td>
+                <a href="{% url 'upravit_plyn' plyn.pk %}" class="btn btn-primary btn-sm">Upraviť</a>
+                <a href="{% url 'vymazat_plyn' plyn.pk %}" class="btn btn-danger btn-sm">Vymazať</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Žiadne plynové záznamy</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'pridat_plyn' %}" class="btn btn-success">Pridať nový plyn</a>
+{% endblock %}

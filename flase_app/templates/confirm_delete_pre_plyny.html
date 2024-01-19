@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Vymazať Plyn{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Vymazať Plyn</h2>
+    <p>Ste si istí, že chcete vymazať "{{ object.nazov_plynu }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Áno, vymazať</button>
+        <a href="{% url 'zoznam_plynov' %}" class="btn btn-secondary">Nie, vrátiť sa späť</a>
+    </form>
+</div>
+{% endblock %}
