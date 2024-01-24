@@ -14,6 +14,7 @@ class User(AbstractUser):
         READER = 2, 'Reader'
 
     role = models.IntegerField(choices=Role.choices, default=Role.READER)
+    is_active = models.BooleanField(default=True)
 
 
 class Owner(models.Model):
@@ -46,7 +47,7 @@ class Location(models.Model):
 class Cylinder(models.Model):
     barcode = models.CharField(max_length=64, unique=True)
     owner = models.ForeignKey(Owner, on_delete=models.RESTRICT)
-
+    
 
 class Gas(models.Model):
     name = models.CharField(max_length=128)

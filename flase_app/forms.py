@@ -16,7 +16,7 @@ class OwnerForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username","role"]
+        fields = ["username","password", "email", "role", "is_active"]
         widgets = {
             'password': forms.PasswordInput(),
             'email': forms.EmailInput(),
@@ -26,4 +26,9 @@ class UserForm(forms.ModelForm):
             "username": _("Username"),
             "password": _("Password"),
             "email": _("Email"),
+            "is_active": _("Is Active"),
         }
+
+
+
+

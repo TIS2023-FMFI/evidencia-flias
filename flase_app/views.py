@@ -8,7 +8,6 @@ from flase_app.models import Owner
 from flase_app.forms import UserForm
 from flase_app.models import User
 
-
 class OwnerListView(LoginRequiredMixin, ListView):
     model = Owner
     template_name = "owners/list.html"
@@ -68,3 +67,5 @@ class UserDisableView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse("user_list")
 
+
+    
