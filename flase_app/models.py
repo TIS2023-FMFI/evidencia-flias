@@ -4,10 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=128, unique=True)
-    password = models.CharField(max_length=128)
-    email = models.CharField(max_length=128, unique=False)
-    
+  
     class Role(models.IntegerChoices):
         ADMIN = 0, 'Admin'
         EDITOR = 1, 'Editor'
@@ -19,6 +16,7 @@ class User(AbstractUser):
 
 class Owner(models.Model):
     name = models.CharField(max_length=128)
+    is_active = models.BooleanField(default=True)
 
 
 class Supplier(models.Model):

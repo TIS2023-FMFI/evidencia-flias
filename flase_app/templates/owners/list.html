@@ -1,8 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <table>
     <thead>
         <tr>
-            <th>Názov</th>
-            <th>Akcie</th>
+            <th>Name</th>
+			<th>Is Active ?</th>
         </tr>
     </thead>
 
@@ -10,12 +14,15 @@
         {% for owner in owner_list %}
         <tr>
             <td>{{ owner.name }}</td>
+			<td>{{ owner.is_active }}</td>
             <td>
-                <a href="{% url 'owner_update' pk=owner.id %}">Upraviť</a>
+                <a href="{% url 'owner_update' pk=owner.id %}">Edit</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<a href="{% url 'owner_create' %}">Pridať ownera</a>
+<a href="{% url 'owner_create' %}">Add Owner</a>
+
+{% endblock content %}
