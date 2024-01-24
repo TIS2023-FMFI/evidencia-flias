@@ -19,6 +19,7 @@ class User(AbstractUser):
 
 class Owner(models.Model):
     name = models.CharField(max_length=128)
+    is_active = models.BooleanField(default=True)
 
 
 class Supplier(models.Model):
