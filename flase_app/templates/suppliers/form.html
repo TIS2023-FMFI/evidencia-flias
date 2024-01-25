@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% if object %}
+        <h1>{% translate 'Edit supplier' %}</h1>
+    {% else %}
+        <h1>{% translate 'New supplier' %}</h1>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">{% translate 'Save' %}</button>
+    </form>
+
+{% endblock content %}
