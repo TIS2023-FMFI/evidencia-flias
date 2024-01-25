@@ -1,12 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-
 <table>
     <thead>
         <tr>
-            <th>Názov</th>
-            <th>Akcie</th>
+            <th>{% translate "Name" %}</th>
+            <th>{% translate "Actions" %}</th>
         </tr>
     </thead>
 
@@ -15,14 +15,13 @@
         <tr>
             <td>{{ owner.name }}</td>
             <td>
-                <a href="{% url 'owner_update' pk=owner.id %}">Upraviť</a>
-                <a href="{% url 'owner_delete' pk=owner.id %}">Odstrániť</a>
+                <a href="{% url 'owner_update' pk=owner.id %}">{% translate "Edit" %}</a>
+                <a href="{% url 'owner_delete' pk=owner.id %}">{% translate "Delete" %}</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<a href="{% url 'owner_create' %}">Pridať ownera</a>
-
+<a href="{% url 'owner_create' %}">{% translate "Create owner" %}</a>
 {% endblock content %}
