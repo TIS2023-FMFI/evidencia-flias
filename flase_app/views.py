@@ -7,10 +7,8 @@ from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 
 from flase_app.forms import OwnerForm, SupplierForm, UserForm, CylinderLifeForm, \
-    PressureLogForm, CylinderFilterForm
+    PressureLogForm, CylinderFilterForm, CylinderLifeForm2
 from flase_app.models import Owner, Supplier, CylinderLife, User, Cylinder
-from django.db.models import Q
-from django.shortcuts import render
 
 
 class OwnerListView(LoginRequiredMixin, ListView):
@@ -204,3 +202,12 @@ class PressureLogView(LoginRequiredMixin, CreateView):
         life.save()
 
         return HttpResponseRedirect("/") # TODO: redirect to cylinder life detail
+
+
+class CylinderLifeUpdateView(LoginRequiredMixin, UpdateView):
+    model = CylinderLife
+    form_class = CylinderLifeForm2
+    template_name = "cylinder_life/form.html"
+
+    def get_success_url(self):
+        return "/"  # TODO: redirect to cylinder detail page
