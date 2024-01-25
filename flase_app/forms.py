@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from flase_app.models import Owner, Supplier
 from flase_app.models import User
 
+
 class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
@@ -12,6 +13,7 @@ class OwnerForm(forms.ModelForm):
         labels = {
             "name": _("Name"),
         }
+
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -29,7 +31,6 @@ class UserForm(forms.ModelForm):
             "is_active": _("Is Active"),
         }
 
-
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
@@ -37,6 +38,3 @@ class SupplierForm(forms.ModelForm):
         labels = {
             "name": _("Name"),
         }
-
-
-

@@ -67,7 +67,7 @@ class UserDisableView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse("user_list")
 
-
+      
 class SupplierListView(LoginRequiredMixin, ListView):
     model = Supplier
     template_name = "suppliers/list.html"

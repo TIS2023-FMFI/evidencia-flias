@@ -1,12 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-
 <table>
     <thead>
         <tr>
-            <th>Name</th>
-			<th>Is Active ?</th>
+            <th>{% translate "Name" %}</th>
+            <th>{% translate "Actions" %}</th>
         </tr>
     </thead>
 
@@ -14,15 +14,14 @@
         {% for owner in owner_list %}
         <tr>
             <td>{{ owner.name }}</td>
-			<td>{{ owner.is_active }}</td>
             <td>
-                <a href="{% url 'owner_update' pk=owner.id %}">Edit</a>
+                <a href="{% url 'owner_update' pk=owner.id %}">{% translate "Edit" %}</a>
+                <a href="{% url 'owner_delete' pk=owner.id %}">{% translate "Delete" %}</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<a href="{% url 'owner_create' %}">Add Owner</a>
-
+<a href="{% url 'owner_create' %}">{% translate "Create owner" %}</a>
 {% endblock content %}
