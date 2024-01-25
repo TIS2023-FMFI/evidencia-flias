@@ -11,7 +11,6 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True)
     role = models.IntegerField(choices=Role.choices, default=Role.READER)
-    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -19,7 +18,6 @@ class User(AbstractUser):
 
 class Owner(models.Model):
     name = models.CharField(max_length=128)
-    is_active = models.BooleanField(default=True)
 
 
 class Supplier(models.Model):

@@ -7,11 +7,10 @@ from flase_app.models import User
 class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
-        fields = ["name", "is_active"]
+        fields = ["name"]
 
         labels = {
             "name": _("Name"),
-            "is_active": _("Is Active"),
         }
 
 class UserForm(forms.ModelForm):
