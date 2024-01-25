@@ -4,15 +4,13 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-  
     class Role(models.IntegerChoices):
         ADMIN = 0, 'Admin'
         EDITOR = 1, 'Editor'
         READER = 2, 'Reader'
-
+        
     role = models.IntegerField(choices=Role.choices, default=Role.READER)
     is_active = models.BooleanField(default=True)
-
 
 class Owner(models.Model):
     name = models.CharField(max_length=128)
