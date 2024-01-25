@@ -8,10 +8,13 @@
         <h1>{% translate 'New supplier' %}</h1>
     {% endif %}
 
-    <form method="post">
+    <form method="post" class="mt-4">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit">{% translate 'Save' %}</button>
+        {% include "forms/form.html" %}
+        <div class="row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">{% translate 'Save' %}</button>
+            </div>
+        </div>
     </form>
-
 {% endblock content %}
