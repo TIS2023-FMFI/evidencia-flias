@@ -9,7 +9,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">{% translate 'Delete' %}</button>
+        <button type="submit" class="btn btn-danger">{% translate 'Delete' %}</button>
+        <a href="{% url "supplier_list" %}" class="btn btn-secondary">{% translate "Cancel" %}</a>
     </form>
-
 {% endblock content %}
