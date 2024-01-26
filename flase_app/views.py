@@ -2,11 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
-from flase_app.forms import OwnerForm, SupplierForm
-from flase_app.models import Owner, Supplier
+from flase_app.forms import OwnerForm, SupplierForm, UserForm
+from flase_app.models import Owner, Supplier, CylinderLife, User
 
-from flase_app.forms import UserForm
-from flase_app.models import User
 
 class OwnerListView(LoginRequiredMixin, ListView):
     model = Owner
@@ -96,3 +94,8 @@ class SupplierDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("supplier_list")
+
+
+class CylinderLifeListView(ListView):
+    model = CylinderLife
+    template_name = "index.html"
