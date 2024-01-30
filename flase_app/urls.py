@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from flase_app.views import CylinderLifeListView
 
 urlpatterns = [
     path("owners/", views.OwnerListView.as_view(), name="owner_list"),
@@ -14,4 +15,5 @@ urlpatterns = [
     path("suppliers/<int:pk>/", views.SupplierUpdateView.as_view(), name="supplier_update"),
     path("suppliers/<int:pk>/delete/", views.SupplierDeleteView.as_view(), name="supplier_delete"),
     path("suppliers/create/", views.SupplierCreateView.as_view(), name="supplier_create"),
+    path("cylinders/", CylinderLifeListView.as_view(), name="cylinder_list"),
 ]
