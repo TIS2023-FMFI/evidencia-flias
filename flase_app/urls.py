@@ -20,4 +20,5 @@ urlpatterns = [
     path("cylinders2/", views.CylinderListView.as_view(), name="cylinder_list2"),
     path("cylinders/create", views.CylinderCreateView.as_view(), name="cylinder_create"),
     path("cylinders/<int:pk>/", views.CylinderUpdateView.as_view(), name="cylinder_update"),
+    path("cylinders/life/<int:pk>/pressure/manual/", views.PressureLogView.as_view(), name="cylinder_life_pressure"),
 ]
