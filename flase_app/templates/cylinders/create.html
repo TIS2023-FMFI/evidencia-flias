@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load i18n %}
+
+{% if object %}
+<h1 style="margin: 20px;">{% translate 'Bottle Properties' %}</h1>
+{% else %}
+<h1 style="margin: 20px;">{% translate 'New Bottle Delivery' %}</h1>
+{% endif %}
+
+<style>
+  .form-label {
+    display: inline-block;
+    width: 100px;
+  }
+  input, select, textarea {
+    width: 300px;
+  }
+  input[type="checkbox"] {
+    width: auto;
+  }
+  
+</style>
+
+<form method="post">
+    {% csrf_token %}
+
+  <div class="row">
+    <div class="col" style="margin: 20px;">
+      <div>
+        <label class="form-label" for="{{ form.barcode.id_for_label }}">{{ form.barcode.label }}</label>
+        {{ form.barcode }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
+        {{ form.location }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.owner.id_for_label }}">{{ form.owner.label }}</label>
+        {{ form.owner }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.supplier.id_for_label }}">{{ form.supplier.label }}</label>
+        {{ form.supplier }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.gas.id_for_label }}">{{ form.gas.label }}</label>
+        {{ form.gas }}
+      </div>	  
+      <div>
+        <label class="form-label" for="{{ form.volume.id_for_label }}">{{ form.volume.label }}</label>
+        {{ form.volume }}
+      </div>
+    </div>
+    <div class="col">
+      <div>
+        <label class="form-label" for="{{ form.pressure.id_for_label }}">{{ form.pressure.label }}</label>
+        {{ form.pressure }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.note.id_for_label }}">{{ form.note.label }}</label>
+        {{ form.note }}
+      </div>	  
+      <div>
+        <label class="form-label" for="{{ form.is_connected.id_for_label }}">{{ form.is_connected.label }}</label>
+        {{ form.is_connected }}
+      </div>
+      <div>
+        <label class="form-label" for="{{ form.is_current.id_for_label }}">{{ form.is_current.label }}</label>
+        {{ form.is_current }}
+      </div>	  
+    </div>
+  </div>
+  
+    <button type="submit" style="margin: 20px;">{% translate 'Save' %}</button>
+</form>
+
+{% endblock content %}
