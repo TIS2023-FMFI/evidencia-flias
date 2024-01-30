@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from flase_app.models import Owner, User
+from flase_app.models import Owner, Supplier
+from flase_app.models import User
 
 
 class OwnerForm(forms.ModelForm):
@@ -28,4 +29,12 @@ class UserForm(forms.ModelForm):
             "password": _("Password"),
             "email": _("Email"),
             "is_active": _("Is Active"),
+        }
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = ["name"]
+        labels = {
+            "name": _("Name"),
         }

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% translate "Suppliers" %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% translate "Name" %}</th>
+            <th class="text-end">{% translate "Actions" %}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for supplier in object_list %}
+            <tr>
+                <td>{{ supplier.name }}</td>
+                <td class="text-end">
+                    <a href="{% url 'supplier_update' pk=supplier.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                    <a href="{% url 'supplier_delete' pk=supplier.id %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> {% translate "Delete" %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'supplier_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add supplier" %}
+    </a>
+{% endblock content %}
