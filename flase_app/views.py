@@ -99,3 +99,16 @@ class SupplierDeleteView(LoginRequiredMixin, DeleteView):
 class CylinderLifeListView(ListView):
     model = CylinderLife
     template_name = "index.html"
+
+    def post(self, request, *args, **kwargs):
+        barcode = request.POST.get('barcode')
+        note = request.POST.get('note')
+        # Filter your queryset based on the submitted barcode and note
+        self.object_list = CylinderLife.objects.filter(cylinder__barcode__icontains=barcode, note__icontains=note)
+        # Return a HttpResponseRedirect or render the template with the filtered queryset
+        return self.render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add any additional context data here
+        return context

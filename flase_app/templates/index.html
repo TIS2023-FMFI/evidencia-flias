@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="barcode">Barcode:</label>
+        <input type="text" id="barcode" name="barcode">
+        <label for="note">Note:</label>
+        <input type="text" id="note" name="note">
+        <button type="submit">Filter</button>
+    </form>
+
     <table style="border: 1px solid black">
         <tr style="border: 1px solid black">
             <th style="border: 1px solid black">barcode</th>
