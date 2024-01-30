@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Barcode</th>
+            <th>Owner</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cylinder in cylinder_list %}
+        <tr>
+            <td>{{ cylinder.barcode }}</td>
+			<td>{{ cylinder.owner.name }}</td>
+			<td>
+                <a href="{% url 'cylinder_update' pk=cylinder.id %}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'cylinder_create' %}">Add Cylinder</a>
+
+{% endblock content %}

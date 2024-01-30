@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
-from flase_app.forms import OwnerForm, SupplierForm, UserForm
-from flase_app.models import Owner, Supplier, CylinderLife, User
+from flase_app.forms import OwnerForm, SupplierForm, UserForm, CylinderLifeForm
+from flase_app.models import Owner, Supplier, CylinderLife, User, Cylinder
 
 
 class OwnerListView(LoginRequiredMixin, ListView):
@@ -112,3 +112,25 @@ class CylinderLifeListView(ListView):
         context = super().get_context_data(**kwargs)
         # Add any additional context data here
         return context
+
+
+class CylinderListView(LoginRequiredMixin, ListView):
+    model = Cylinder
+    template_name = "cylinders/list.html"
+
+
+class CylinderCreateView(LoginRequiredMixin, CreateView):
+    template_name = "cylinders/create.html"
+    form_class = CylinderLifeForm
+
+    def get_success_url(self):
+        return reverse("cylinder_list")
+
+
+class CylinderUpdateView(LoginRequiredMixin, UpdateView):
+    model = CylinderLife
+    template_name = "cylinders/create.html"
+    form_class = CylinderLifeForm
+
+    def get_success_url(self):
+        return reverse("cylinder_list")
