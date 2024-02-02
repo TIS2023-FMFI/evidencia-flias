@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier
+from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier, \
+    CylinderChange
 
 
 class OwnerForm(forms.ModelForm):
@@ -83,4 +84,13 @@ class CylinderLifeForm(forms.ModelForm):
             "gas": _("Gas"),
             "note": _("Note"),
             "is_current": _("Is_current"),
+        }
+
+
+class PressureLogForm(forms.ModelForm):
+    class Meta:
+        model = CylinderChange
+        fields = ["pressure"]
+        labels = {
+            "pressure": _("Current pressure"),
         }
