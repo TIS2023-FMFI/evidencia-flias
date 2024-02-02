@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Filtrovací formulár -->
+<form method="get" class="form-inline">
+    {{ filter_form.as_p }}
+    <button type="submit" class="btn btn-primary">Filtrovať</button>
+    <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">Reset</a>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Barcode</th>
+            <th>Owner</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cylinder in cylinder_list %}
+        <tr>
+            <td>{{ cylinder.barcode }}</td>
+            <td>{{ cylinder.owner.name }}</td>
+            <td>
+                <a href="{% url 'cylinder_update' pk=cylinder.id %}">Edit</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No cylinders found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'cylinder_create' %}">Add Cylinder</a>
+
+{% endblock content %}

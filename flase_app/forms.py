@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier, \
-    CylinderChange
+    CylinderChange, Location, Gas
 
 
 class OwnerForm(forms.ModelForm):
@@ -94,3 +94,16 @@ class PressureLogForm(forms.ModelForm):
         labels = {
             "pressure": _("Current pressure"),
         }
+
+
+class CylinderFilterForm(forms.Form):
+    gas = forms.ModelChoiceField(queryset=Gas.objects.all(), required=False)
+    owner = forms.ModelChoiceField(queryset=Owner.objects.all(), required=False)
+    volume = forms.DecimalField(required=False)
+    supplier = forms.ModelChoiceField(queryset=Supplier.objects.all(), required=False)
+    location = forms.ModelChoiceField(queryset=Location.objects.all(), required=False)
+    status = forms.ChoiceField(choices=[(True, 'Connected'), (False, 'Not Connected')], required=False, widget=forms.Select())
+
+    def __init__(self, *args, **kwargs):
+        super(CylinderFilterForm, self).__init__(*args, **kwargs)
+        self.fields['status'].choices = [('', 'Any'),] + list(self.fields['status'].choices)[1:]
