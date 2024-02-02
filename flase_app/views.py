@@ -102,7 +102,7 @@ class SupplierDeleteView(LoginRequiredMixin, DeleteView):
 
 class CylinderLifeListView(ListView):
     model = CylinderLife
-    template_name = "index.html"
+    template_name = "cylinders/index.html"
 
     def post(self, request, *args, **kwargs):
         barcode = request.POST.get('barcode')
@@ -116,12 +116,6 @@ class CylinderLifeListView(ListView):
         context = super().get_context_data(**kwargs)
         # Add any additional context data here
         return context
-
-
-class CylinderListView(LoginRequiredMixin, ListView):
-    model = Cylinder
-    template_name = "cylinders/list.html"
-
 
 class CylinderCreateView(LoginRequiredMixin, CreateView):
     template_name = "cylinders/create.html"
