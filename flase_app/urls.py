@@ -15,9 +15,7 @@ urlpatterns = [
     path("suppliers/<int:pk>/", views.SupplierUpdateView.as_view(), name="supplier_update"),
     path("suppliers/<int:pk>/delete/", views.SupplierDeleteView.as_view(), name="supplier_delete"),
     path("suppliers/create/", views.SupplierCreateView.as_view(), name="supplier_create"),
-    # TODO: zistit co je medzi tymito dvoma
     path("cylinders/", CylinderLifeListView.as_view(), name="cylinder_list"),
-    path("cylinders2/", views.CylinderListView.as_view(), name="cylinder_list2"),
     path("cylinders/create", views.CylinderCreateView.as_view(), name="cylinder_create"),
     path("cylinders/<int:pk>/", views.CylinderUpdateView.as_view(), name="cylinder_update"),
 ]

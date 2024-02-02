@@ -45,7 +45,7 @@ class Location(models.Model):
 
 class Cylinder(models.Model):
     barcode = models.CharField(max_length=64, unique=True)
-    owner = models.ForeignKey(Owner, on_delete=models.RESTRICT)
+    owner = models.ForeignKey(Owner, on_delete=models.RESTRICT, blank=True, null=True)
     
 
 class Gas(models.Model):
@@ -54,13 +54,13 @@ class Gas(models.Model):
 
 class CylinderLife(models.Model):
     cylinder = models.ForeignKey(Cylinder, on_delete=models.CASCADE)
-    volume = models.DecimalField(max_digits=6, decimal_places=2)
+    volume = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.RESTRICT, blank=True, null=True)
 
     pressure = models.IntegerField(blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.RESTRICT)
     is_connected = models.BooleanField()
-    gas = models.ForeignKey(Gas, on_delete=models.RESTRICT)
+    gas = models.ForeignKey(Gas, on_delete=models.RESTRICT, blank=True, null=True)
     note = models.CharField(max_length=256, blank=True)
 
     is_current = models.BooleanField()
