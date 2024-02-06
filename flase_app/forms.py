@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
 from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier, \
@@ -44,6 +45,14 @@ class UserForm(forms.ModelForm):
         if not kwargs.get("instance"):
             self.fields["password"].required = True
             self.fields["password"].help_text = ""
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+
+        if password:
+            validate_password(password)
+
+        return password
 
     def save(self, commit=True):
         user = super().save(commit=False)
