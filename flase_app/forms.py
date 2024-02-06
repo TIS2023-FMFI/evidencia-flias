@@ -2,11 +2,16 @@ from django import forms
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
-from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier, \
-    CylinderChange, Location, Gas
-
-from flase_app.models import Owner, Supplier, CylinderLife
-from flase_app.models import User
+from flase_app.models import (
+    Owner,
+    User,
+    CylinderLife,
+    Cylinder,
+    Supplier,
+    CylinderChange,
+    Location,
+    Gas,
+)
 
 
 class OwnerForm(forms.ModelForm):
@@ -20,7 +25,12 @@ class OwnerForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(), required=False, help_text=_("Leave empty if you want to keep the current password."), label=_("Password"))
+    password = forms.CharField(
+        widget=forms.PasswordInput(),
+        required=False,
+        help_text=_("Leave empty if you want to keep the current password."),
+        label=_("Password"),
+    )
 
     field_order = ["first_name", "last_name", "email", "password", "role", "is_active"]
 
@@ -36,7 +46,9 @@ class UserForm(forms.ModelForm):
         }
 
         help_texts = {
-            "is_active": _("Use this to disable users. An inactive user cannot log in."),
+            "is_active": _(
+                "Use this to disable users. An inactive user cannot log in."
+            ),
         }
 
     def __init__(self, **kwargs):
@@ -64,7 +76,6 @@ class UserForm(forms.ModelForm):
         return user
 
 
-
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
@@ -81,17 +92,20 @@ class CylinderLifeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        instance = kwargs.get('instance')
+        instance = kwargs.get("instance")
         if instance:
-            self.fields['barcode'].initial = instance.cylinder.barcode
-            self.fields['owner'].initial = instance.cylinder.owner
+            self.fields["barcode"].initial = instance.cylinder.barcode
+            self.fields["owner"].initial = instance.cylinder.owner
 
-        self.fields['owner'].required = False
+        self.fields["owner"].required = False
 
-    def save(self, commit = True):
-        cylinder, created = Cylinder.objects.get_or_create(barcode=self.cleaned_data["barcode"], defaults={"owner": self.cleaned_data["owner"]})
+    def save(self, commit=True):
+        cylinder, created = Cylinder.objects.get_or_create(
+            barcode=self.cleaned_data["barcode"],
+            defaults={"owner": self.cleaned_data["owner"]},
+        )
         life = super().save(commit=False)
-        if (not created):
+        if not created:
             cylinder.owner = self.cleaned_data["owner"]
             cylinder.save()
         life.cylinder = cylinder
@@ -101,9 +115,20 @@ class CylinderLifeForm(forms.ModelForm):
 
     class Meta:
         model = CylinderLife
-        fields = ["barcode", "owner", "volume", "supplier", "pressure", "location", "is_connected", "gas", "note", "is_current"]
+        fields = [
+            "barcode",
+            "owner",
+            "volume",
+            "supplier",
+            "pressure",
+            "location",
+            "is_connected",
+            "gas",
+            "note",
+            "is_current",
+        ]
         widgets = {
-            'note': forms.Textarea(attrs={'cols': 40, 'rows': 5}),
+            "note": forms.Textarea(attrs={"cols": 40, "rows": 5}),
         }
         labels = {
             "barcode": _("Barcode"),
@@ -134,11 +159,17 @@ class CylinderFilterForm(forms.Form):
     volume = forms.DecimalField(required=False)
     supplier = forms.ModelChoiceField(queryset=Supplier.objects.all(), required=False)
     location = forms.ModelChoiceField(queryset=Location.objects.all(), required=False)
-    status = forms.ChoiceField(choices=[(True, 'Connected'), (False, 'Not Connected')], required=False, widget=forms.Select())
+    status = forms.ChoiceField(
+        choices=[(True, "Connected"), (False, "Not Connected")],
+        required=False,
+        widget=forms.Select(),
+    )
 
     def __init__(self, *args, **kwargs):
         super(CylinderFilterForm, self).__init__(*args, **kwargs)
-        self.fields['status'].choices = [('', 'Any'),] + list(self.fields['status'].choices)[1:]
+        self.fields["status"].choices = [
+            ("", "Any"),
+        ] + list(self.fields["status"].choices)[1:]
 
 
 class CylinderLifeForm2(forms.ModelForm):
@@ -156,9 +187,7 @@ class CylinderLifeForm2(forms.ModelForm):
             "note": _("Note"),
         }
 
-        widgets = {
-            "note": forms.Textarea()
-        }
+        widgets = {"note": forms.Textarea()}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

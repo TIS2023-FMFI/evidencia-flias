@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flase_app', '0007_alter_user_email'),
+        ("flase_app", "0007_alter_user_email"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='email',
+            model_name="user",
+            name="email",
             field=models.CharField(max_length=128, unique=True),
         ),
     ]

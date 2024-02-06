@@ -4,25 +4,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flase_app', '0005_remove_user_name_alter_user_role_alter_user_username'),
+        ("flase_app", "0005_remove_user_name_alter_user_role_alter_user_username"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='email',
+            model_name="user",
+            name="email",
             field=models.CharField(max_length=128, unique=True),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='password',
+            model_name="user",
+            name="password",
             field=models.CharField(max_length=128),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.IntegerField(choices=[(0, 'Admin'), (1, 'Editor'), (2, 'Reader')], default=2),
+            model_name="user",
+            name="role",
+            field=models.IntegerField(
+                choices=[(0, "Admin"), (1, "Editor"), (2, "Reader")], default=2
+            ),
         ),
     ]

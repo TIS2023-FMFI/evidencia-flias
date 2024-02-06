@@ -1,6 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-from .models import User, Owner, Supplier, Building, Workplace, Location, Cylinder, Gas, CylinderLife, CylinderChange
+from .models import (
+    User,
+    Owner,
+    Supplier,
+    Building,
+    Workplace,
+    Location,
+    Cylinder,
+    Gas,
+    CylinderLife,
+    CylinderChange,
+)
 
 
 @admin.register(User)
@@ -74,7 +85,18 @@ class GasAdmin(admin.ModelAdmin):
 
 @admin.register(CylinderLife)
 class CylinderLifeAdmin(admin.ModelAdmin):
-    list_display = ["cylinder", "volume", "supplier", "pressure", "location", "is_connected", "gas", "is_current", "start_date", "end_date"]
+    list_display = [
+        "cylinder",
+        "volume",
+        "supplier",
+        "pressure",
+        "location",
+        "is_connected",
+        "gas",
+        "is_current",
+        "start_date",
+        "end_date",
+    ]
 
 
 @admin.register(CylinderChange)

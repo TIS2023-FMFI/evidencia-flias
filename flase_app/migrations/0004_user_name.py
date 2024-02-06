@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flase_app', '0003_alter_user_role'),
+        ("flase_app", "0003_alter_user_role"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='name',
-            field=models.CharField(default='defaultUser', max_length=128),
+            model_name="user",
+            name="name",
+            field=models.CharField(default="defaultUser", max_length=128),
         ),
     ]

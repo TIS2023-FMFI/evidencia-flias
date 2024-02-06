@@ -2,12 +2,24 @@ from django.urls import path
 
 from flase_app import views
 from flase_app.views import CylinderLifeListView, CylinderListView
-from flase_app.views.owner import OwnerListView, OwnerCreateView, OwnerUpdateView, \
-    OwnerDeleteView
-from flase_app.views.supplier import SupplierListView, SupplierUpdateView, \
-    SupplierDeleteView, SupplierCreateView
-from flase_app.views.user import UserListView, UserUpdateView, UserDisableView, \
-    UserCreateView
+from flase_app.views.owner import (
+    OwnerListView,
+    OwnerCreateView,
+    OwnerUpdateView,
+    OwnerDeleteView,
+)
+from flase_app.views.supplier import (
+    SupplierListView,
+    SupplierUpdateView,
+    SupplierDeleteView,
+    SupplierCreateView,
+)
+from flase_app.views.user import (
+    UserListView,
+    UserUpdateView,
+    UserDisableView,
+    UserCreateView,
+)
 
 urlpatterns = [
     # Owners
@@ -23,13 +35,31 @@ urlpatterns = [
     # Suppliers
     path("suppliers/", SupplierListView.as_view(), name="supplier_list"),
     path("suppliers/<int:pk>/", SupplierUpdateView.as_view(), name="supplier_update"),
-    path("suppliers/<int:pk>/delete/", SupplierDeleteView.as_view(), name="supplier_delete"),
+    path(
+        "suppliers/<int:pk>/delete/",
+        SupplierDeleteView.as_view(),
+        name="supplier_delete",
+    ),
     path("suppliers/create/", SupplierCreateView.as_view(), name="supplier_create"),
-    # 
+    #
     path("cylinders/", CylinderLifeListView.as_view(), name="cylinder_list"),
-    path('cylinders/', CylinderListView.as_view(), name='cylinder_list'),
-    path("cylinders/create", views.CylinderCreateView.as_view(), name="cylinder_create"),
-    path("cylinders/<int:pk>/", views.CylinderUpdateView.as_view(), name="cylinder_update"),
-    path("cylinders/life/<int:pk>/pressure/manual/", views.PressureLogView.as_view(), name="cylinder_life_pressure"),
-    path("cylinders/life/<int:pk>/edit/", views.CylinderLifeUpdateView.as_view(), name="cylinder_life_update"),
+    path("cylinders/", CylinderListView.as_view(), name="cylinder_list"),
+    path(
+        "cylinders/create", views.CylinderCreateView.as_view(), name="cylinder_create"
+    ),
+    path(
+        "cylinders/<int:pk>/",
+        views.CylinderUpdateView.as_view(),
+        name="cylinder_update",
+    ),
+    path(
+        "cylinders/life/<int:pk>/pressure/manual/",
+        views.PressureLogView.as_view(),
+        name="cylinder_life_pressure",
+    ),
+    path(
+        "cylinders/life/<int:pk>/edit/",
+        views.CylinderLifeUpdateView.as_view(),
+        name="cylinder_life_update",
+    ),
 ]
