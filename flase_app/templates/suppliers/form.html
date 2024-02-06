@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}
+    {% if object %}{% translate 'Edit supplier' %}{% else %}{% translate 'New supplier' %}{% endif %}
+{% endblock %}
+
 {% block content %}
     {% if object %}
         <h1>{% translate 'Edit supplier' %}</h1>
