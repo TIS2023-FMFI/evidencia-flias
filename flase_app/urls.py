@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
-from flase_app.views import CylinderLifeListView
+from flase_app.views import CylinderLifeListView, CylinderListView
 
 urlpatterns = [
     path("owners/", views.OwnerListView.as_view(), name="owner_list"),
+    path('cylinders/', CylinderListView.as_view(), name='cylinder_list'),
     path("owners/<int:pk>/", views.OwnerUpdateView.as_view(), name="owner_update"),
     path("owners/<int:pk>/delete/", views.OwnerDeleteView.as_view(), name="owner_delete"),
     path("owners/create/", views.OwnerCreateView.as_view(), name="owner_create"),

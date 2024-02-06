@@ -5,9 +5,12 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
+
 from flase_app.forms import OwnerForm, SupplierForm, UserForm, CylinderLifeForm, \
-    PressureLogForm
+    PressureLogForm, CylinderFilterForm
 from flase_app.models import Owner, Supplier, CylinderLife, User, Cylinder
+from django.db.models import Q
+from django.shortcuts import render
 
 
 class OwnerListView(LoginRequiredMixin, ListView):
@@ -116,6 +119,44 @@ class CylinderLifeListView(ListView):
         context = super().get_context_data(**kwargs)
         # Add any additional context data here
         return context
+
+
+class CylinderListView(LoginRequiredMixin, ListView):
+    model = Cylinder
+    template_name = 'cylinders/list.html'
+    context_object_name = 'cylinders'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        form = CylinderFilterForm(self.request.GET)
+        if form.is_valid():
+            gas = form.cleaned_data.get('gas')
+            owner = form.cleaned_data.get('owner')
+            volume = form.cleaned_data.get('volume')
+            supplier = form.cleaned_data.get('supplier')
+            location = form.cleaned_data.get('location')
+            status = form.cleaned_data.get('status')
+
+            if gas:
+                queryset = queryset.filter(cylinderlife__gas=gas, cylinderlife__is_current=True)
+            if owner:
+                queryset = queryset.filter(owner=owner)
+            if volume is not None:
+                queryset = queryset.filter(cylinderlife__volume=volume, cylinderlife__is_current=True)
+            if supplier:
+                queryset = queryset.filter(cylinderlife__supplier=supplier, cylinderlife__is_current=True)
+            if location:
+                queryset = queryset.filter(cylinderlife__location=location, cylinderlife__is_current=True)
+            if status:
+                is_connected = status == 'True'
+                queryset = queryset.filter(cylinderlife__is_connected=is_connected, cylinderlife__is_current=True)
+        return queryset.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_form'] = CylinderFilterForm(self.request.GET or None)
+        return context
+
 
 class CylinderCreateView(LoginRequiredMixin, CreateView):
     template_name = "cylinders/create.html"
