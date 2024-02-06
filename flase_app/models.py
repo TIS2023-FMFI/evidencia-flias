@@ -118,6 +118,7 @@ class Cylinder(models.Model):
 
 class Gas(models.Model):
     name = models.CharField(max_length=128)
+    note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name

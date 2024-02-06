@@ -197,3 +197,9 @@ class CylinderLifeForm2(forms.ModelForm):
         # we should not save if commit=False, but there is no good way to indicate
         # that there are multiple models changed to the caller, so we save it anyway
         return life
+
+
+class GasForm(forms.ModelForm):
+    class Meta:
+        model = Gas
+        fields = ["name", "note"]
