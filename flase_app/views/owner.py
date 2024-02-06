@@ -1,17 +1,17 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from flase_app.forms import OwnerForm
+from flase_app.mixins import AdminRequiredMixin
 from flase_app.models import Owner
 
 
-class OwnerListView(LoginRequiredMixin, ListView):
+class OwnerListView(AdminRequiredMixin, ListView):
     model = Owner
     template_name = "owners/list.html"
 
 
-class OwnerUpdateView(LoginRequiredMixin, UpdateView):
+class OwnerUpdateView(AdminRequiredMixin, UpdateView):
     model = Owner
     template_name = "owners/form.html"
     form_class = OwnerForm
@@ -20,7 +20,7 @@ class OwnerUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("owner_list")
 
 
-class OwnerCreateView(LoginRequiredMixin, CreateView):
+class OwnerCreateView(AdminRequiredMixin, CreateView):
     template_name = "owners/form.html"
     form_class = OwnerForm
 
@@ -28,7 +28,7 @@ class OwnerCreateView(LoginRequiredMixin, CreateView):
         return reverse("owner_list")
 
 
-class OwnerDeleteView(LoginRequiredMixin, DeleteView):
+class OwnerDeleteView(AdminRequiredMixin, DeleteView):
     model = Owner
     template_name = "owners/delete.html"
 
