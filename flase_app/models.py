@@ -19,9 +19,15 @@ class User(AbstractUser):
 class Owner(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.name
+
 
 class Supplier(models.Model):
     name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
 
 
 class Building(models.Model):
@@ -50,6 +56,9 @@ class Cylinder(models.Model):
 
 class Gas(models.Model):
     name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
 
 
 class CylinderLife(models.Model):

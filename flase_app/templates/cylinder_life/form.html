@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% translate 'Edit cylinder parameters' %}</h1>
+
+    <div class="alert alert-primary">
+        <b>{% translate "You are editing cylinder parameters." %}</b>
+        {# TODO: Link #}
+        {% url "cylinder_life_update" as link %}
+        {% blocktranslate with link=link %}Did you mean to edit <a href="{{ link }}">cylinder's current status</a> instead?{% endblocktranslate %}
+    </div>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {% include "forms/form.html" %}
+        <div class="row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">{% translate 'Save' %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

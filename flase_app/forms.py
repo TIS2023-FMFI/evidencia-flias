@@ -4,6 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from flase_app.models import Owner, User, CylinderLife, Cylinder, Supplier, \
     CylinderChange, Location, Gas
 
+from flase_app.models import Owner, Supplier, CylinderLife
+from flase_app.models import User
+
 
 class OwnerForm(forms.ModelForm):
     class Meta:
@@ -42,7 +45,6 @@ class SupplierForm(forms.ModelForm):
 
 
 class CylinderLifeForm(forms.ModelForm):
-    
     barcode = forms.CharField(max_length=64)
     owner = forms.ModelChoiceField(queryset=Owner.objects.all())
 
@@ -62,17 +64,17 @@ class CylinderLifeForm(forms.ModelForm):
         if (not created):
             cylinder.owner = self.cleaned_data["owner"]
             cylinder.save()
-        life.cylinder = cylinder    
+        life.cylinder = cylinder
         life.save()
 
         return life
-    
+
     class Meta:
         model = CylinderLife
         fields = ["barcode", "owner", "volume", "supplier", "pressure", "location", "is_connected", "gas", "note", "is_current"]
         widgets = {
             'note': forms.Textarea(attrs={'cols': 40, 'rows': 5}),
-        }        
+        }
         labels = {
             "barcode": _("Barcode"),
             "owner": _("Owner"),
@@ -107,3 +109,36 @@ class CylinderFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CylinderFilterForm, self).__init__(*args, **kwargs)
         self.fields['status'].choices = [('', 'Any'),] + list(self.fields['status'].choices)[1:]
+
+
+class CylinderLifeForm2(forms.ModelForm):
+    owner = forms.ModelChoiceField(Owner.objects, label=_("Owner"))
+
+    field_order = ["gas", "volume", "owner", "supplier", "note"]
+
+    class Meta:
+        model = CylinderLife
+        fields = ["gas", "volume", "supplier", "note"]
+        labels = {
+            "gas": _("Gas"),
+            "volume": _("Volume"),
+            "supplier": _("Supplier"),
+            "note": _("Note"),
+        }
+
+        widgets = {
+            "note": forms.Textarea()
+        }
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields["owner"].initial = self.instance.cylinder.owner
+
+    def save(self, commit=True):
+        life = super().save(commit=commit)
+        cylinder = life.cylinder
+        cylinder.owner = self.cleaned_data["owner"]
+        cylinder.save()
+        # we should not save if commit=False, but there is no good way to indicate
+        # that there are multiple models changed to the caller, so we save it anyway
+        return life
