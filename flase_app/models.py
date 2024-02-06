@@ -38,9 +38,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Role(models.IntegerChoices):
-        ADMIN = 0, _("Admin")
+        READER = 0, _("Reader")
         EDITOR = 1, _("Editor")
-        READER = 2, _("Reader")
+        OPERATOR = 2, _("Operator")
+        ADMIN = 3, _("Administrator")
 
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
