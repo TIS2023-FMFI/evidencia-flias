@@ -35,7 +35,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Bottles</a>
                     </li>
-                    {# TODO: only show for admin #}
+                    {% if user.role >= user.Role.ADMIN %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">{% translate "Administration" %}</a>
@@ -47,6 +47,7 @@
                             <a class="dropdown-item" href="#">Gasses</a>
                         </div>
                     </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">User</a>
