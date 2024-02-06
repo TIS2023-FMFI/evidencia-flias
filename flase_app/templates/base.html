@@ -24,7 +24,7 @@
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container">
-            <a class="navbar-brand" href="#">Gas Evidence</a>
+            <a class="navbar-brand" href="/">{% translate "Cylinder Evidence" %}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,14 +33,16 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Bottles</a>
+                        <a class="nav-link" href="/">Bottles</a>
                     </li>
-                    <li class="nav-item dropdown" >
+                    {# TODO: only show for admin #}
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">Administration</a>
+                            aria-expanded="false">{% translate "Administration" %}</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="#">Suppliers</a>
-                            <a class="dropdown-item" href="#">Owners</a>
+                            <a class="dropdown-item" href="{% url "user_list" %}">{% translate "Users" %}</a>
+                            <a class="dropdown-item" href="{% url "supplier_list" %}">{% translate "Suppliers" %}</a>
+                            <a class="dropdown-item" href="{% url "owner_list" %}">{% translate "Owners" %}</a>
                             <a class="dropdown-item" href="#">Locations</a>
                             <a class="dropdown-item" href="#">Gasses</a>
                         </div>
