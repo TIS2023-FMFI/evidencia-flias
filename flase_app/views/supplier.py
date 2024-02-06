@@ -1,17 +1,17 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from flase_app.forms import SupplierForm
+from flase_app.mixins import AdminRequiredMixin
 from flase_app.models import Supplier
 
 
-class SupplierListView(LoginRequiredMixin, ListView):
+class SupplierListView(AdminRequiredMixin, ListView):
     model = Supplier
     template_name = "suppliers/list.html"
 
 
-class SupplierUpdateView(LoginRequiredMixin, UpdateView):
+class SupplierUpdateView(AdminRequiredMixin, UpdateView):
     model = Supplier
     form_class = SupplierForm
     template_name = "suppliers/form.html"
@@ -20,7 +20,7 @@ class SupplierUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("supplier_list")
 
 
-class SupplierCreateView(LoginRequiredMixin, CreateView):
+class SupplierCreateView(AdminRequiredMixin, CreateView):
     form_class = SupplierForm
     template_name = "suppliers/form.html"
 
@@ -28,7 +28,7 @@ class SupplierCreateView(LoginRequiredMixin, CreateView):
         return reverse("supplier_list")
 
 
-class SupplierDeleteView(LoginRequiredMixin, DeleteView):
+class SupplierDeleteView(AdminRequiredMixin, DeleteView):
     model = Supplier
     template_name = "suppliers/delete.html"
 

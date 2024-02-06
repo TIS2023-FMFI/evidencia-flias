@@ -1,17 +1,17 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from flase_app.forms import UserForm
+from flase_app.mixins import AdminRequiredMixin
 from flase_app.models import User
 
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserListView(AdminRequiredMixin, ListView):
     model = User
     template_name = "users/list.html"
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(AdminRequiredMixin, UpdateView):
     model = User
     template_name = "users/form.html"
     form_class = UserForm
@@ -20,7 +20,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("user_list")
 
 
-class UserCreateView(LoginRequiredMixin, CreateView):
+class UserCreateView(AdminRequiredMixin, CreateView):
     template_name = "users/form.html"
     form_class = UserForm
 
@@ -28,7 +28,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
         return reverse("user_list")
 
 
-class UserDisableView(LoginRequiredMixin, DeleteView):
+class UserDisableView(AdminRequiredMixin, DeleteView):
     model = User
     template_name = "users/disable.html"
 
