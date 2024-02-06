@@ -1,9 +1,19 @@
-<h1>Odstranenie ownera</h1>
+{% extends "base.html" %}
+{% load i18n %}
 
-<p>Naozaj chces odstranit ownera {{ object.name }}?</p>
+{% block title %}
+    {% translate "Delete owner" %}
+{% endblock %}
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Áno</button>
-</form>
+{% block content %}
+    <h1>{% translate 'Delete owner' %}</h1>
 
+    <p>{% blocktranslate with owner=object.name %}Are you sure you want to delete owner {{ owner }}?{% endblocktranslate %}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-danger">{% translate 'Delete' %}</button>
+        <a href="{% url "supplier_list" %}" class="btn btn-secondary">{% translate "Cancel" %}</a>
+    </form>
+{% endblock content %}

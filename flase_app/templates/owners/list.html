@@ -1,27 +1,39 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}
+	{% translate "Owners" %}
+{% endblock %}
+
 {% block content %}
-<table>
-    <thead>
+    <h1>{% translate "Owners" %}</h1>
+
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>{% translate "Name" %}</th>
-            <th>{% translate "Actions" %}</th>
+            <th class="text-end">{% translate "Actions" %}</th>
         </tr>
-    </thead>
+        </thead>
 
-    <tbody>
-        {% for owner in owner_list %}
-        <tr>
-            <td>{{ owner.name }}</td>
-            <td>
-                <a href="{% url 'owner_update' pk=owner.id %}">{% translate "Edit" %}</a>
-                <a href="{% url 'owner_delete' pk=owner.id %}">{% translate "Delete" %}</a>
-            </td>
-        </tr>
+        <tbody>
+        {% for owner in object_list %}
+            <tr>
+                <td>{{ owner.name }}</td>
+                <td class="text-end">
+                    <a href="{% url 'owner_update' pk=owner.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                    <a href="{% url 'owner_delete' pk=owner.id %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> {% translate "Delete" %}
+                    </a>
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<a href="{% url 'owner_create' %}">{% translate "Create owner" %}</a>
+    <a href="{% url 'supplier_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add owner" %}
+    </a>
 {% endblock content %}

@@ -4,16 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flase_app', '0001_initial'),
+        ("flase_app", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='role',
-            field=models.IntegerField(choices=[(0, 'Admin'), (1, 'Editor'), (2, 'Reader')], default=1),
+            model_name="user",
+            name="role",
+            field=models.IntegerField(
+                choices=[(0, "Admin"), (1, "Editor"), (2, "Reader")], default=1
+            ),
             preserve_default=False,
         ),
     ]

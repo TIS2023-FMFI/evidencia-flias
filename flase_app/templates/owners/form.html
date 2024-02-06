@@ -2,15 +2,13 @@
 {% load i18n %}
 
 {% block title %}
-    {% if object %}{% translate 'Edit supplier' %}{% else %}{% translate 'New supplier' %}{% endif %}
+    {% if object %}{% translate 'Edit owner' %}{% else %}{% translate 'New owner' %}{% endif %}
 {% endblock %}
 
 {% block content %}
-    {% if object %}
-        <h1>{% translate 'Edit supplier' %}</h1>
-    {% else %}
-        <h1>{% translate 'New supplier' %}</h1>
-    {% endif %}
+    <h1>
+        {% if object %}{% translate 'Edit owner' %}{% else %}{% translate 'New owner' %}{% endif %}
+    </h1>
 
     <form method="post" class="mt-4">
         {% csrf_token %}
