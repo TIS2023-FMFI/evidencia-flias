@@ -154,22 +154,18 @@ class PressureLogForm(forms.ModelForm):
 
 
 class CylinderFilterForm(forms.Form):
-    gas = forms.ModelChoiceField(queryset=Gas.objects.all(), required=False)
-    owner = forms.ModelChoiceField(queryset=Owner.objects.all(), required=False)
-    volume = forms.DecimalField(required=False)
-    supplier = forms.ModelChoiceField(queryset=Supplier.objects.all(), required=False)
-    location = forms.ModelChoiceField(queryset=Location.objects.all(), required=False)
+    query = forms.CharField(label=_("Search query"), required=False)
+    gas = forms.ModelChoiceField(queryset=Gas.objects.get_queryset(), required=False, label=_("Gas"))
+    owner = forms.ModelChoiceField(queryset=Owner.objects.get_queryset(), required=False, label=_("Owner"))
+    volume = forms.DecimalField(required=False, label=_("Volume"))
+    supplier = forms.ModelChoiceField(queryset=Supplier.objects.get_queryset(), required=False, label=_("Supplier"))
+    location = forms.ModelChoiceField(queryset=Location.objects.get_queryset(), required=False, label=_("Location"))
     status = forms.ChoiceField(
-        choices=[(True, "Connected"), (False, "Not Connected")],
+        choices=[("", "---------"), ("c", _("Connected")), ("d", _("Disconnected"))],
         required=False,
         widget=forms.Select(),
+        label=_("Status"),
     )
-
-    def __init__(self, *args, **kwargs):
-        super(CylinderFilterForm, self).__init__(*args, **kwargs)
-        self.fields["status"].choices = [
-            ("", "Any"),
-        ] + list(self.fields["status"].choices)[1:]
 
 
 class CylinderLifeForm2(forms.ModelForm):

@@ -88,13 +88,16 @@ class Supplier(models.Model):
 class Building(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.name
+
 
 class Workplace(models.Model):
     name = models.CharField(max_length=128)
     building = models.ForeignKey(Building, on_delete=models.RESTRICT)
 
     def __str__(self):
-        return f"{self.building.name} / {self.name}"
+        return f"{self.name}, {self.building.name}"
 
 
 class Location(models.Model):
@@ -102,6 +105,9 @@ class Location(models.Model):
     workplace = models.ForeignKey(Workplace, on_delete=models.RESTRICT)
     person_responsible = models.CharField(max_length=128)
     # TODO: manometer?
+
+    def __str__(self):
+        return f"{self.name}, {self.workplace.name}, {self.workplace.building.name}"
 
 
 class Cylinder(models.Model):

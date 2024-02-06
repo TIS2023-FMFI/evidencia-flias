@@ -1,7 +1,7 @@
 from django.urls import path
 
 from flase_app import views
-from flase_app.views import CylinderLifeListView, CylinderListView
+from flase_app.views.cylinder import CylinderListView
 from flase_app.views.owner import (
     OwnerListView,
     OwnerCreateView,
@@ -42,7 +42,6 @@ urlpatterns = [
     ),
     path("suppliers/create/", SupplierCreateView.as_view(), name="supplier_create"),
     #
-    path("cylinders/", CylinderLifeListView.as_view(), name="cylinder_list"),
     path("cylinders/", CylinderListView.as_view(), name="cylinder_list"),
     path(
         "cylinders/create", views.CylinderCreateView.as_view(), name="cylinder_create"
