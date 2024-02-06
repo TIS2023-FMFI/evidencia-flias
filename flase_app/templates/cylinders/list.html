@@ -1,40 +1,78 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate "Cylinders" %}
+{% endblock %}
 
 {% block content %}
 
-<!-- Filtrovací formulár -->
-<form method="get" class="form-inline">
-    {{ filter_form.as_p }}
-    <button type="submit" class="btn btn-primary">Filtrovať</button>
-    <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">Reset</a>
-</form>
+    {# TODO: improve filter form #}
 
-<table>
-    <thead>
-        <tr>
-            <th>Barcode</th>
-            <th>Owner</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+    <form method="get" class="form-inline">
+        {{ filter_form.as_p }}
+        <button type="submit" class="btn btn-primary">Filtrovať</button>
+        <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">Reset</a>
+    </form>
 
-    <tbody>
-        {% for cylinder in cylinder_list %}
-        <tr>
-            <td>{{ cylinder.barcode }}</td>
-            <td>{{ cylinder.owner.name }}</td>
-            <td>
-                <a href="{% url 'cylinder_update' pk=cylinder.id %}">Edit</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">No cylinders found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <h1>{% translate "Cylinders" %}</h1>
 
-<a href="{% url 'cylinder_create' %}">Add Cylinder</a>
+    {# TODO: responsive table #}
 
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr class="text-nowrap">
+                <th>{% translate "Barcode" %}</th>
+                <th>{% translate "Gas" %}</th>
+                <th>{% translate "Volume" %}</th>
+                <th>{% translate "Current pressure" %}</th>
+                <th>{% translate "Current location" %}</th>
+                <th>{% translate "Owner" %}</th>
+                <th>{% translate "Supplier" %}</th>
+                <th>{% translate "Note" %}</th>
+                {#        <th>{% translate "" %}</th>#}
+                <th class="text-end">{% translate "Actions" %}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for life in object_list %}
+                <tr>
+                    <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
+                    <td class="text-nowrap">{{ life.gas }}</td>
+                    <td class="text-nowrap">{{ life.volume }} ℓ</td>
+                    <td class="text-nowrap">
+                        {{ life.pressure }} bar
+                        <div class="fw-light text-muted">TODO: date</div>
+                    </td>
+                    <td class="text-nowrap">
+                        {{ life.location }}
+
+                        {% if life.is_connected %}
+                        <div class="text-success">{% translate "Connected" %}</div>
+                        {% else %}
+                        <div class="text-danger">{% translate "Disconnected" %}</div>
+                        {% endif %}
+                    </td>
+                    <td class="text-nowrap">{{ life.cylinder.owner }}</td>
+                    <td class="text-nowrap">{{ life.supplier }}</td>
+                    <td class="text-sm">{{ life.note }}</td>
+                    <td class="text-end">
+                        {#                <a href="{% url 'owner_update' pk=owner.id %}" class="btn btn-sm btn-primary">#}
+                        {#                    <i class="bi bi-pencil"></i> {% translate "Edit" %}#}
+                        {#                </a>#}
+                        {#                <a href="{% url 'owner_delete' pk=owner.id %}" class="btn btn-sm btn-danger">#}
+                        {#                    <i class="bi bi-trash"></i> {% translate "Delete" %}#}
+                        {#                </a>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{% url 'cylinder_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+    </a>
 {% endblock content %}
