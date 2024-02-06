@@ -1,32 +1,42 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate "Users" %}
+{% endblock %}
 
 {% block content %}
+    <h1>{% translate "Users" %}</h1>
 
-<table>
-    <thead>
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <th>Name</th>
-            <th>E-mail</th>
-			<th>Role</th>
-			<th>Is Active ?</th>
+            <th>{% translate "Name" %}</th>
+            <th>{% translate "Email address" %}</th>
+            <th>{% translate "Role" %}</th>
+            <th>{% translate "Status" %}</th>
+            <th class="text-end">{% translate "Actions" %}</th>
         </tr>
-    </thead>
+        </thead>
 
-    <tbody>
-        {% for user in user_list %}
-        <tr>
-            <td>{{ user.username }}</td>
-			<td>{{ user.email }}</td>
-			<td>{{ user.role }}</td>
-			<td>{{ user.is_active }}</td>
-            <td>
-                <a href="{% url 'user_update' pk=user.id %}">Edit</a>
-            </td>
-        </tr>
+        <tbody>
+        {% for user in object_list %}
+            <tr>
+                <td>{{ user.get_full_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.get_role_display }}</td>
+                <td>{% if user.is_active %}{% translate "Active" %}{% else %}{% translate "Inactive" %}{% endif %}</td>
+                <td class="text-end">
+                    <a href="{% url 'user_update' pk=user.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<a href="{% url 'user_create' %}">Add User</a>
-
+    <a href="{% url 'user_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add user" %}
+    </a>
 {% endblock content %}

@@ -1,5 +1,6 @@
 from django.urls import path
 
+import flase_app.views.user
 from flase_app import views
 from flase_app.views import CylinderLifeListView, CylinderListView
 from flase_app.views.owner import OwnerListView, OwnerCreateView, OwnerUpdateView, \
@@ -11,12 +12,13 @@ urlpatterns = [
     path("owners/create/", OwnerCreateView.as_view(), name="owner_create"),
     path("owners/<int:pk>/", OwnerUpdateView.as_view(), name="owner_update"),
     path("owners/<int:pk>/delete/", OwnerDeleteView.as_view(), name="owner_delete"),
+    # Users
+    path("users/", flase_app.views.user.UserListView.as_view(), name="user_list"),
+    path("users/<int:pk>/", flase_app.views.user.UserUpdateView.as_view(), name="user_update"),
+    path("users/<int:pk>/disable/", flase_app.views.user.UserDisableView.as_view(), name="user_disable"),
+    path("users/create/", flase_app.views.user.UserCreateView.as_view(), name="user_create"),
     #
     path('cylinders/', CylinderListView.as_view(), name='cylinder_list'),
-    path("users/", views.UserListView.as_view(), name="user_list"),
-    path("users/<int:pk>/", views.UserUpdateView.as_view(), name="user_update"),
-    path("users/<int:pk>/disable/", views.UserDisableView.as_view(), name="user_disable"),
-    path("users/create/", views.UserCreateView.as_view(), name="user_create"),
     path("suppliers/", views.SupplierListView.as_view(), name="supplier_list"),
     path("suppliers/<int:pk>/", views.SupplierUpdateView.as_view(), name="supplier_update"),
     path("suppliers/<int:pk>/delete/", views.SupplierDeleteView.as_view(), name="supplier_delete"),

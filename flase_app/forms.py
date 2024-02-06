@@ -19,20 +19,41 @@ class OwnerForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), required=False, help_text=_("Leave empty if you want to keep the current password."), label=_("Password"))
+
+    field_order = ["first_name", "last_name", "email", "password", "role", "is_active"]
+
     class Meta:
         model = User
-        fields = ["username","password", "email", "role", "is_active"]
-        widgets = {
-            'password': forms.PasswordInput(),
-            'email': forms.EmailInput(),
-            }
+        fields = ["first_name", "last_name", "email", "role", "is_active"]
         labels = {
+            "first_name": _("First name"),
+            "last_name": _("Last name"),
+            "email": _("Email address"),
             "role": _("Role"),
-            "username": _("Username"),
-            "password": _("Password"),
-            "email": _("Email"),
-            "is_active": _("Is Active"),
+            "is_active": _("Active"),
         }
+
+        help_texts = {
+            "is_active": _("Use this to disable users. An inactive user cannot log in."),
+        }
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        if not kwargs.get("instance"):
+            self.fields["password"].required = True
+            self.fields["password"].help_text = ""
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get("password")
+        if password:
+            user.set_password(password)
+        if commit:
+            user.save()
+        return user
+
 
 
 class SupplierForm(forms.ModelForm):

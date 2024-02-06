@@ -6,39 +6,9 @@ from django.utils.functional import cached_property
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 
-from flase_app.forms import SupplierForm, UserForm, CylinderLifeForm, \
+from flase_app.forms import SupplierForm, CylinderLifeForm, \
     PressureLogForm, CylinderFilterForm, CylinderLifeForm2
-from flase_app.models import Supplier, CylinderLife, User, Cylinder
-
-
-class UserListView(LoginRequiredMixin, ListView):
-    model = User
-    template_name = "users/list.html"
-
-
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    template_name = "users/update.html"
-    form_class = UserForm
-
-    def get_success_url(self):
-        return reverse("user_list")
-
-
-class UserCreateView(LoginRequiredMixin, CreateView):
-    template_name = "users/update.html"
-    form_class = UserForm
-
-    def get_success_url(self):
-        return reverse("user_list")
-
-
-class UserDisableView(LoginRequiredMixin, DeleteView):
-    model = User
-    template_name = "users/disable.html"
-
-    def get_success_url(self):
-        return reverse("user_list")
+from flase_app.models import Supplier, CylinderLife, Cylinder
 
 
 class SupplierListView(LoginRequiredMixin, ListView):
