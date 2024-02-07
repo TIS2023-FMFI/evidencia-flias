@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate "Workplaces" %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% translate "Workplaces" %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% translate "Name" %}</th>
+            <td>{% translate "Building" %}</td>
+            <th class="text-end">{% translate "Actions" %}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for workplace in object_list %}
+            <tr>
+                <td>{{ workplace.name }}</td>
+                <td>{{ workplace.building.name }}</td>
+                <td class="text-end">
+                    <a href="{% url 'workplace_update' pk=workplace.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                    <a href="{% url 'workplace_delete' pk=workplace.id %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> {% translate "Delete" %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'workplace_new' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add workplace" %}
+    </a>
+{% endblock content %}

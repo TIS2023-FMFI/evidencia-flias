@@ -38,9 +38,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Role(models.IntegerChoices):
-        ADMIN = 0, _("Admin")
+        READER = 0, _("Reader")
         EDITOR = 1, _("Editor")
-        READER = 2, _("Reader")
+        OPERATOR = 2, _("Operator")
+        ADMIN = 3, _("Administrator")
 
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
@@ -88,13 +89,16 @@ class Supplier(models.Model):
 class Building(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.name
+
 
 class Workplace(models.Model):
     name = models.CharField(max_length=128)
     building = models.ForeignKey(Building, on_delete=models.RESTRICT)
 
     def __str__(self):
-        return f"{self.building.name} / {self.name}"
+        return f"{self.name}, {self.building.name}"
 
 
 class Location(models.Model):
@@ -102,6 +106,9 @@ class Location(models.Model):
     workplace = models.ForeignKey(Workplace, on_delete=models.RESTRICT)
     person_responsible = models.CharField(max_length=128)
     # TODO: manometer?
+
+    def __str__(self):
+        return f"{self.name}, {self.workplace.name}, {self.workplace.building.name}"
 
 
 class Cylinder(models.Model):
@@ -111,6 +118,7 @@ class Cylinder(models.Model):
 
 class Gas(models.Model):
     name = models.CharField(max_length=128)
+    note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name

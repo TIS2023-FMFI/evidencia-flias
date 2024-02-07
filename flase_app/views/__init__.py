@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.functional import cached_property
+
 from django.views.generic import ListView, UpdateView, CreateView
 import csv
 from django.http import HttpResponse
@@ -11,8 +12,7 @@ from datetime import datetime
 from flase_app.forms import (
     CylinderLifeForm,
     PressureLogForm,
-    CylinderFilterForm,
-    CylinderLifeForm2,
+    CylinderLifeForm2, CylinderFilterForm,
 )
 from flase_app.models import CylinderLife, Cylinder
 
@@ -53,12 +53,12 @@ class CylinderLifeListView(ListView):
             headers={"Content-Disposition": 'attachment; filename=' + filename},
         )
 
+        if not queryset:
+            return response
+
         writer = csv.writer(response)
         writer.writerow(
             ["Row number", "Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
-
-        if not queryset:
-            return response
 
         for index, obj in enumerate(queryset):
             writer.writerow([

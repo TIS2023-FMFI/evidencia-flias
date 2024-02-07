@@ -11,8 +11,37 @@ from flase_app.models import (
     CylinderChange,
     Location,
     Gas,
+    Workplace,
+    Building,
 )
 
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ["name", "workplace", "person_responsible"]
+        labels = {
+            "name": _("Name"),
+            "workplace": _("Workplace"),
+            "person_responsible": _("Person responsible"),
+        }
+
+class BuildingForm(forms.ModelForm):
+    class Meta:
+        model = Building
+        fields = ["name"]
+        labels = {
+            "name": _("Name"),
+        }
+
+class WorkplaceForm(forms.ModelForm):
+    class Meta:
+        model = Workplace
+        fields = ["name", "building"]
+        labels = {
+            "name": _("Name"),
+            "building": _("Building"),
+        }
 
 class OwnerForm(forms.ModelForm):
     class Meta:
@@ -154,22 +183,18 @@ class PressureLogForm(forms.ModelForm):
 
 
 class CylinderFilterForm(forms.Form):
-    gas = forms.ModelChoiceField(queryset=Gas.objects.all(), required=False)
-    owner = forms.ModelChoiceField(queryset=Owner.objects.all(), required=False)
-    volume = forms.DecimalField(required=False)
-    supplier = forms.ModelChoiceField(queryset=Supplier.objects.all(), required=False)
-    location = forms.ModelChoiceField(queryset=Location.objects.all(), required=False)
+    query = forms.CharField(label=_("Search query"), required=False)
+    gas = forms.ModelChoiceField(queryset=Gas.objects.get_queryset(), required=False, label=_("Gas"))
+    owner = forms.ModelChoiceField(queryset=Owner.objects.get_queryset(), required=False, label=_("Owner"))
+    volume = forms.DecimalField(required=False, label=_("Volume"))
+    supplier = forms.ModelChoiceField(queryset=Supplier.objects.get_queryset(), required=False, label=_("Supplier"))
+    location = forms.ModelChoiceField(queryset=Location.objects.get_queryset(), required=False, label=_("Location"))
     status = forms.ChoiceField(
-        choices=[(True, "Connected"), (False, "Not Connected")],
+        choices=[("", "---------"), ("c", _("Connected")), ("d", _("Disconnected"))],
         required=False,
         widget=forms.Select(),
+        label=_("Status"),
     )
-
-    def __init__(self, *args, **kwargs):
-        super(CylinderFilterForm, self).__init__(*args, **kwargs)
-        self.fields["status"].choices = [
-            ("", "Any"),
-        ] + list(self.fields["status"].choices)[1:]
 
 
 class CylinderLifeForm2(forms.ModelForm):
@@ -201,3 +226,9 @@ class CylinderLifeForm2(forms.ModelForm):
         # we should not save if commit=False, but there is no good way to indicate
         # that there are multiple models changed to the caller, so we save it anyway
         return life
+
+
+class GasForm(forms.ModelForm):
+    class Meta:
+        model = Gas
+        fields = ["name", "note"]

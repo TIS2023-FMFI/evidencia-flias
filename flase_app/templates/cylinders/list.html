@@ -1,40 +1,101 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Cylinders" %}
+{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+    <h1>{% translate "Cylinders" %}</h1>
 
-<!-- Filtrovací formulár -->
-<form method="get" class="form-inline">
-    {{ filter_form.as_p }}
-    <button type="submit" class="btn btn-primary">Filtrovať</button>
-    <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">Reset</a>
-</form>
+    <div class="card my-4">
+        <div class="card-header">
+            {% translate "Filters" %}
+        </div>
+        <div class="card-body">
+            <form method="get" class="row">
+                
+                <div class="col-12 mb-3">
+                    <label for="query" class="form-label">{% translate "Search" %}</label>
+                    <input type="text" class="form-control" id="query" name="query" placeholder="{% translate 'Search for bottles...' %}" value="{{ filter_form.query.value|default_if_none:'' }}">
+                </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Barcode</th>
-            <th>Owner</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+                
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.gas.label_tag }}
+                    {{ filter_form.gas }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.volume.label_tag }}
+                    {{ filter_form.volume }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.owner.label_tag }}
+                    {{ filter_form.owner }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.supplier.label_tag }}
+                    {{ filter_form.supplier }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.location.label_tag }}
+                    {{ filter_form.location }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ filter_form.status.label_tag }}
+                    {{ filter_form.status }}
+                </div>
+                
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">{% translate "Filter" %}</button>
+                    <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">{% translate "Reset" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <tbody>
-        {% for cylinder in cylinder_list %}
-        <tr>
-            <td>{{ cylinder.barcode }}</td>
-            <td>{{ cylinder.owner.name }}</td>
-            <td>
-                <a href="{% url 'cylinder_update' pk=cylinder.id %}">Edit</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">No cylinders found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
-<a href="{% url 'cylinder_create' %}">Add Cylinder</a>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr class="text-nowrap">
+                <th>{% translate "Barcode" %}</th>
+                <th>{% translate "Gas" %}</th>
+                <th>{% translate "Volume" %}</th>
+                <th>{% translate "Current pressure" %}</th>
+                <th>{% translate "Current location" %}</th>
+                <th>{% translate "Owner" %}</th>
+                <th>{% translate "Supplier" %}</th>
+                <th>{% translate "Note" %}</th>
+                <th class="text-end">{% translate "Actions" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for life in object_list %}
+                <tr>
+                    <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
+                    <td class="text-nowrap">{{ life.gas }}</td>
+                    <td class="text-nowrap">{{ life.volume }} ℓ</td>
+                    <td class="text-nowrap">{{ life.pressure }} bar</td>
+                    <td class="text-nowrap">{{ life.location }}</td>
+                    <td class="text-nowrap">{{ life.cylinder.owner }}</td>
+                    <td class="text-nowrap">{{ life.supplier }}</td>
+                    <td class="text-sm">{{ life.note }}</td>
+                    <td class="text-end">
+                        <a href="{% url 'cylinder_detail' life.cylinder.id %}" class="btn btn-sm btn-primary">
+                             <i class="bi bi-eye"></i> {% translate "Detail" %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    <a href="{% url 'cylinder_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+    </a>
+</div>
 {% endblock content %}

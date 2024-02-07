@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Detail fľaše{% endblock %}
+
+{% block content %}
+<style>
+    .detail-heading {
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+    .detail-label {
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .detail-value {
+        display: inline;
+    }
+    .detail-row {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="detail-heading">{{ cylinder_life.cylinder.barcode }}</h1>
+        <a href="{% url 'cylinder_edit' cylinder_life.cylinder.id %}" class="btn btn-primary">Edit properties</a>
+    </div>
+            <hr>
+            <div class="detail-row"><span class="detail-label">Gas:</span><span class="detail-value">{{ cylinder_life.gas }}</span></div>
+            <div class="detail-row"><span class="detail-label">Volume:</span><span class="detail-value">{{ cylinder_life.volume }} ℓ</span></div>
+            <div class="detail-row"><span class="detail-label">Current pressure:</span><span class="detail-value">{{ cylinder_life.pressure }} bar</span></div>
+            <div class="detail-row"><span class="detail-label">Location:</span><span class="detail-value">{{ cylinder_life.location }}</span></div>
+            <div class="detail-row"><span class="detail-label">Owner:</span><span class="detail-value">{{ cylinder_life.cylinder.owner }}</span></div>
+            <div class="detail-row"><span class="detail-label">Supplier:</span><span class="detail-value">{{ cylinder_life.supplier }}</span></div>
+            <div class="detail-row"><span class="detail-label">Note:</span><span class="detail-value">{{ cylinder_life.note }}</span></div>
+        </div>
+    <div class="history-section">
+        <h2>{% translate "History" %}</h2>
+        <ul>
+            {% for change in history %}
+                <li>
+                    <strong>{{ change.timestamp|date:"Y-m-d H:i" }}</strong> - 
+                    {% if change.pressure %}{% translate "Pressure:" %} {{ change.pressure }} bar, {% endif %}
+                    {% if change.location %}{% translate "Location:" %} {{ change.location.name }}, {% endif %}
+                    {% if change.is_connected is not None %}{% translate "Connected:" %} {{ change.is_connected|yesno:"Yes,No" }}, {% endif %}
+                    {% if change.note %}{% translate "Note:" %} {{ change.note }}, {% endif %}
+                    {% translate "Edited by:" %} {{ change.user.get_full_name }}
+                </li>
+            {% empty %}
+                <li>{% translate "No history available." %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
