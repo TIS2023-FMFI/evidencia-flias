@@ -11,8 +11,37 @@ from flase_app.models import (
     CylinderChange,
     Location,
     Gas,
+    Workplace,
+    Building,
 )
 
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ["name", "workplace", "person_responsible"]
+        labels = {
+            "name": _("Name"),
+            "workplace": _("Workplace"),
+            "person_responsible": _("Person responsible"),
+        }
+
+class BuildingForm(forms.ModelForm):
+    class Meta:
+        model = Building
+        fields = ["name"]
+        labels = {
+            "name": _("Name"),
+        }
+
+class WorkplaceForm(forms.ModelForm):
+    class Meta:
+        model = Workplace
+        fields = ["name", "building"]
+        labels = {
+            "name": _("Name"),
+            "building": _("Building"),
+        }
 
 class OwnerForm(forms.ModelForm):
     class Meta:
