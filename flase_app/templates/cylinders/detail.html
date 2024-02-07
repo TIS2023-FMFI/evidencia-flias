@@ -25,16 +25,19 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="detail-heading">{{ cylinder_life.cylinder.barcode }}</h1>
-        <a href="{% url 'cylinder_edit' cylinder_life.cylinder.id %}" class="btn btn-primary">Edit properties</a>
+		<div class="d-flex">
+		  <a href="{% url 'cylinder_edit' cylinder_life.cylinder.id %}" class="btn btn-primary" style="margin-right: 5px;">{% translate "Edit Properties" %}</a>
+		  <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}" class="btn btn-danger">{% translate "Log Pressure" %}</a>
+		</div>
     </div>
             <hr>
-            <div class="detail-row"><span class="detail-label">Gas:</span><span class="detail-value">{{ cylinder_life.gas }}</span></div>
-            <div class="detail-row"><span class="detail-label">Volume:</span><span class="detail-value">{{ cylinder_life.volume }} ℓ</span></div>
-            <div class="detail-row"><span class="detail-label">Current pressure:</span><span class="detail-value">{{ cylinder_life.pressure }} bar</span></div>
-            <div class="detail-row"><span class="detail-label">Location:</span><span class="detail-value">{{ cylinder_life.location }}</span></div>
-            <div class="detail-row"><span class="detail-label">Owner:</span><span class="detail-value">{{ cylinder_life.cylinder.owner }}</span></div>
-            <div class="detail-row"><span class="detail-label">Supplier:</span><span class="detail-value">{{ cylinder_life.supplier }}</span></div>
-            <div class="detail-row"><span class="detail-label">Note:</span><span class="detail-value">{{ cylinder_life.note }}</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Gas:" %}</span><span class="detail-value">{{ cylinder_life.gas }}</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Volume:" %}</span><span class="detail-value">{{ cylinder_life.volume }} ℓ</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Current pressure:" %}</span><span class="detail-value">{{ cylinder_life.pressure }} bar</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Location:" %}</span><span class="detail-value">{{ cylinder_life.location }}</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Owner:" %}</span><span class="detail-value">{{ cylinder_life.cylinder.owner }}</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Supplier:" %}</span><span class="detail-value">{{ cylinder_life.supplier }}</span></div>
+            <div class="detail-row"><span class="detail-label">{% translate "Note:" %}</span><span class="detail-value">{{ cylinder_life.note }}</span></div>
         </div>
     <div class="history-section">
         <h2>{% translate "History" %}</h2>
