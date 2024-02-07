@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate "Buildings" %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% translate "Buildings" %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% translate "Name" %}</th>
+            <th class="text-end">{% translate "Actions" %}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for building in object_list %}
+            <tr>
+                <td>{{ building.name }}</td>
+                <td class="text-end">
+                    <a href="{% url 'building_update' pk=building.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                    <a href="{% url 'building_delete' pk=building.id %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> {% translate "Delete" %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'building_new' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add building" %}
+    </a>
+{% endblock content %}

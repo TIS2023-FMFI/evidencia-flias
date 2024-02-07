@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate "Locations" %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% translate "Locations" %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% translate "Name" %}</th>
+            <td>{% translate "Workplace" %}</td>
+            <td>{% translate "Person responsible" %}</td>
+            <th class="text-end">{% translate "Actions" %}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for location in object_list %}
+            <tr>
+                <td>{{ location.name }}</td>
+                <td>{{ location.workplace.name }}</td>
+                <td>{{ location.person_responsible }}</td>
+                <td class="text-end">
+                    <a href="{% url 'location_update' pk=location.id %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> {% translate "Edit" %}
+                    </a>
+                    <a href="{% url 'location_delete' pk=location.id %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> {% translate "Delete" %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'location_new' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add location" %}
+    </a>
+{% endblock content %}
