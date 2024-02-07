@@ -93,7 +93,7 @@
                     <td class="text-nowrap">{{ life.supplier }}</td>
                     <td class="text-sm">{{ life.note }}</td>
                     <td class="text-end">
-                        <a href="{% url 'cylinder_detail' life.cylinder.id %}" class="btn btn-sm btn-primary">
+                        <a href="{% url 'cylinder_life_detail' life.id %}" class="btn btn-sm btn-primary">
                              <i class="bi bi-eye"></i> {% translate "Detail" %}
                         </a>
                     </td>

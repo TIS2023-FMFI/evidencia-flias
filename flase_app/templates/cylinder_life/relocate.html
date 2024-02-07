@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% translate 'Change cylinder location' %}</h1>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {% include "forms/form.html" %}
+        <div class="row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">{% translate 'Save' %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

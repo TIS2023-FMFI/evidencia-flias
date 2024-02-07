@@ -7,10 +7,11 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>{{ cylinder_life.cylinder.barcode }}</h1>
         <div class="d-flex">
-            <a href="{% url 'cylinder_edit' cylinder_life.cylinder.id %}" class="btn btn-primary"
-               style="margin-right: 5px;">{% translate "Edit Properties" %}</a>
-            <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}"
-               class="btn btn-danger">{% translate "Log Pressure" %}</a>
+            {% if user.role >= user.Role.OPERATOR %}
+            <a href="{% url 'cylinder_life_update' cylinder_life.id %}" class="btn btn-primary">{% translate "Edit properties" %}</a>
+            <a href="{% url 'cylinder_life_relocate' cylinder_life.id %}" class="btn btn-warning">{% translate "Change location" %}</a>
+            {% endif %}
+            <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}" class="btn btn-danger">{% translate "Log pressure" %}</a>
         </div>
     </div>
     <hr>

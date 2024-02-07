@@ -52,22 +52,21 @@ urlpatterns = [
         "cylinders/create/", views.CylinderCreateView.as_view(), name="cylinder_create"
     ),
     path(
-        "cylinders/<int:pk>/",
-        views.CylinderUpdateView.as_view(),
-        name="cylinder_update",
-    ),
-    path(
         "cylinders/life/<int:pk>/pressure/manual/",
         views.PressureLogView.as_view(),
         name="cylinder_life_pressure",
     ),
     path(
         "cylinders/life/<int:pk>/edit/",
-        views.CylinderLifeUpdateView.as_view(),
+        cylinder.CylinderLifeUpdateView.as_view(),
         name="cylinder_life_update",
     ),
-    path('cylinders/detail/<int:pk>/', cylinder.CylinderDetailView.as_view(), name='cylinder_detail'),
-    path('cylinders/edit/<int:pk>/', cylinder.CylinderUpdateView.as_view(), name='cylinder_edit'),
+    path(
+        "cylinders/life/<int:pk>/relocate/",
+        cylinder.CylinderLifeRelocateView.as_view(),
+        name="cylinder_life_relocate",
+    ),
+    path('cylinders/life/<int:pk>/', cylinder.CylinderLifeDetailView.as_view(), name='cylinder_life_detail'),
     # Gas
     path('gasses/', GasListView.as_view(), name='gas_list'),
     path('gasses/new/', GasCreateView.as_view(), name='gas_new'),
