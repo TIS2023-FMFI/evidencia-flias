@@ -53,12 +53,12 @@ class CylinderLifeListView(ListView):
             headers={"Content-Disposition": 'attachment; filename=' + filename},
         )
 
-        if not queryset:
-            return response
-
         writer = csv.writer(response)
         writer.writerow(
             ["Row number", "Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
+
+        if not queryset:
+            return response
 
         for index, obj in enumerate(queryset):
             writer.writerow([
