@@ -46,7 +46,7 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                
+
                 <div class="col-12 text-end">
                     <button type="submit" class="btn btn-primary">{% translate "Filter" %}</button>
                     <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">{% translate "Reset" %}</a>
@@ -54,8 +54,6 @@
             </form>
         </div>
     </div>
-
-
     
     <div class="table-responsive">
         <table class="table table-striped">
@@ -78,7 +76,7 @@
                     <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
                     <td class="text-nowrap">{{ life.gas }}</td>
                     <td class="text-nowrap">{{ life.volume }} ℓ</td>
-                    <td class="text-nowrap">{{ life.pressure }} bar</td>
+                    <td class="text-nowrap">{{ life.pressure|default:"--" }} bar</td>
                     <td class="text-nowrap">{{ life.location }}</td>
                     <td class="text-nowrap">{{ life.cylinder.owner }}</td>
                     <td class="text-nowrap">{{ life.supplier }}</td>
@@ -96,6 +94,11 @@
 
     <a href="{% url 'cylinder_create' %}" class="btn btn-success">
         <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+    </a>
+
+    <a href="{% url "cylinder_export" %}?{{ request.GET.urlencode }}" class="btn btn-secondary">
+        <i class="bi bi-download"></i>
+        {% translate "Export as CSV" %}
     </a>
 </div>
 {% endblock content %}
