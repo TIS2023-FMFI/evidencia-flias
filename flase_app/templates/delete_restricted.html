@@ -9,4 +9,6 @@
     <h1>{% translate 'Deletion failed' %}</h1>
 
     <p>{% blocktranslate %}Failed to delete selected object. Check that there are no other related objects that prevent the deletion.{% endblocktranslate %}</p>
+
+    <a href="{{ success_url }}" class="btn btn-primary">{% translate "Back" %}</a>
 {% endblock content %}

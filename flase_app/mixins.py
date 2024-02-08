@@ -35,4 +35,4 @@ class RestrictedDeleteView(DeleteView):
         try:
             return super().form_valid(form)
         except RestrictedError:
-            return render(self.request, "delete_restricted.html")
+            return render(self.request, "delete_restricted.html", {"success_url": self.get_success_url()})
