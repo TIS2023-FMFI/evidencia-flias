@@ -1,8 +1,8 @@
 from django.urls import reverse
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import OwnerForm
-from flase_app.mixins import AdminRequiredMixin
+from flase_app.mixins import AdminRequiredMixin, RestrictedDeleteView
 from flase_app.models import Owner
 
 
@@ -28,7 +28,7 @@ class OwnerCreateView(AdminRequiredMixin, CreateView):
         return reverse("owner_list")
 
 
-class OwnerDeleteView(AdminRequiredMixin, DeleteView):
+class OwnerDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Owner
     template_name = "owners/delete.html"
 

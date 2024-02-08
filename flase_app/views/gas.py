@@ -1,9 +1,10 @@
 # flase_app/views/gas.py
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import GasForm
+from flase_app.mixins import RestrictedDeleteView
 from flase_app.models import Gas
 
 
@@ -30,7 +31,7 @@ class GasCreateView(LoginRequiredMixin, CreateView):
         return reverse("gas_list")
 
 
-class GasDeleteView(LoginRequiredMixin, DeleteView):
+class GasDeleteView(LoginRequiredMixin, RestrictedDeleteView):
     model = Gas
     template_name = "gasses/delete.html"
 
