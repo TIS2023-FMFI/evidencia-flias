@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from flase_app.forms import WorkplaceForm, BuildingForm, LocationForm
+from flase_app.mixins import RestrictedDeleteView
 from flase_app.models import Workplace, Building, Location
 
 
@@ -29,7 +30,7 @@ class WorkplaceCreateView(LoginRequiredMixin, CreateView):
         return reverse("workplace_list")
 
 
-class WorkplaceDeleteView(LoginRequiredMixin, DeleteView):
+class WorkplaceDeleteView(LoginRequiredMixin, RestrictedDeleteView):
     model = Workplace
     template_name = "places/workplaces_delete.html"
 
@@ -59,7 +60,7 @@ class BuildingCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("building_list")
 
-class BuildingDeleteView(LoginRequiredMixin, DeleteView):
+class BuildingDeleteView(LoginRequiredMixin, RestrictedDeleteView):
     model = Building
     template_name = "places/buildings_delete.html"
 
@@ -90,7 +91,7 @@ class LocationCreateView(LoginRequiredMixin, CreateView):
         return reverse("location_list")
 
 
-class LocationDeleteView(LoginRequiredMixin, DeleteView):
+class LocationDeleteView(LoginRequiredMixin, RestrictedDeleteView):
     model = Location
     template_name = "places/locations_delete.html"
 
