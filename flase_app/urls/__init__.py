@@ -1,8 +1,7 @@
 from django.urls import path
 from flase_app import views
 
-from flase_app.views.cylinder import CylinderListView, CylinderDetailView, \
-    CylinderUpdateView, CylinderExportView
+from flase_app.views import places, cylinder
 from flase_app.views.gas import (
     GasListView,
     GasCreateView,
@@ -24,7 +23,6 @@ from flase_app.views.supplier import (
 from flase_app.views.user import (
     UserListView,
     UserUpdateView,
-    UserDisableView,
     UserCreateView,
 )
 
@@ -37,7 +35,6 @@ urlpatterns = [
     # Users
     path("users/", UserListView.as_view(), name="user_list"),
     path("users/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
-    path("users/<int:pk>/disable/", UserDisableView.as_view(), name="user_disable"),
     path("users/create/", UserCreateView.as_view(), name="user_create"),
     # Suppliers
     path("suppliers/", SupplierListView.as_view(), name="supplier_list"),
@@ -49,8 +46,8 @@ urlpatterns = [
     ),
     path("suppliers/create/", SupplierCreateView.as_view(), name="supplier_create"),
     # Cylinder
-    path("cylinders/", CylinderListView.as_view(), name="cylinder_list"),
-    path("cylinders/export/", CylinderExportView.as_view(), name="cylinder_export"),
+    path("cylinders/", cylinder.CylinderListView.as_view(), name="cylinder_list"),
+    path("cylinders/export/", cylinder.CylinderExportView.as_view(), name="cylinder_export"),
     path(
         "cylinders/create/", views.CylinderCreateView.as_view(), name="cylinder_create"
     ),
@@ -69,11 +66,24 @@ urlpatterns = [
         views.CylinderLifeUpdateView.as_view(),
         name="cylinder_life_update",
     ),
-    path('cylinders/detail/<int:pk>/', CylinderDetailView.as_view(), name='cylinder_detail'),
-    path('cylinders/edit/<int:pk>/', CylinderUpdateView.as_view(), name='cylinder_edit'),
+    path('cylinders/detail/<int:pk>/', cylinder.CylinderDetailView.as_view(), name='cylinder_detail'),
+    path('cylinders/edit/<int:pk>/', cylinder.CylinderUpdateView.as_view(), name='cylinder_edit'),
     # Gas
     path('gasses/', GasListView.as_view(), name='gas_list'),
     path('gasses/new/', GasCreateView.as_view(), name='gas_new'),
     path('gasses/edit/<int:pk>/', GasUpdateView.as_view(), name='gas_edit'),
     path('gasses/delete/<int:pk>/', GasDeleteView.as_view(), name='gas_delete'),
+    # Places
+    path("places/workplaces/", places.WorkplaceListView.as_view(), name="workplace_list"),
+    path("places/workplaces/create/", places.WorkplaceCreateView.as_view(), name="workplace_create"),
+    path("places/workplaces/<int:pk>/", places.WorkplaceUpdateView.as_view(), name="workplace_update"),
+    path("places/workplaces/<int:pk>/delete/", places.WorkplaceDeleteView.as_view(), name="workplace_delete"),
+    path("places/buildings/", places.BuildingListView.as_view(), name="building_list"),
+    path("places/buildings/create/", places.BuildingCreateView.as_view(), name="building_create"),
+    path("places/buildings/<int:pk>/", places.BuildingUpdateView.as_view(), name="building_update"),
+    path("places/buildings/<int:pk>/delete/", places.BuildingDeleteView.as_view(), name="building_delete"),
+    path("places/locations/", places.LocationListView.as_view(), name="location_list"),
+    path("places/locations/create/", places.LocationCreateView.as_view(), name="location_create"),
+    path("places/locations/<int:pk>/", places.LocationUpdateView.as_view(), name="location_update"),
+    path("places/locations/<int:pk>/delete/", places.LocationDeleteView.as_view(), name="location_delete"),
 ]

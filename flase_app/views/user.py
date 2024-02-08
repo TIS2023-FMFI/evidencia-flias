@@ -26,11 +26,3 @@ class UserCreateView(AdminRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("user_list")
-
-
-class UserDisableView(AdminRequiredMixin, DeleteView):
-    model = User
-    template_name = "users/disable.html"
-
-    def get_success_url(self):
-        return reverse("user_list")

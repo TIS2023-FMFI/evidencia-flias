@@ -1,8 +1,8 @@
 from django.urls import reverse
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import SupplierForm
-from flase_app.mixins import AdminRequiredMixin
+from flase_app.mixins import AdminRequiredMixin, RestrictedDeleteView
 from flase_app.models import Supplier
 
 
@@ -28,7 +28,7 @@ class SupplierCreateView(AdminRequiredMixin, CreateView):
         return reverse("supplier_list")
 
 
-class SupplierDeleteView(AdminRequiredMixin, DeleteView):
+class SupplierDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Supplier
     template_name = "suppliers/delete.html"
 

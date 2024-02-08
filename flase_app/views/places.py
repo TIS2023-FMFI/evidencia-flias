@@ -1,17 +1,17 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import WorkplaceForm, BuildingForm, LocationForm
+from flase_app.mixins import RestrictedDeleteView, AdminRequiredMixin
 from flase_app.models import Workplace, Building, Location
 
 
-class WorkplaceListView(LoginRequiredMixin, ListView):
+class WorkplaceListView(AdminRequiredMixin, ListView):
     model = Workplace
     template_name = "places/workplaces.html"
 
 
-class WorkplaceUpdateView(LoginRequiredMixin, UpdateView):
+class WorkplaceUpdateView(AdminRequiredMixin, UpdateView):
     model = Workplace
     template_name = "places/workplaces_form.html"
     form_class = WorkplaceForm
@@ -20,7 +20,7 @@ class WorkplaceUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("workplace_list")
 
 
-class WorkplaceCreateView(LoginRequiredMixin, CreateView):
+class WorkplaceCreateView(AdminRequiredMixin, CreateView):
     model = Workplace
     template_name = "places/workplaces_form.html"
     form_class = WorkplaceForm
@@ -29,7 +29,7 @@ class WorkplaceCreateView(LoginRequiredMixin, CreateView):
         return reverse("workplace_list")
 
 
-class WorkplaceDeleteView(LoginRequiredMixin, DeleteView):
+class WorkplaceDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Workplace
     template_name = "places/workplaces_delete.html"
 
@@ -37,12 +37,12 @@ class WorkplaceDeleteView(LoginRequiredMixin, DeleteView):
         return reverse("workplace_list")
 
 
-class BuildingListView(LoginRequiredMixin, ListView):
+class BuildingListView(AdminRequiredMixin, ListView):
     model = Building
     template_name = "places/buildings.html"
 
 
-class BuildingUpdateView(LoginRequiredMixin, UpdateView):
+class BuildingUpdateView(AdminRequiredMixin, UpdateView):
     model = Building
     template_name = "places/buildings_form.html"
     form_class = BuildingForm
@@ -51,7 +51,7 @@ class BuildingUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("building_list")
 
 
-class BuildingCreateView(LoginRequiredMixin, CreateView):
+class BuildingCreateView(AdminRequiredMixin, CreateView):
     model = Building
     template_name = "places/buildings_form.html"
     form_class = BuildingForm
@@ -59,7 +59,7 @@ class BuildingCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("building_list")
 
-class BuildingDeleteView(LoginRequiredMixin, DeleteView):
+class BuildingDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Building
     template_name = "places/buildings_delete.html"
 
@@ -67,12 +67,12 @@ class BuildingDeleteView(LoginRequiredMixin, DeleteView):
         return reverse("building_list")
 
 
-class LocationListView(LoginRequiredMixin, ListView):
+class LocationListView(AdminRequiredMixin, ListView):
     model = Location
     template_name = "places/locations.html"
 
 
-class LocationUpdateView(LoginRequiredMixin, UpdateView):
+class LocationUpdateView(AdminRequiredMixin, UpdateView):
     model = Location
     template_name = "places/locations_form.html"
     form_class = LocationForm
@@ -81,7 +81,7 @@ class LocationUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("location_list")
 
 
-class LocationCreateView(LoginRequiredMixin, CreateView):
+class LocationCreateView(AdminRequiredMixin, CreateView):
     model = Location
     template_name = "places/locations_form.html"
     form_class = LocationForm
@@ -90,7 +90,7 @@ class LocationCreateView(LoginRequiredMixin, CreateView):
         return reverse("location_list")
 
 
-class LocationDeleteView(LoginRequiredMixin, DeleteView):
+class LocationDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Location
     template_name = "places/locations_delete.html"
 
