@@ -5,9 +5,6 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 
 from django.views.generic import ListView, UpdateView, CreateView
-import csv
-from django.http import HttpResponse
-from datetime import datetime
 
 from flase_app.forms import (
     CylinderLifeForm,
@@ -15,66 +12,6 @@ from flase_app.forms import (
     CylinderLifeForm2, CylinderFilterForm,
 )
 from flase_app.models import CylinderLife, Cylinder
-
-
-class CylinderLifeListView(ListView):
-    model = CylinderLife
-    template_name = "cylinders/list2.html"
-
-    def get(self, request, *args, **kwargs):
-        barcode = request.session.get('barcode', '')
-        note = request.session.get('note', '')
-        self.object_list = CylinderLife.objects.filter(cylinder__barcode__icontains=barcode,
-                                                       note__icontains=note)
-
-        if request.GET.get('export_csv'):
-            return self.export_csv(self.object_list)
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        barcode = request.POST.get('barcode')
-        note = request.POST.get('note')
-        request.session['barcode'] = barcode
-        request.session['note'] = note
-
-        self.object_list = CylinderLife.objects.filter(cylinder__barcode__icontains=barcode,
-                                                       note__icontains=note)
-
-        return self.render_to_response(self.get_context_data())
-
-    def export_csv(self, queryset):
-        date = datetime.now().date()
-
-        filename = f"export-cylinders-{date}.csv"
-        response = HttpResponse(
-            content_type="text/csv",
-            headers={"Content-Disposition": 'attachment; filename=' + filename},
-        )
-
-        if not queryset:
-            return response
-
-        writer = csv.writer(response)
-        writer.writerow(
-            ["Row number", "Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
-
-        for index, obj in enumerate(queryset):
-            writer.writerow([
-                index,
-                obj.gas.name,
-                obj.cylinder.barcode,
-                obj.cylinder.owner.name,
-                obj.location.name,
-                obj.volume,
-                obj.supplier.name,
-                obj.note,
-            ])
-
-        return response
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class CylinderListView(LoginRequiredMixin, ListView):

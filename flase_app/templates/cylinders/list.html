@@ -54,8 +54,6 @@
             </form>
         </div>
     </div>
-
-
     
     <div class="table-responsive">
         <table class="table table-striped">
@@ -78,7 +76,7 @@
                     <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
                     <td class="text-nowrap">{{ life.gas }}</td>
                     <td class="text-nowrap">{{ life.volume }} ℓ</td>
-                    <td class="text-nowrap">{{ life.pressure }} bar</td>
+                    <td class="text-nowrap">{{ life.pressure|default:"--" }} bar</td>
                     <td class="text-nowrap">{{ life.location }}</td>
                     <td class="text-nowrap">{{ life.cylinder.owner }}</td>
                     <td class="text-nowrap">{{ life.supplier }}</td>
@@ -94,15 +92,13 @@
         </table>
     </div>
 
-    <form method="post">
-        <div class="col-12 text-start">
-            <a href="{% url 'cylinder_create' %}" class="btn btn-success">
-                <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
-            </a>
+    <a href="{% url 'cylinder_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+    </a>
 
-            {% csrf_token %}
-            <button type="submit" id="export" name="export" value="export_csv" class="btn btn-primary">{% translate "Export cylinders" %}</button>
-        </div>
-    </form>
+    <a href="{% url "cylinder_export" %}?{{ request.GET.urlencode }}" class="btn btn-secondary">
+        <i class="bi bi-download"></i>
+        {% translate "Export as CSV" %}
+    </a>
 </div>
 {% endblock content %}

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import ListView
 
 from flase_app.forms import CylinderFilterForm
@@ -12,53 +13,46 @@ from django.http import HttpResponse
 from datetime import datetime
 
 
-class CylinderListView(LoginRequiredMixin, ListView):
-    model = CylinderLife
-    template_name = "cylinders/list.html"
-
-    def search_object(self, qs, query):
+class CylinderQuerySetMixin:
+    def query_filter(self, qs, query):
         search_object = Q(note__icontains=query)
         search_object |= Q(cylinder__barcode__icontains=query)
         search_object |= Q(cylinder__owner__name__contains=query)
         search_object |= Q(supplier__name__contains=query)
         search_object |= Q(gas__name__contains=query)
         search_object |= Q(location__name__contains=query)
-        qs = qs.filter(search_object)
-        return qs
+        return qs.filter(search_object)
 
-    def filter_objects(self, qs, query, gas, owner, volume, supplier, location, status):
+    def filter_objects(self, qs, form):
+        query = form.cleaned_data.get("query")
         if query:
-            qs = self.search_object(qs, query)
+            qs = self.query_filter(qs, query)
+
+        gas = form.cleaned_data.get("gas")
         if gas:
             qs = qs.filter(gas=gas)
+
+        owner = form.cleaned_data.get("owner")
         if owner:
             qs = qs.filter(cylinder__owner=owner)
-        if volume:
+
+        volume = form.cleaned_data.get("volume")
+        if volume is not None:
             qs = qs.filter(volume=volume)
+
+        supplier = form.cleaned_data.get("supplier")
         if supplier:
             qs = qs.filter(supplier=supplier)
+
+        location = form.cleaned_data.get("location")
         if location:
             qs = qs.filter(location=location)
+
+        status = form.cleaned_data.get("status")
         if status:
             qs = qs.filter(is_connected=(status == "c"))
+
         return qs
-
-    def post(self, *args, **kwargs):
-        qs = CylinderLife.objects.filter(is_current=True).select_related("cylinder", "gas", "supplier", "location",
-                                                                         "location__workplace",
-                                                                         "location__workplace__building",
-                                                                         "cylinder__owner")
-
-        query = self.request.session.get('query')
-        gas = self.request.session.get('gas')
-        owner = self.request.session.get('owner')
-        volume = self.request.session.get('volume')
-        supplier = self.request.session.get('supplier')
-        location = self.request.session.get('location')
-        status = self.request.session.get('status')
-
-        qs = self.filter_objects(qs, query, gas, owner, volume, supplier, location, status)
-        return self.export_csv(qs)
 
     def get_queryset(self):
         qs = CylinderLife.objects.filter(is_current=True).select_related("cylinder", "gas", "supplier", "location",
@@ -68,28 +62,22 @@ class CylinderListView(LoginRequiredMixin, ListView):
 
         form = CylinderFilterForm(self.request.GET)
         if form.is_valid():
-            query = form.cleaned_data.get("query")
-
-            gas = form.cleaned_data.get("gas")
-            owner = form.cleaned_data.get("owner")
-            volume = form.cleaned_data.get("volume")
-            supplier = form.cleaned_data.get("supplier")
-            location = form.cleaned_data.get("location")
-            status = form.cleaned_data.get("status")
-
-            qs = self.filter_objects(qs, query, gas, owner, volume, supplier, location, status)
-
-
-            self.request.session['query'] = self.request.GET.get('query')
-            self.request.session['gas'] = self.request.GET.get('gas')
-            self.request.session['owner'] = self.request.GET.get('owner')
-            self.request.session['volume'] = self.request.GET.get('volume')
-            self.request.session['supplier'] = self.request.GET.get('supplier')
-            self.request.session['location'] = self.request.GET.get('location')
-            self.request.session['status'] = self.request.GET.get('status')
+            qs = self.filter_objects(qs, form)
         return qs
 
-    def export_csv(self, queryset):
+
+class CylinderListView(LoginRequiredMixin, CylinderQuerySetMixin, ListView):
+    model = CylinderLife
+    template_name = "cylinders/list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter_form"] = CylinderFilterForm(self.request.GET or None)
+        return context
+
+
+class CylinderExportView(LoginRequiredMixin, CylinderQuerySetMixin, View):
+    def get(self, request, *args, **kwargs):
         date = datetime.now().date()
         filename = f"export-cylinders-{date}.csv"
         response = HttpResponse(
@@ -99,14 +87,11 @@ class CylinderListView(LoginRequiredMixin, ListView):
 
         writer = csv.writer(response)
         writer.writerow(
-            ["Row number", "Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
+            ["Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
 
-        if not queryset:
-            return response
-
-        for index, obj in enumerate(queryset):
+        # TODO: add remaining data
+        for obj in self.get_queryset():
             writer.writerow([
-                index,
                 obj.gas.name,
                 obj.cylinder.barcode,
                 obj.cylinder.owner.name,
@@ -117,12 +102,6 @@ class CylinderListView(LoginRequiredMixin, ListView):
             ])
 
         return response
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["filter_form"] = CylinderFilterForm(self.request.GET or None)
-        return context
 
 
 class CylinderDetailView(DetailView):
