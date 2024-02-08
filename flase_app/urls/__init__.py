@@ -26,10 +26,6 @@ from flase_app.views.user import (
     UserDisableView,
     UserCreateView,
 )
-from flase_app.views.registration import (
-    CustomPasswordChangeView,
-    CustomPasswordChangeDoneView,
-)
 urlpatterns = [
     # Owners
     path("owners/", OwnerListView.as_view(), name="owner_list"),
@@ -77,8 +73,4 @@ urlpatterns = [
     path('gasses/new/', GasCreateView.as_view(), name='gas_new'),
     path('gasses/edit/<int:pk>/', GasUpdateView.as_view(), name='gas_edit'),
     path('gasses/delete/<int:pk>/', GasDeleteView.as_view(), name='gas_delete'),
-    # Registration
-    path('accounts/password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
-    path('accounts/password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
-    
 ]

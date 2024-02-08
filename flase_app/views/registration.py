@@ -8,8 +8,3 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     def get_success_url(self):
         return reverse("password_change_done")
 
-class CustomPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
-    template_name = 'registration/password_change_done.html'
-    
-    def get_success_url(self):
-        return reverse("cylinder_list")
