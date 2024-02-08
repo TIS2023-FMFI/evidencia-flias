@@ -1,6 +1,6 @@
 from django.urls import path
-
 from flase_app import views
+
 from flase_app.views.cylinder import CylinderListView, CylinderDetailView, CylinderUpdateView
 from flase_app.views.gas import (
     GasListView,
@@ -26,7 +26,6 @@ from flase_app.views.user import (
     UserDisableView,
     UserCreateView,
 )
-
 urlpatterns = [
     # Owners
     path("owners/", OwnerListView.as_view(), name="owner_list"),
