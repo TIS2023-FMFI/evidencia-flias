@@ -24,8 +24,6 @@ class CylinderLifeListView(ListView):
     def get(self, request, *args, **kwargs):
         barcode = request.session.get('barcode', '')
         note = request.session.get('note', '')
-        print('barcode: ', barcode)
-        print('note: ', note)
         self.object_list = CylinderLife.objects.filter(cylinder__barcode__icontains=barcode,
                                                        note__icontains=note)
 
@@ -46,7 +44,7 @@ class CylinderLifeListView(ListView):
 
     def export_csv(self, queryset):
         date = datetime.now().date()
-        print('queryset: ', queryset)
+
         filename = f"export-cylinders-{date}.csv"
         response = HttpResponse(
             content_type="text/csv",

@@ -46,7 +46,7 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                
+
                 <div class="col-12 text-end">
                     <button type="submit" class="btn btn-primary">{% translate "Filter" %}</button>
                     <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">{% translate "Reset" %}</a>
@@ -94,8 +94,15 @@
         </table>
     </div>
 
-    <a href="{% url 'cylinder_create' %}" class="btn btn-success">
-        <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
-    </a>
+    <form method="post">
+        <div class="col-12 text-start">
+            <a href="{% url 'cylinder_create' %}" class="btn btn-success">
+                <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+            </a>
+
+            {% csrf_token %}
+            <button type="submit" id="export" name="export" value="export_csv" class="btn btn-primary">{% translate "Export cylinders" %}</button>
+        </div>
+    </form>
 </div>
 {% endblock content %}

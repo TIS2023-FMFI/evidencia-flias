@@ -26,6 +26,7 @@ from flase_app.views.user import (
     UserDisableView,
     UserCreateView,
 )
+
 urlpatterns = [
     # Owners
     path("owners/", OwnerListView.as_view(), name="owner_list"),
