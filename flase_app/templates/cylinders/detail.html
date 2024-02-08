@@ -20,6 +20,16 @@
     .detail-row {
         margin-bottom: 10px;
     }
+    .delivery-table {
+        width: 400px;
+        margin: 20px 0
+    }
+    .delivery-table-row {
+        border: 1px solid black;
+    }
+    .delivery-table-data {
+        padding: 5px 10px;
+    }
 </style>
 
 <div class="container mt-4">
@@ -55,5 +65,24 @@
                 <li>{% translate "No history available." %}</li>
             {% endfor %}
         </ul>
+    </div>
+    <div>
+        <h2>{% translate "Previous deliveries" %}</h2>
+        <table class="delivery-table">
+            {% for delivery in deliveries %}
+                <tr class="delivery-table-row">
+                    <td class="delivery-table-data">
+                        <strong>{{ delivery.gas.name }} ({{ delivery.volume }})</strong> {{ delivery.start_date }} - {{ delivery.end_time }}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>No previous deliveries</td>
+                </tr>
+            {% endfor %}
+        </table>
+       <a href="{% url 'cylinder_create' %}" class="btn btn-success">
+           <i class="bi bi-plus-lg"></i> {% translate "New delivery" %}
+       </a>
     </div>
 {% endblock %}
