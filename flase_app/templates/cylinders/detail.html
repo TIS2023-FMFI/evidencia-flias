@@ -24,7 +24,7 @@
             <dd class="col-sm-7">{{ cylinder_life.volume }} ℓ</dd>
 
             <dt class="col-sm-5">{% translate "Current pressure" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.pressure }} bar</dd>
+            <dd class="col-sm-7">{{ cylinder_life.pressure|default:"--" }} bar</dd>
 
             <dt class="col-sm-5">{% translate "Location" %}</dt>
             <dd class="col-sm-7">{{ cylinder_life.location }}</dd>

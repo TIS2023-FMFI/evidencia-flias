@@ -76,8 +76,19 @@
                     <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
                     <td class="text-nowrap">{{ life.gas }}</td>
                     <td class="text-nowrap">{{ life.volume }} ℓ</td>
-                    <td class="text-nowrap">{{ life.pressure|default:"--" }} bar</td>
-                    <td class="text-nowrap">{{ life.location }}</td>
+                    <td class="text-nowrap">
+                        {{ life.pressure|default:"--" }} bar
+                        <div class="fw-light text-muted">TODO: date</div>
+                    </td>
+                    <td class="text-nowrap">
+                        {{ life.location }}
+
+                        {% if life.is_connected %}
+                        <div class="text-success">{% translate "Connected" %}</div>
+                        {% else %}
+                        <div class="text-danger">{% translate "Disconnected" %}</div>
+                        {% endif %}
+                    </td>
                     <td class="text-nowrap">{{ life.cylinder.owner }}</td>
                     <td class="text-nowrap">{{ life.supplier }}</td>
                     <td class="text-sm">{{ life.note }}</td>
