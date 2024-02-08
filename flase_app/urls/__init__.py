@@ -23,7 +23,6 @@ from flase_app.views.supplier import (
 from flase_app.views.user import (
     UserListView,
     UserUpdateView,
-    UserDisableView,
     UserCreateView,
 )
 
@@ -36,7 +35,6 @@ urlpatterns = [
     # Users
     path("users/", UserListView.as_view(), name="user_list"),
     path("users/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
-    path("users/<int:pk>/disable/", UserDisableView.as_view(), name="user_disable"),
     path("users/create/", UserCreateView.as_view(), name="user_create"),
     # Suppliers
     path("suppliers/", SupplierListView.as_view(), name="supplier_list"),
