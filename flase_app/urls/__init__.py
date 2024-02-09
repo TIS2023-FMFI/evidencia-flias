@@ -1,5 +1,5 @@
-from django.urls import path
 from flase_app import views
+from django.urls import path, include
 
 from flase_app.views import places, cylinder
 from flase_app.views.gas import (
@@ -8,6 +8,7 @@ from flase_app.views.gas import (
     GasUpdateView,
     GasDeleteView
 )
+from flase_app.views.home import HomeRedirectView
 from flase_app.views.owner import (
     OwnerListView,
     OwnerCreateView,
@@ -85,4 +86,6 @@ urlpatterns = [
     path("places/locations/create/", places.LocationCreateView.as_view(), name="location_create"),
     path("places/locations/<int:pk>/", places.LocationUpdateView.as_view(), name="location_update"),
     path("places/locations/<int:pk>/delete/", places.LocationDeleteView.as_view(), name="location_delete"),
+    # Redirect
+    path('', HomeRedirectView.as_view(), name='home'),
 ]
