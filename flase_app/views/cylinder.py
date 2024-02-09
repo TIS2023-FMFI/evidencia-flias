@@ -113,9 +113,8 @@ class CylinderLifeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cylinder_life_id = self.kwargs.get('pk')
-        context['history'] = CylinderChange.objects.filter(life_id=cylinder_life_id).order_by('-timestamp')
-        context['deliveries'] = CylinderLife.objects.filter(id=cylinder_life_id).order_by('-start_date')
+        context['history'] = CylinderChange.objects.filter(life_id=self.object.id).order_by('-timestamp')
+        context['deliveries'] = CylinderLife.objects.filter(cylinder_id=self.object.cylinder.id).order_by('-start_date')
         return context
 
 

@@ -7,10 +7,11 @@ from django.utils.functional import cached_property
 from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import (
-    CylinderLifeForm,
+    CylinderLifeCreateForm,
     PressureLogForm,
     CylinderFilterForm,
 )
+from flase_app.mixins import OperatorRequiredMixin
 from flase_app.models import CylinderLife, Cylinder
 
 
@@ -62,9 +63,16 @@ class CylinderListView(LoginRequiredMixin, ListView):
         return context
 
 
-class CylinderCreateView(LoginRequiredMixin, CreateView):
+class CylinderCreateView(OperatorRequiredMixin, CreateView):
     template_name = "cylinders/create.html"
-    form_class = CylinderLifeForm
+    form_class = CylinderLifeCreateForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["user"] = self.request.user
+        barcode = self.request.GET.get("barcode")
+        kw["cylinder"] = Cylinder.objects.filter(barcode=barcode).first()
+        return kw
 
     def get_success_url(self):
         return reverse("cylinder_list")
