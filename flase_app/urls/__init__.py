@@ -1,7 +1,9 @@
-from flase_app import views
-from django.urls import path, include
+from django.urls import path
 
 from flase_app.views import places, cylinder
+from django.contrib.auth.views import LogoutView
+
+from flase_app import views
 from flase_app.views.gas import (
     GasListView,
     GasCreateView,
