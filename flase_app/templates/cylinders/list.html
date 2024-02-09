@@ -74,8 +74,8 @@
             {% for life in object_list %}
                 <tr>
                     <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
-                    <td class="text-nowrap">{{ life.gas }}</td>
-                    <td class="text-nowrap">{{ life.volume }} ℓ</td>
+                    <td class="text-nowrap">{{ life.gas|default:"--" }}</td>
+                    <td class="text-nowrap">{{ life.volume|default:"--" }} ℓ</td>
                     <td class="text-nowrap">
                         {{ life.pressure|default:"--" }} bar
                         <div class="fw-light text-muted">TODO: date</div>
@@ -89,8 +89,8 @@
                         <div class="text-danger">{% translate "Disconnected" %}</div>
                         {% endif %}
                     </td>
-                    <td class="text-nowrap">{{ life.cylinder.owner }}</td>
-                    <td class="text-nowrap">{{ life.supplier }}</td>
+                    <td class="text-nowrap">{{ life.cylinder.owner|default:"--" }}</td>
+                    <td class="text-nowrap">{{ life.supplier|default:"--" }}</td>
                     <td class="text-sm">{{ life.note }}</td>
                     <td class="text-end">
                         <a href="{% url 'cylinder_life_detail' life.id %}" class="btn btn-sm btn-primary">

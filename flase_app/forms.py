@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.password_validation import validate_password
+from django.db import transaction
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from flase_app.models import (
@@ -114,20 +116,52 @@ class SupplierForm(forms.ModelForm):
         }
 
 
-class CylinderLifeForm(forms.ModelForm):
-    barcode = forms.CharField(max_length=64)
-    owner = forms.ModelChoiceField(queryset=Owner.objects.all())
+class CylinderLifeCreateForm(forms.ModelForm):
+    barcode = forms.CharField(max_length=64, label=_("Barcode"))
+    owner = forms.ModelChoiceField(queryset=Owner.objects.get_queryset(), required=False, label=_("Owner"))
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    field_order = ["barcode", "gas", "volume", "owner", "supplier", "pressure", "location", "is_connected", "note"]
 
-        instance = kwargs.get("instance")
-        if instance:
-            self.fields["barcode"].initial = instance.cylinder.barcode
-            self.fields["owner"].initial = instance.cylinder.owner
+    class Meta:
+        model = CylinderLife
+        fields = [
+            "gas",
+            "volume",
+            "supplier",
+            "note",
+            "location",
+            "is_connected",
+            "pressure",
+        ]
+        widgets = {
+            "note": forms.Textarea(),
+        }
+        labels = {
+            "volume": _("Volume"),
+            "supplier": _("Supplier"),
+            "pressure": _("Pressure"),
+            "location": _("Location"),
+            "is_connected": _("Connected"),
+            "gas": _("Gas"),
+            "note": _("Note"),
+        }
 
-        self.fields["owner"].required = False
+    def __init__(self, **kwargs):
+        self.user = kwargs.pop("user")
+        cylinder = kwargs.pop("cylinder")
+        super().__init__(**kwargs)
 
+        if cylinder:
+            self.fields["barcode"].initial = cylinder.barcode
+            self.fields["owner"].initial = cylinder.owner
+
+            latest_life = cylinder.cylinderlife_set.filter(is_current=True).first()
+            if latest_life:
+                self.fields["gas"].initial = latest_life.gas
+                self.fields["volume"].initial = latest_life.volume
+                self.fields["supplier"].initial = latest_life.supplier
+
+    @transaction.atomic
     def save(self, commit=True):
         cylinder, created = Cylinder.objects.get_or_create(
             barcode=self.cleaned_data["barcode"],
@@ -137,40 +171,27 @@ class CylinderLifeForm(forms.ModelForm):
         if not created:
             cylinder.owner = self.cleaned_data["owner"]
             cylinder.save()
+
+        cylinder.cylinderlife_set.filter(is_current=True).update(is_current=False, end_date=timezone.now())
+
         life.cylinder = cylinder
+        life.is_current = True
+        life.start_date = timezone.now()
         life.save()
+
+        location = self.cleaned_data.get("location")
+        is_connected = self.cleaned_data.get("is_connected")
+        pressure = self.cleaned_data.get("pressure")
+
+        if location or pressure or is_connected is not None:
+            change = CylinderChange(life=life, user=self.user)
+            change.pressure = pressure
+            change.location = location
+            change.is_connected = is_connected
+            change.save()
 
         return life
 
-    class Meta:
-        model = CylinderLife
-        fields = [
-            "barcode",
-            "owner",
-            "volume",
-            "supplier",
-            "pressure",
-            "location",
-            "is_connected",
-            "gas",
-            "note",
-            "is_current",
-        ]
-        widgets = {
-            "note": forms.Textarea(attrs={"cols": 40, "rows": 5}),
-        }
-        labels = {
-            "barcode": _("Barcode"),
-            "owner": _("Owner"),
-            "volume": _("Volume"),
-            "supplier": _("Supplier"),
-            "pressure": _("Pressure"),
-            "location": _("Location"),
-            "is_connected": _("Is_connected"),
-            "gas": _("Gas"),
-            "note": _("Note"),
-            "is_current": _("Is_current"),
-        }
 
 
 class PressureLogForm(forms.ModelForm):
