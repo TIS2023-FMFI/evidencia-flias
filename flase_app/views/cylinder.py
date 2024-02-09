@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView, CreateView
+from django.utils.functional import cached_property
 
-from flase_app.forms import CylinderFilterForm
+from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm
+from flase_app.mixins import OperatorRequiredMixin
 from flase_app.models import CylinderLife, CylinderChange
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
 import csv
 from django.http import HttpResponse
 from datetime import datetime
@@ -104,7 +106,7 @@ class CylinderExportView(LoginRequiredMixin, CylinderQuerySetMixin, View):
         return response
 
 
-class CylinderDetailView(DetailView):
+class CylinderLifeDetailView(DetailView):
     model = CylinderLife
     template_name = 'cylinders/detail.html'
     context_object_name = 'cylinder_life'
@@ -117,19 +119,33 @@ class CylinderDetailView(DetailView):
         return context
 
 
-class CylinderUpdateView(UpdateView):
+class CylinderLifeUpdateView(OperatorRequiredMixin, UpdateView):
     model = CylinderLife
-    fields = ['gas', 'volume', 'pressure', 'location', 'note']
-    template_name = 'cylinders/edit.html'
-    success_url = reverse_lazy('cylinder_list')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Edit Cylinder Properties'
-        context['cylinder_id'] = self.object.cylinder.id
-        return context
+    form_class = CylinderLifeUpdateForm
+    template_name = "cylinder_life/form.html"
 
     def get_success_url(self):
-        cylinder_id = self.object.cylinder.id
-        return reverse('cylinder_detail', kwargs={'pk': cylinder_id})
-    # TODO: Spýtať sa na históriu ako je to myslené. Teda podľa čoho ju zobrazovať.
+        return reverse('cylinder_life_detail', kwargs={'pk': self.object.id})
+
+
+class CylinderLifeRelocateView(OperatorRequiredMixin, CreateView):
+    form_class = RelocateForm
+    template_name = "cylinder_life/relocate.html"
+
+    @cached_property
+    def cylinder_life(self):
+        return get_object_or_404(CylinderLife, id=self.kwargs["pk"])
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["life"] = self.cylinder_life
+        kw["user"] = self.request.user
+        return kw
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["life"] = self.cylinder_life
+        return ctx
+
+    def get_success_url(self):
+        return reverse('cylinder_life_detail', kwargs={'pk': self.cylinder_life.id})

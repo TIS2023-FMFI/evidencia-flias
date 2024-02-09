@@ -4,12 +4,12 @@
 {% block content %}
     <h1>{% translate 'Edit cylinder parameters' %}</h1>
 
-    <div class="alert alert-primary">
-        <b>{% translate "You are editing cylinder parameters." %}</b>
+{#    <div class="alert alert-primary">#}
+{#        <b>{% translate "You are editing cylinder parameters." %}</b>#}
         {# TODO: Link #}
-        {% url "cylinder_life_update" as link %}
-        {% blocktranslate with link=link %}Did you mean to edit <a href="{{ link }}">cylinder's current status</a> instead?{% endblocktranslate %}
-    </div>
+{#        {% url "cylinder_life_update" as link %}#}
+{#        {% blocktranslate with link=link %}Did you mean to edit <a href="{{ link }}">cylinder's current status</a> instead?{% endblocktranslate %}#}
+{#    </div>#}
 
     <form method="post" class="mt-4">
         {% csrf_token %}

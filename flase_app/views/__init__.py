@@ -9,7 +9,7 @@ from django.views.generic import ListView, UpdateView, CreateView
 from flase_app.forms import (
     CylinderLifeForm,
     PressureLogForm,
-    CylinderLifeForm2, CylinderFilterForm,
+    CylinderFilterForm,
 )
 from flase_app.models import CylinderLife, Cylinder
 
@@ -70,15 +70,6 @@ class CylinderCreateView(LoginRequiredMixin, CreateView):
         return reverse("cylinder_list")
 
 
-class CylinderUpdateView(LoginRequiredMixin, UpdateView):
-    model = CylinderLife
-    template_name = "cylinders/create.html"
-    form_class = CylinderLifeForm
-
-    def get_success_url(self):
-        return reverse("cylinder_list")
-
-
 class PressureLogView(LoginRequiredMixin, CreateView):
     form_class = PressureLogForm
     template_name = "cylinders/log_pressure.html"
@@ -110,10 +101,3 @@ class PressureLogView(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect("/")  # TODO: redirect to cylinder life detail
 
 
-class CylinderLifeUpdateView(LoginRequiredMixin, UpdateView):
-    model = CylinderLife
-    form_class = CylinderLifeForm2
-    template_name = "cylinder_life/form.html"
-
-    def get_success_url(self):
-        return "/"  # TODO: redirect to cylinder detail page

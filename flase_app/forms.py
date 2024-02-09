@@ -182,6 +182,41 @@ class PressureLogForm(forms.ModelForm):
         }
 
 
+class RelocateForm(forms.ModelForm):
+    class Meta:
+        model = CylinderChange
+        fields = ["location", "is_connected"]
+        labels = {
+            "location": _("Location"),
+            "is_connected": _("Connected"),
+        }
+
+        widgets = {
+            "is_connected": forms.CheckboxInput(),
+        }
+
+    def __init__(self, **kwargs):
+        self.life = kwargs.pop("life")
+        self.user = kwargs.pop("user")
+        super().__init__(**kwargs)
+
+        self.fields["location"].required = True
+        self.fields["location"].initial = self.life.location
+        self.fields["is_connected"].initial = self.life.is_connected
+
+    def save(self, commit=True):
+        change = super().save(commit=False)
+        change.user = self.user
+        change.life = self.life
+        change.save()
+
+        self.life.location = self.cleaned_data["location"]
+        self.life.is_connected = self.cleaned_data["is_connected"]
+        self.life.save()
+
+        return change
+
+
 class CylinderFilterForm(forms.Form):
     query = forms.CharField(label=_("Search query"), required=False)
     gas = forms.ModelChoiceField(queryset=Gas.objects.get_queryset(), required=False, label=_("Gas"))
@@ -197,7 +232,7 @@ class CylinderFilterForm(forms.Form):
     )
 
 
-class CylinderLifeForm2(forms.ModelForm):
+class CylinderLifeUpdateForm(forms.ModelForm):
     owner = forms.ModelChoiceField(Owner.objects, label=_("Owner"))
 
     field_order = ["gas", "volume", "owner", "supplier", "note"]
