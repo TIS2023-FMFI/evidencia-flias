@@ -1,7 +1,9 @@
-from flase_app import views
 from django.urls import path
 
 from flase_app.views import places, cylinder
+from django.contrib.auth.views import LogoutView
+
+from flase_app import views
 from flase_app.views.gas import (
     GasListView,
     GasCreateView,
@@ -25,9 +27,6 @@ from flase_app.views.user import (
     UserListView,
     UserUpdateView,
     UserCreateView,
-)
-from flase_app.views.registration import (
-    CustomLogoutView,
 )
 urlpatterns = [
     # Owners
@@ -91,5 +90,5 @@ urlpatterns = [
     # Redirect
     path('', HomeRedirectView.as_view(), name='home'),
     # Registration
-    path('accounts/logout/', CustomLogoutView, name='logout'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
 ]
