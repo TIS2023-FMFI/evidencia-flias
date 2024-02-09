@@ -90,5 +90,5 @@ urlpatterns = [
     # Redirect
     path('', HomeRedirectView.as_view(), name='home'),
     # Registration
-    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('accounts/logout/', LogoutView.as_view(next_page='/accounts/login/'), name='logout'),
 ]
