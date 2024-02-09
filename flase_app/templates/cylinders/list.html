@@ -12,8 +12,13 @@
     <h1>{% translate "Cylinders" %}</h1>
 
     <div class="card my-4">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             {% translate "Filters" %}
+
+            <a href="{% url "cylinder_scan_barcode" %}" class="btn btn-sm btn-secondary">
+                <i class="bi bi-phone"></i>
+                {% translate "Scan barcode" %}
+            </a>
         </div>
         <div class="card-body">
             <form method="get" class="row">

@@ -2,8 +2,10 @@
 {% load i18n %}
 {% load static %}
 
+{% block title %}{% translate "Scan barcode" %}{% endblock %}
+
 {% block content %}
-    <h1>{% translate 'Scan cylinder barcode' %}</h1>
+    <h1>{% translate 'Scan barcode' %}</h1>
 
     {% if error %}
     <div class="alert alert-danger">{% translate "There is no cylinder with the scanned barcode." %}</div>
