@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <h1>{% translate 'Scan cylinder barcode' %}</h1>
+
+    {% if error %}
+    <div class="alert alert-danger">{% translate "There is no cylinder with the scanned barcode." %}</div>
+    {% endif %}
+
+    <div id="scanner" style="width: 100%"></div>
+
+    <button class="btn btn-primary" id="scanner-start">{% translate "Start scanner" %}</button>
+
+    <form method="post" class="hidden" id="scanner-form">
+        {% csrf_token %}
+        <input type="hidden" id="scanner-field" name="barcode">
+    </form>
+
+    <script src="{% static "vendor/html5-qrcode.js" %}"></script>
+    <script>
+        let scanner = new Html5Qrcode("scanner", {
+            useBarCodeDetectorIfSupported: true,
+        }, false)
+
+        function onScanSuccess(decodedText, decodedResult) {
+            scanner.stop()
+            document.getElementById("scanner-field").value = decodedText
+            document.getElementById("scanner-form").submit()
+        }
+
+        document.getElementById("scanner-start").addEventListener("click", () => {
+            document.getElementById("scanner-start").classList.add("hidden")
+            scanner.start({facingMode: "environment"}, {fps: 10}, onScanSuccess)
+        })
+    </script>
+{% endblock content %}

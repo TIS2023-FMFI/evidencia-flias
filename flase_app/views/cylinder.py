@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
 from django.forms import Form
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
@@ -11,12 +11,14 @@ from django.views.generic import ListView, UpdateView, CreateView, FormView, \
     TemplateView
 from django.utils.functional import cached_property
 
-from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm
+from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm, \
+    BarcodeForm
 from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
+
 from flase_app.models import CylinderLife, CylinderChange
 from django.views.generic.detail import DetailView
 import csv
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime, timedelta
 
 
@@ -232,3 +234,14 @@ class CylinderLifeEndForm(OperatorRequiredMixin, TemplateView):
         life.save()
 
         return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': self.kwargs["pk"]}))
+
+
+class ScanBarcodeView(LoginRequiredMixin, FormView):
+    template_name = "cylinders/scan_barcode.html"
+    form_class = BarcodeForm
+
+    def form_valid(self, form):
+        cylinder_life = CylinderLife.objects.filter(cylinder__barcode=form.cleaned_data['barcode']).order_by("-start_date").first()
+        if not cylinder_life:
+            return render(self.request, "cylinders/scan_barcode.html", {"error": True})
+        return redirect("cylinder_life_detail", pk=cylinder_life.id)

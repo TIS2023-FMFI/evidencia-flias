@@ -288,3 +288,7 @@ class GasForm(forms.ModelForm):
     class Meta:
         model = Gas
         fields = ["name", "note"]
+
+
+class BarcodeForm(forms.Form):
+    barcode = forms.CharField(max_length=64)
