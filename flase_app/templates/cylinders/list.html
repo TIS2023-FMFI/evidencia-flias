@@ -2,11 +2,32 @@
 {% load widget_tweaks %}
 {% load i18n %}
 
+
 {% block title %}
     {% translate "Cylinders" %}
 {% endblock %}
 
 {% block content %}
+{% block head %}
+<style>
+    .table-responsive table {
+        border-collapse: collapse !important;
+    }
+    .table-bordered th, .table-bordered td {
+        border: 1px solid black !important;
+    }
+    
+    @media (max-width: 768px) {
+    .table-responsive table {
+        display: none;
+    }
+    .mobile-table {
+        display: block !important;
+    }
+}
+</style>
+{% endblock head %}
+
 <div class="container mt-4">
     <h1>{% translate "Cylinders" %}</h1>
 
@@ -58,7 +79,7 @@
     </div>
     
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-bordered my-custom-table">
             <thead>
             <tr class="text-nowrap">
                 <th>{% translate "Barcode" %}</th>
@@ -104,6 +125,46 @@
             </tbody>
         </table>
     </div>
+<div class="mobile-table" style="display: none;">
+    {% for life in object_list %}
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Barcode</th>
+                <td>{{ life.cylinder.barcode }}</td>
+            </tr>
+            <tr>
+                <th>Gas</th>
+                <td>{{ life.gas }}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{{ life.volume }} ℓ</td>
+            </tr>
+            <tr>
+                <th>Current pressure</th>
+                <td>{{ life.pressure|default:"--" }} bar</td>
+            </tr>
+            <tr>
+                <th>Current location</th>
+                <td>{{ life.location }}</td>
+            </tr>
+            <tr>
+                <th>Owner</th>
+                <td>{{ life.cylinder.owner }}</td>
+            </tr>
+            <tr>
+                <th>Supplier</th>
+                <td>{{ life.supplier }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ life.note }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+</div>
 
     <a href="{% url 'cylinder_create' %}" class="btn btn-success">
         <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
