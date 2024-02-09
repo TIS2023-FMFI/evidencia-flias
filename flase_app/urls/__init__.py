@@ -28,6 +28,7 @@ from flase_app.views.user import (
     UserUpdateView,
     UserCreateView,
 )
+
 urlpatterns = [
     # Owners
     path("owners/", OwnerListView.as_view(), name="owner_list"),
@@ -89,6 +90,4 @@ urlpatterns = [
     path("places/locations/<int:pk>/delete/", places.LocationDeleteView.as_view(), name="location_delete"),
     # Redirect
     path('', HomeRedirectView.as_view(), name='home'),
-    # Registration
-    path('accounts/logout/', LogoutView.as_view(next_page='/accounts/login/'), name='logout'),
 ]
