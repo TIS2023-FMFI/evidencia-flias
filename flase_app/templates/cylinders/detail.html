@@ -36,6 +36,9 @@
             <dt class="col-sm-5">{% translate "Supplier" %}</dt>
             <dd class="col-sm-7">{{ cylinder_life.supplier|default:"--" }}</dd>
 
+            <dt class="col-sm-5">{% translate "First use" %}</dt>
+            <dd class="col-sm-7">{{ first_use|default:"--"|date:"d.m.Y" }}</dd>
+
             <dt class="col-sm-5">{% translate "Note" %}</dt>
             <dd class="col-sm-7">{{ cylinder_life.note }}</dd>
         </dl>
