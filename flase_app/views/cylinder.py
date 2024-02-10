@@ -106,7 +106,7 @@ class CylinderExportView(LoginRequiredMixin, CylinderQuerySetMixin, View):
         return response
 
 
-class CylinderLifeDetailView(DetailView):
+class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
     model = CylinderLife
     template_name = 'cylinders/detail.html'
     context_object_name = 'cylinder_life'
