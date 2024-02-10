@@ -11,7 +11,7 @@ from flase_app.mixins import OperatorRequiredMixin
 from flase_app.models import CylinderLife, CylinderChange
 from django.views.generic.detail import DetailView
 import csv
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 
 
@@ -128,7 +128,28 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
         
         return context
 
+    def post(self, request, *args, **kwargs):
+        cylinder_life_id = self.kwargs.get('pk')
 
+        changes = CylinderChange.objects.filter(life_id=cylinder_life_id).order_by('-timestamp')
+        if len(changes) >= 2:
+            latest_change = changes[1]
+            delete_change = changes[0]
+
+            if latest_change.pressure is not None:
+                latest_change.life.pressure = latest_change.pressure
+            if latest_change.location is not None:
+                latest_change.life.location = latest_change.location
+            if latest_change.is_connected is not None:
+                latest_change.life.is_connected = latest_change.is_connected
+            if latest_change.note is not None:    
+                latest_change.life.note = latest_change.note
+                
+            latest_change.life.save()
+            delete_change.delete()
+            
+        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': cylinder_life_id}))    
+    
 class CylinderLifeUpdateView(OperatorRequiredMixin, UpdateView):
     model = CylinderLife
     form_class = CylinderLifeUpdateForm
