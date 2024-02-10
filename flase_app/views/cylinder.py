@@ -2,11 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
+from django.forms import Form
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
-from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import ListView, UpdateView, CreateView, FormView, \
+    TemplateView
 from django.utils.functional import cached_property
 
 from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm
@@ -213,3 +215,19 @@ class CylinderLifeRelocateView(OperatorRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('cylinder_life_detail', kwargs={'pk': self.cylinder_life.id})
+
+
+class CylinderLifeEndForm(OperatorRequiredMixin, TemplateView):
+    template_name = "cylinder_life/end.html"
+
+    @cached_property
+    def life(self):
+        return get_object_or_404(CylinderLife, id=self.kwargs["pk"], is_current=True)
+
+    def post(self, request, *args, **kwargs):
+        life = self.life
+        life.is_current = False
+        life.end_date = timezone.now()
+        life.save()
+
+        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': self.kwargs["pk"]}))
