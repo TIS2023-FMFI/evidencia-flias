@@ -119,8 +119,18 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
         context['first_use'] = first_use
         context['history'] = CylinderChange.objects.filter(life_id=self.object.id).order_by('-timestamp')
         context['deliveries'] = CylinderLife.objects.filter(cylinder_id=self.object.cylinder.id).order_by('-start_date')
-        return context
 
+        cylinder_changes = CylinderChange.objects.filter(life_id=self.object.id).order_by('timestamp')
+        pressure_data = []
+        timestamp_labels = []
+        for change in cylinder_changes:
+            pressure_data.append(change.pressure)
+            timestamp_labels.append(change.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
+
+        context['pressure_data'] = pressure_data
+        context['timestamp_labels'] = timestamp_labels
+        
+        return context
 
 class CylinderLifeUpdateView(OperatorRequiredMixin, UpdateView):
     model = CylinderLife
