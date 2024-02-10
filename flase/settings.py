@@ -22,6 +22,9 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG", default=False)
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=[])
 
+if DEBUG:
+    INTERNAL_IPS = ["127.0.0.1"]
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 3600
 
@@ -34,9 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "flase_app",
     "widget_tweaks",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
