@@ -6,6 +6,7 @@
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>{{ cylinder_life.cylinder.barcode }}</h1>
+        {% if cylinder_life.is_current %}
         <div>
             {% if user.role >= user.Role.OPERATOR %}
             <a href="{% url 'cylinder_life_update' cylinder_life.id %}" class="btn btn-primary">{% translate "Edit properties" %}</a>
@@ -15,35 +16,42 @@
             <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}" class="btn btn-danger">{% translate "Log pressure" %}</a>
             {% endif %}
         </div>
+        {% endif %}
     </div>
     <hr>
 
     <div class="row">
-        <dl class="row col-sm-4">
-            <dt class="col-sm-5">{% translate "Gas" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.gas|default:"--" }}</dd>
+        <div class="col-sm-4">
+            <dl class="row">
+                <dt class="col-sm-5">{% translate "Gas" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.gas|default:"--" }}</dd>
 
-            <dt class="col-sm-5">{% translate "Volume" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.volume|default:"--" }} ℓ</dd>
+                <dt class="col-sm-5">{% translate "Volume" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.volume|default:"--" }} ℓ</dd>
 
-            <dt class="col-sm-5">{% translate "Current pressure" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.pressure|default:"--" }} bar</dd>
+                <dt class="col-sm-5">{% translate "Current pressure" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.pressure|default:"--" }} bar</dd>
 
-            <dt class="col-sm-5">{% translate "Location" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.location }}</dd>
+                <dt class="col-sm-5">{% translate "Location" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.location }}</dd>
 
-            <dt class="col-sm-5">{% translate "Owner" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.cylinder.owner|default:"--" }}</dd>
+                <dt class="col-sm-5">{% translate "Owner" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.cylinder.owner|default:"--" }}</dd>
 
-            <dt class="col-sm-5">{% translate "Supplier" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.supplier|default:"--" }}</dd>
+                <dt class="col-sm-5">{% translate "Supplier" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.supplier|default:"--" }}</dd>
 
-            <dt class="col-sm-5">{% translate "First use" %}</dt>
-            <dd class="col-sm-7">{% if first_use %}{{ first_use|date }}{% else %}--{% endif %}</dd>
+                <dt class="col-sm-5">{% translate "First use" %}</dt>
+                <dd class="col-sm-7">{% if first_use %}{{ first_use|date }}{% else %}--{% endif %}</dd>
 
-            <dt class="col-sm-5">{% translate "Note" %}</dt>
-            <dd class="col-sm-7">{{ cylinder_life.note }}</dd>
-        </dl>
+                <dt class="col-sm-5">{% translate "Note" %}</dt>
+                <dd class="col-sm-7">{{ cylinder_life.note }}</dd>
+            </dl>
+
+            {% if user.role >= user.Role.OPERATOR and cylinder_life.is_current %}
+                <a href="{% url "cylinder_life_end" pk=cylinder_life.id %}" class="btn btn-danger">{% translate "End this delivery" %}</a>
+            {% endif %}
+        </div>
 
         <div class="col-sm-8">
 			<canvas id="pressure_chart"></canvas>
@@ -148,8 +156,5 @@
                 <i class="bi bi-plus-lg"></i> {% translate "New delivery" %}
             </a>
         </div>
-		
-
-	
     </div>
 {% endblock %}
