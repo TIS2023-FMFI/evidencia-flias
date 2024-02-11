@@ -11,7 +11,9 @@
             <a href="{% url 'cylinder_life_update' cylinder_life.id %}" class="btn btn-primary">{% translate "Edit properties" %}</a>
             <a href="{% url 'cylinder_life_relocate' cylinder_life.id %}" class="btn btn-warning">{% translate "Change location" %}</a>
             {% endif %}
+            {% if user.role >= user.Role.EDITOR %}
             <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}" class="btn btn-danger">{% translate "Log pressure" %}</a>
+            {% endif %}
         </div>
     </div>
     <hr>

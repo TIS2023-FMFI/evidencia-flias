@@ -10,8 +10,3 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     
     def get_success_url(self):
         return reverse("password_change_done")
-
-
-def CustomLogoutView(request):
-    logout(request)
-    return redirect('login')

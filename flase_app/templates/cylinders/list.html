@@ -165,11 +165,11 @@
     </table>
     {% endfor %}
 </div>
-
+    {% if user.role >= user.Role.OPERATOR %}
     <a href="{% url 'cylinder_create' %}" class="btn btn-success">
         <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
     </a>
-
+    {% endif %}
     <a href="{% url "cylinder_export" %}?{{ request.GET.urlencode }}" class="btn btn-secondary">
         <i class="bi bi-download"></i>
         {% translate "Export as CSV" %}

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.functional import cached_property
+from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
 
 from django.views.generic import ListView, UpdateView, CreateView
 
@@ -78,7 +79,7 @@ class CylinderCreateView(OperatorRequiredMixin, CreateView):
         return reverse("cylinder_list")
 
 
-class PressureLogView(LoginRequiredMixin, CreateView):
+class PressureLogView(EditorRequiredMixin, CreateView):
     form_class = PressureLogForm
     template_name = "cylinders/log_pressure.html"
 

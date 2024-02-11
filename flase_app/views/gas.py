@@ -4,16 +4,16 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView, CreateView
 
 from flase_app.forms import GasForm
-from flase_app.mixins import RestrictedDeleteView
+from flase_app.mixins import RestrictedDeleteView, EditorRequiredMixin, AdminRequiredMixin
 from flase_app.models import Gas
 
 
-class GasListView(LoginRequiredMixin, ListView):
+class GasListView(AdminRequiredMixin, ListView):
     model = Gas
     template_name = "gasses/list.html"
 
 
-class GasUpdateView(LoginRequiredMixin, UpdateView):
+class GasUpdateView(AdminRequiredMixin, UpdateView):
     model = Gas
     template_name = "gasses/form.html"
     form_class = GasForm
@@ -22,7 +22,7 @@ class GasUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("gas_list")
 
 
-class GasCreateView(LoginRequiredMixin, CreateView):
+class GasCreateView(AdminRequiredMixin, CreateView):
     model = Gas
     template_name = "gasses/form.html"
     form_class = GasForm
@@ -31,7 +31,7 @@ class GasCreateView(LoginRequiredMixin, CreateView):
         return reverse("gas_list")
 
 
-class GasDeleteView(LoginRequiredMixin, RestrictedDeleteView):
+class GasDeleteView(AdminRequiredMixin, RestrictedDeleteView):
     model = Gas
     template_name = "gasses/delete.html"
 
