@@ -46,82 +46,42 @@
         </dl>
 
         <div class="col-sm-8">
-			<canvas id="myChart"></canvas>
-			
+			<canvas id="pressure_chart"></canvas>
+
+            {{ chart_data|json_script:"chart_data" }}
+
 			<script>
-				var pressureData = {{ pressure_data|safe }};
-				var timestampLabels = {{ timestamp_labels|safe }};
-				
-				var ctx = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(ctx, {
-					type: 'line',
-					data: {
-						labels: timestampLabels,
-						datasets: [{
-							label: 'Pressure',
-							data: pressureData,
-							borderColor: 'rgba(255, 99, 132, 1)',
-							borderWidth: 2,
-							fill: false
-						}]
-					},
-					options: {
-						layout: {
-							padding: {
-								left: 10,
-								right: 10,
-								top: 10,
-								bottom: 10
-							}
-						},
-						elements: {
-							line: {
-								backgroundColor: 'rgba(255, 99, 132, 0.2)',
-								borderColor: 'rgba(0, 0, 0, 1)',
-								borderWidth: 2
-							}
-						},
-						scales: {
-							yAxes: [{
-								scaleLabel: {
-									display: true,
-									labelString: 'Pressure',
-									fontColor: 'black'
-								},
-								ticks: {
-									beginAtZero: true,
-									suggestedMin: 0,
-									fontColor: 'black'
-								},
-								gridLines: {
-									color: 'black',
-									lineWidth: 2
-								}
-							}],
-							xAxes: [{
-								type: 'time',
-								time: {
-									displayFormats: {
-										second: 'YYYY-MM-DD HH:mm:ss'
-									}
-								},
-								scaleLabel: {
-									display: true,
-									labelString: 'Timestamp',
-									fontColor: 'black'
-								},
-								ticks: {
-									fontColor: 'black'
-								},
-								gridLines: {
-									color: 'black',
-									lineWidth: 2
-								}
-							}]
-						}
-					}
-				});
-			</script>	
+                const ctx = document.getElementById('pressure_chart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: '{% translate "Pressure" %}',
+                            data: JSON.parse(document.getElementById("chart_data").innerText),
+                            borderColor: '#0d6efd',
+                            backgroundColor: '#4b93ff',
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '{% translate "Pressure" %}',
+                                },
+                            },
+                            x: {
+                                type: 'time',
+                            }
+                        }
+                    }
+                });
+            </script>
 		</div>
     </div>
 
