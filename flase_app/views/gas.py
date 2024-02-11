@@ -8,12 +8,12 @@ from flase_app.mixins import RestrictedDeleteView, EditorRequiredMixin, AdminReq
 from flase_app.models import Gas
 
 
-class GasListView(LoginRequiredMixin, ListView):
+class GasListView(AdminRequiredMixin, ListView):
     model = Gas
     template_name = "gasses/list.html"
 
 
-class GasUpdateView(EditorRequiredMixin, UpdateView):
+class GasUpdateView(AdminRequiredMixin, UpdateView):
     model = Gas
     template_name = "gasses/form.html"
     form_class = GasForm
