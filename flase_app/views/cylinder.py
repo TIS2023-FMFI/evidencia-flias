@@ -137,9 +137,10 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
         first_use = CylinderChange.objects.filter(life_id=self.object.id, is_connected=True).order_by(
             'timestamp').values_list('timestamp', flat=True).first()
         context['first_use'] = first_use
-        changes = CylinderChange.objects.filter(life_id=self.object.id).order_by('-timestamp').all()
+        
+        changes = CylinderChange.objects.select_related("user", "location", "location__workplace", "location__workplace__building").filter(life_id=self.object.id).order_by('-timestamp').all()
         context['history'] = changes
-        context['deliveries'] = CylinderLife.objects.filter(cylinder_id=self.object.cylinder.id).order_by('-start_date')
+        context['deliveries'] = CylinderLife.objects.select_related("gas").filter(cylinder_id=self.object.cylinder.id).order_by('-start_date')
 
         pressure_changes = CylinderChange.objects.filter(life_id=self.object.id, pressure__isnull=False).order_by('timestamp')
         chart_data = []
@@ -147,7 +148,7 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
             chart_data.append({"x": change.timestamp.strftime('%Y-%m-%d %H:%M:%S'), "y": change.pressure})
         context["chart_data"] = chart_data
         context["can_undo"] = can_undo(self.request.user, changes[0])
-        
+
         return context
 
 
