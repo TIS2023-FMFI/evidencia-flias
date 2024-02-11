@@ -65,6 +65,11 @@ urlpatterns = [
         name="cylinder_life_update",
     ),
     path(
+        "cylinders/life/<int:pk>/undo/",
+        cylinder.CylinderUndoChangeView.as_view(),
+        name="cylinder_life_undo",
+    ),
+    path(
         "cylinders/life/<int:pk>/relocate/",
         cylinder.CylinderLifeRelocateView.as_view(),
         name="cylinder_life_relocate",

@@ -87,7 +87,19 @@
 
     <div class="row mt-4">
         <div class="col-sm-6">
-            <h2>{% translate "History" %}</h2>
+			<div class="d-flex justify-content-between align-items-center">
+				<h2>{% translate "History" %}</h2>
+
+                {% if can_undo %}
+				<form method="post" action="{% url "cylinder_life_undo" pk=cylinder_life.id %}">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-dark">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        {% translate "Revert last change" %}
+                    </button>
+				</form>
+                {% endif %}
+			</div>
             <ul class="list-group">
                 {% for change in history %}
                     <li class="list-group-item">

@@ -107,6 +107,6 @@ class PressureLogView(EditorRequiredMixin, CreateView):
         life.pressure = change.pressure
         life.save()
 
-        return HttpResponseRedirect("/")  # TODO: redirect to cylinder life detail
+        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': life.id}))
 
 
