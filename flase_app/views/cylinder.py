@@ -59,6 +59,14 @@ class CylinderQuerySetMixin:
         if status:
             qs = qs.filter(is_connected=(status == "c"))
 
+        building = form.cleaned_data.get("building")
+        if building:
+            qs = qs.filter(location__workplace__building=building)
+
+        workplace = form.cleaned_data.get("workplace")
+        if workplace:
+            qs = qs.filter(location__workplace=workplace)
+
         return qs
 
     def get_queryset(self):
