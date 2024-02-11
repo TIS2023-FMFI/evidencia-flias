@@ -45,7 +45,44 @@
             <dd class="col-sm-7">{{ cylinder_life.note }}</dd>
         </dl>
 
-        <div class="col-sm-8 bg-secondary">(tu bude graf)</div>
+        <div class="col-sm-8">
+			<canvas id="pressure_chart"></canvas>
+
+            {{ chart_data|json_script:"chart_data" }}
+
+			<script>
+                const ctx = document.getElementById('pressure_chart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: '{% translate "Pressure" %}',
+                            data: JSON.parse(document.getElementById("chart_data").innerText),
+                            borderColor: '#0d6efd',
+                            backgroundColor: '#4b93ff',
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '{% translate "Pressure" %}',
+                                },
+                            },
+                            x: {
+                                type: 'time',
+                            }
+                        }
+                    }
+                });
+            </script>
+		</div>
     </div>
 
     <div class="row mt-4">
@@ -99,5 +136,8 @@
                 <i class="bi bi-plus-lg"></i> {% translate "New delivery" %}
             </a>
         </div>
+		
+
+	
     </div>
 {% endblock %}
