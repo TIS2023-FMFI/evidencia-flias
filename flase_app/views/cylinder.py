@@ -1,18 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.db import transaction
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, UpdateView, CreateView
 from django.utils.functional import cached_property
 
 from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm
-from flase_app.mixins import OperatorRequiredMixin
+from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
 from flase_app.models import CylinderLife, CylinderChange
 from django.views.generic.detail import DetailView
 import csv
-from django.http import HttpResponse, HttpResponseRedirect
-from datetime import datetime
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from datetime import datetime, timedelta
 
 
 class CylinderQuerySetMixin:
@@ -106,6 +109,21 @@ class CylinderExportView(LoginRequiredMixin, CylinderQuerySetMixin, View):
         return response
 
 
+def can_undo(user, change):
+    # Reader cannot undo anything
+    if user.role <= user.Role.READER:
+        return False
+
+    # Operators can undo any change
+    if user.role >= user.Role.OPERATOR:
+        return True
+
+    # Editors can only undo their changes that were made in the last 24 hours
+    if change.user != user:
+        return False
+    return change.timestamp <= timezone.now() - timedelta(hours=24)
+
+
 class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
     model = CylinderLife
     template_name = 'cylinders/detail.html'
@@ -114,42 +132,57 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        first_use = CylinderChange.objects.filter(life_id=self.object.id, timestamp__isnull=False).order_by(
+        first_use = CylinderChange.objects.filter(life_id=self.object.id, is_connected=True).order_by(
             'timestamp').values_list('timestamp', flat=True).first()
         context['first_use'] = first_use
-        context['history'] = CylinderChange.objects.filter(life_id=self.object.id).order_by('-timestamp')
+        changes = CylinderChange.objects.filter(life_id=self.object.id).order_by('-timestamp').all()
+        context['history'] = changes
         context['deliveries'] = CylinderLife.objects.filter(cylinder_id=self.object.cylinder.id).order_by('-start_date')
 
-        cylinder_changes = CylinderChange.objects.filter(life_id=self.object.id, pressure__isnull=False).order_by('timestamp')
+        pressure_changes = CylinderChange.objects.filter(life_id=self.object.id, pressure__isnull=False).order_by('timestamp')
         chart_data = []
-        for change in cylinder_changes:
+        for change in pressure_changes:
             chart_data.append({"x": change.timestamp.strftime('%Y-%m-%d %H:%M:%S'), "y": change.pressure})
         context["chart_data"] = chart_data
+        context["can_undo"] = can_undo(self.request.user, changes[0])
         
         return context
 
+
+class CylinderUndoChangeView(EditorRequiredMixin, View):
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
-        cylinder_life_id = self.kwargs.get('pk')
+        life = get_object_or_404(CylinderLife, id=self.kwargs["pk"])
 
-        changes = CylinderChange.objects.filter(life_id=cylinder_life_id).order_by('-timestamp')
-        if len(changes) >= 2:
-            latest_change = changes[1]
-            delete_change = changes[0]
+        changes = CylinderChange.objects.filter(life=life).order_by('-timestamp')
+        latest_change = changes.first()
+        if not can_undo(request.user, latest_change):
+            raise PermissionDenied()
 
-            if latest_change.pressure is not None:
-                latest_change.life.pressure = latest_change.pressure
-            if latest_change.location is not None:
-                latest_change.life.location = latest_change.location
-            if latest_change.is_connected is not None:
-                latest_change.life.is_connected = latest_change.is_connected
-            if latest_change.note is not None:    
-                latest_change.life.note = latest_change.note
-                
-            latest_change.life.save()
-            delete_change.delete()
-            
-        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': cylinder_life_id}))    
-    
+        if not latest_change:
+            raise PermissionDenied()
+
+        if latest_change.pressure:
+            previous_pressure_change = changes.exclude(id=latest_change.id).filter(pressure__isnull=False).first()
+            if not previous_pressure_change:
+                raise PermissionDenied()
+
+            life.pressure = previous_pressure_change.pressure
+
+        if latest_change.location:
+            previous_location_change = changes.exclude(id=latest_change.id).filter(location__isnull=False).first()
+            if not previous_location_change:
+                raise PermissionDenied()
+
+            life.location = previous_location_change.location
+            life.is_connected = previous_location_change.is_connected
+
+        latest_change.delete()
+        life.save()
+
+        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': life.id}))
+
+
 class CylinderLifeUpdateView(OperatorRequiredMixin, UpdateView):
     model = CylinderLife
     form_class = CylinderLifeUpdateForm
