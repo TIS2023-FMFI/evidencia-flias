@@ -77,6 +77,7 @@ urlpatterns = [
     ),
     path('cylinders/life/<int:pk>/', cylinder.CylinderLifeDetailView.as_view(), name='cylinder_life_detail'),
     path('cylinders/life/<int:pk>/end/', cylinder.CylinderLifeEndForm.as_view(), name='cylinder_life_end'),
+    path('cylinders/scan/', cylinder.ScanBarcodeView.as_view(), name='cylinder_scan_barcode'),
     # Gas
     path('gasses/', GasListView.as_view(), name='gas_list'),
     path('gasses/new/', GasCreateView.as_view(), name='gas_new'),
