@@ -1,0 +1,606 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-09 22:25+0000\n"
+"PO-Revision-Date: 2024-02-09 23:25+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: flase_app/forms.py:26 flase_app/forms.py:36 flase_app/forms.py:44
+#: flase_app/forms.py:54 flase_app/forms.py:115
+#: flase_app/templates/gasses/list.html:14
+#: flase_app/templates/owners/list.html:14
+#: flase_app/templates/places/buildings.html:14
+#: flase_app/templates/places/locations.html:14
+#: flase_app/templates/places/workplaces.html:14
+#: flase_app/templates/suppliers/list.html:14
+#: flase_app/templates/users/list.html:14
+msgid "Name"
+msgstr "Názov"
+
+#: flase_app/forms.py:27 flase_app/templates/places/locations.html:15
+msgid "Workplace"
+msgstr "Pracovisko"
+
+#: flase_app/forms.py:28 flase_app/templates/places/locations.html:16
+msgid "Person responsible"
+msgstr "Zodpovedná osoba"
+
+#: flase_app/forms.py:45 flase_app/templates/places/workplaces.html:15
+msgid "Building"
+msgstr "Budova"
+
+#: flase_app/forms.py:62
+msgid "Leave empty if you want to keep the current password."
+msgstr "Nechajte prázdne, ak chcete zachovať aktuálne heslo."
+
+#: flase_app/forms.py:63 flase_app/templates/registration/login.html:24
+msgid "Password"
+msgstr "Heslo"
+
+#: flase_app/forms.py:72
+msgid "First name"
+msgstr "Meno"
+
+#: flase_app/forms.py:73
+msgid "Last name"
+msgstr "Priezvisko"
+
+#: flase_app/forms.py:74 flase_app/templates/registration/login.html:20
+#: flase_app/templates/users/list.html:15
+msgid "Email address"
+msgstr "Emailová adresa"
+
+#: flase_app/forms.py:75 flase_app/templates/users/list.html:16
+msgid "Role"
+msgstr "Rola"
+
+#: flase_app/forms.py:76 flase_app/templates/users/list.html:28
+msgid "Active"
+msgstr "Aktívny"
+
+#: flase_app/forms.py:81
+msgid "Use this to disable users. An inactive user cannot log in."
+msgstr "Použite na zablokovanie používateľov. Neaktívny používateľ sa nemôže prihlásiť."
+
+#: flase_app/forms.py:120 flase_app/templates/cylinders/list.html:85
+#: flase_app/templates/cylinders/log_pressure.html:7
+msgid "Barcode"
+msgstr "Čiarový kód"
+
+#: flase_app/forms.py:121 flase_app/forms.py:244 flase_app/forms.py:257
+#: flase_app/templates/cylinders/detail.html:33
+#: flase_app/templates/cylinders/list.html:90
+msgid "Owner"
+msgstr "Majiteľ"
+
+#: flase_app/forms.py:140 flase_app/forms.py:245 flase_app/forms.py:266
+#: flase_app/templates/cylinders/detail.html:24
+#: flase_app/templates/cylinders/list.html:87
+msgid "Volume"
+msgstr "Objem"
+
+#: flase_app/forms.py:141 flase_app/forms.py:246 flase_app/forms.py:267
+#: flase_app/templates/cylinders/detail.html:36
+#: flase_app/templates/cylinders/list.html:91
+msgid "Supplier"
+msgstr "Dodávateľ"
+
+#: flase_app/forms.py:142 flase_app/templates/cylinders/detail.html:64
+msgid "Pressure"
+msgstr "Tlak"
+
+#: flase_app/forms.py:143 flase_app/forms.py:211 flase_app/forms.py:247
+#: flase_app/templates/cylinders/detail.html:30
+#: flase_app/templates/cylinders/detail.html:54
+msgid "Location"
+msgstr "Umiestnenie"
+
+#: flase_app/forms.py:144 flase_app/forms.py:212 flase_app/forms.py:249
+#: flase_app/templates/cylinders/detail.html:57
+#: flase_app/templates/cylinders/list.html:110
+msgid "Connected"
+msgstr "Pripojená"
+
+#: flase_app/forms.py:145 flase_app/forms.py:243 flase_app/forms.py:265
+#: flase_app/templates/cylinders/detail.html:21
+#: flase_app/templates/cylinders/list.html:86
+msgid "Gas"
+msgstr "Plyn"
+
+#: flase_app/forms.py:146 flase_app/forms.py:268
+#: flase_app/templates/cylinders/detail.html:39
+#: flase_app/templates/cylinders/detail.html:67
+#: flase_app/templates/cylinders/list.html:92
+#: flase_app/templates/gasses/list.html:15
+msgid "Note"
+msgstr "Poznámka"
+
+#: flase_app/forms.py:202 flase_app/templates/cylinders/detail.html:27
+#: flase_app/templates/cylinders/list.html:88
+msgid "Current pressure"
+msgstr "Aktuálny tlak"
+
+#: flase_app/forms.py:242
+msgid "Search query"
+msgstr "Vyhľadávací dotaz"
+
+#: flase_app/forms.py:249 flase_app/templates/cylinders/detail.html:59
+#: flase_app/templates/cylinders/list.html:112
+msgid "Disconnected"
+msgstr "Odpojená"
+
+#: flase_app/forms.py:252 flase_app/templates/users/list.html:17
+msgid "Status"
+msgstr "Stav"
+
+#: flase_app/models.py:41
+msgid "Reader"
+msgstr "Čitateľ"
+
+#: flase_app/models.py:42
+msgid "Editor"
+msgstr "Editor"
+
+#: flase_app/models.py:43
+msgid "Operator"
+msgstr "Operátor"
+
+#: flase_app/models.py:44
+msgid "Administrator"
+msgstr "Administrátor"
+
+#: flase_app/templates/base.html:7 flase_app/templates/base.html:28
+msgid "Cylinder Evidence"
+msgstr "Evidencia fliaš"
+
+#: flase_app/templates/base.html:39 flase_app/templates/cylinders/list.html:7
+#: flase_app/templates/cylinders/list.html:32
+msgid "Cylinders"
+msgstr "Fľaše"
+
+#: flase_app/templates/base.html:43
+msgid "Administration"
+msgstr "Administrácia"
+
+#: flase_app/templates/base.html:45 flase_app/templates/users/list.html:5
+#: flase_app/templates/users/list.html:9
+msgid "Users"
+msgstr "Používatelia"
+
+#: flase_app/templates/base.html:46 flase_app/templates/suppliers/list.html:5
+#: flase_app/templates/suppliers/list.html:9
+msgid "Suppliers"
+msgstr "Dodávatelia"
+
+#: flase_app/templates/base.html:47 flase_app/templates/owners/list.html:5
+#: flase_app/templates/owners/list.html:9
+msgid "Owners"
+msgstr "Majitelia"
+
+#: flase_app/templates/base.html:48
+msgid "Gasses"
+msgstr "Plyny"
+
+#: flase_app/templates/base.html:49 flase_app/templates/places/buildings.html:5
+#: flase_app/templates/places/buildings.html:9
+msgid "Buildings"
+msgstr "Budovy"
+
+#: flase_app/templates/base.html:50
+#: flase_app/templates/places/workplaces.html:5
+#: flase_app/templates/places/workplaces.html:9
+msgid "Workplaces"
+msgstr "Pracoviská"
+
+#: flase_app/templates/base.html:51 flase_app/templates/places/locations.html:5
+#: flase_app/templates/places/locations.html:9
+msgid "Locations"
+msgstr "Umiestnenia"
+
+#: flase_app/templates/base.html:59
+#: flase_app/templates/registration/password_change_form.html:5
+#: flase_app/templates/registration/password_change_form.html:9
+msgid "Change password"
+msgstr "Zmeniť heslo"
+
+#: flase_app/templates/cylinder_life/form.html:5
+msgid "Edit cylinder properties"
+msgstr "Úprava parametrov fľaše"
+
+#: flase_app/templates/cylinder_life/form.html:8
+msgid "You are editing cylinder properties."
+msgstr "Upravujete parametre fľaše."
+
+#: flase_app/templates/cylinder_life/form.html:9
+msgid "Did you mean to create a new delivery instead?"
+msgstr "Nechceli ste vytvoriť novú dodávku?"
+
+#: flase_app/templates/cylinder_life/form.html:17
+#: flase_app/templates/cylinder_life/relocate.html:12
+#: flase_app/templates/cylinders/create.html:17
+#: flase_app/templates/cylinders/log_pressure.html:14
+#: flase_app/templates/gasses/form.html:20
+#: flase_app/templates/owners/form.html:18
+#: flase_app/templates/places/buildings_form.html:18
+#: flase_app/templates/places/locations_form.html:18
+#: flase_app/templates/places/workplaces_form.html:18
+#: flase_app/templates/registration/password_reset_confirm.html:17
+#: flase_app/templates/registration/password_reset_form.html:17
+#: flase_app/templates/suppliers/form.html:20
+#: flase_app/templates/users/form.html:18
+msgid "Save"
+msgstr "Uložiť"
+
+#: flase_app/templates/cylinder_life/relocate.html:5
+msgid "Change cylinder location"
+msgstr "Zmeniť umiestnenie fľaše"
+
+#: flase_app/templates/cylinders/create.html:5
+msgid "New cylinder delivery"
+msgstr "Nová dodávka fľaše"
+
+#: flase_app/templates/cylinders/create.html:8
+msgid "You are creating a new cylinder delivery."
+msgstr "Vytvárate novú dodávku fľaše."
+
+#: flase_app/templates/cylinders/create.html:9
+msgid "Did you mean to edit cylinder's current properties instead?"
+msgstr "Nechceli ste upraviť aktuálne parametre fľaše?"
+
+#: flase_app/templates/cylinders/detail.html:11
+msgid "Edit properties"
+msgstr "Upraviť parametre"
+
+#: flase_app/templates/cylinders/detail.html:12
+msgid "Change location"
+msgstr "Zmeniť umiestnenie"
+
+#: flase_app/templates/cylinders/detail.html:14
+msgid "Log pressure"
+msgstr "Zaevidovať tlak"
+
+#: flase_app/templates/cylinders/detail.html:48
+msgid "History"
+msgstr "História"
+
+#: flase_app/templates/cylinders/detail.html:83
+msgid "Previous deliveries"
+msgstr "Predchádzajúce dodávky"
+
+#: flase_app/templates/cylinders/detail.html:94
+msgid "New delivery"
+msgstr "Nová dodávka"
+
+#: flase_app/templates/cylinders/list.html:36
+msgid "Filters"
+msgstr "Filtre"
+
+#: flase_app/templates/cylinders/list.html:42
+msgid "Search"
+msgstr "Vyhľadávanie"
+
+#: flase_app/templates/cylinders/list.html:43
+msgid "Search for bottles..."
+msgstr "Hľadať fľaše..."
+
+#: flase_app/templates/cylinders/list.html:74
+msgid "Filter"
+msgstr "Filter"
+
+#: flase_app/templates/cylinders/list.html:75
+msgid "Reset"
+msgstr "Reset"
+
+#: flase_app/templates/cylinders/list.html:89
+msgid "Current location"
+msgstr "Aktuálne umiestnenie"
+
+#: flase_app/templates/cylinders/list.html:93
+#: flase_app/templates/gasses/list.html:16
+#: flase_app/templates/owners/list.html:15
+#: flase_app/templates/places/buildings.html:15
+#: flase_app/templates/places/locations.html:17
+#: flase_app/templates/places/workplaces.html:16
+#: flase_app/templates/suppliers/list.html:15
+#: flase_app/templates/users/list.html:18
+msgid "Actions"
+msgstr "Akcie"
+
+#: flase_app/templates/cylinders/list.html:120
+msgid "Detail"
+msgstr "Detail"
+
+#: flase_app/templates/cylinders/list.html:170
+msgid "Add cylinder"
+msgstr "Pridať fľašu"
+
+#: flase_app/templates/cylinders/list.html:175
+msgid "Export as CSV"
+msgstr "Vyexportovať ako CSV"
+
+#: flase_app/templates/cylinders/log_pressure.html:5
+msgid "Manually log pressure"
+msgstr "Manuálne zaevidovanie tlaku"
+
+#: flase_app/templates/delete_restricted.html:5
+#: flase_app/templates/delete_restricted.html:9
+msgid "Deletion failed"
+msgstr "Nepodarilo sa odstrániť"
+
+#: flase_app/templates/delete_restricted.html:11
+msgid "Failed to delete selected object. Check that there are no other related objects that prevent the deletion."
+msgstr "Nepodarilo sa odstrániť vybraný objekt. Skontrolujte, či neexistujú iné súvisiace objekty, ktoré by bránili vymazaniu."
+
+#: flase_app/templates/delete_restricted.html:13
+#: flase_app/templates/registration/password_change_done.html:13
+#: flase_app/templates/registration/password_reset_complete.html:12
+msgid "Back"
+msgstr "Späť"
+
+#: flase_app/templates/forms/form.html:34
+msgid "Required"
+msgstr "Povinné"
+
+#: flase_app/templates/gasses/delete.html:5
+#: flase_app/templates/gasses/delete.html:9
+msgid "Delete gas"
+msgstr "Odstrániť plyn"
+
+#: flase_app/templates/gasses/delete.html:11
+#, python-format
+msgid "Are you sure you want to delete gas %(gas)s?"
+msgstr "Určite chcete odstrániť plyn %(gas)s?"
+
+#: flase_app/templates/gasses/delete.html:16
+#: flase_app/templates/gasses/list.html:30
+#: flase_app/templates/owners/delete.html:16
+#: flase_app/templates/owners/list.html:28
+#: flase_app/templates/places/buildings.html:28
+#: flase_app/templates/places/buildings_delete.html:16
+#: flase_app/templates/places/locations.html:32
+#: flase_app/templates/places/locations_delete.html:16
+#: flase_app/templates/places/workplaces.html:30
+#: flase_app/templates/places/workplaces_delete.html:16
+#: flase_app/templates/suppliers/delete.html:16
+#: flase_app/templates/suppliers/list.html:28
+msgid "Delete"
+msgstr "Odstrániť"
+
+#: flase_app/templates/gasses/delete.html:17
+#: flase_app/templates/owners/delete.html:17
+#: flase_app/templates/places/buildings_delete.html:17
+#: flase_app/templates/places/locations_delete.html:17
+#: flase_app/templates/places/workplaces_delete.html:17
+#: flase_app/templates/suppliers/delete.html:17
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: flase_app/templates/gasses/form.html:5
+#: flase_app/templates/gasses/form.html:10
+msgid "Edit gas"
+msgstr "Úprava plynu"
+
+#: flase_app/templates/gasses/form.html:5
+#: flase_app/templates/gasses/form.html:12
+msgid "New gas"
+msgstr "Nový plyn"
+
+#: flase_app/templates/gasses/list.html:5
+#: flase_app/templates/gasses/list.html:9
+msgid "Gases"
+msgstr "Plyny"
+
+#: flase_app/templates/gasses/list.html:27
+#: flase_app/templates/owners/list.html:25
+#: flase_app/templates/places/buildings.html:25
+#: flase_app/templates/places/locations.html:29
+#: flase_app/templates/places/workplaces.html:27
+#: flase_app/templates/suppliers/list.html:25
+#: flase_app/templates/users/list.html:31
+msgid "Edit"
+msgstr "Upraviť"
+
+#: flase_app/templates/gasses/list.html:39
+msgid "Add gas"
+msgstr "Pridať plyn"
+
+#: flase_app/templates/owners/delete.html:5
+#: flase_app/templates/owners/delete.html:9
+msgid "Delete owner"
+msgstr "Odstrániť majiteľa"
+
+#: flase_app/templates/owners/delete.html:11
+#, python-format
+msgid "Are you sure you want to delete owner %(owner)s?"
+msgstr "Určite chcete odstrániť majiteľa %(owner)s?"
+
+#: flase_app/templates/owners/form.html:5
+#: flase_app/templates/owners/form.html:10
+msgid "Edit owner"
+msgstr "Úprava majiteľa"
+
+#: flase_app/templates/owners/form.html:5
+#: flase_app/templates/owners/form.html:10
+msgid "New owner"
+msgstr "Nový majiteľ"
+
+#: flase_app/templates/owners/list.html:37
+msgid "Add owner"
+msgstr "Pridať majiteľa"
+
+#: flase_app/templates/places/buildings.html:37
+msgid "Add building"
+msgstr "Pridať budovu"
+
+#: flase_app/templates/places/buildings_delete.html:5
+#: flase_app/templates/places/buildings_delete.html:9
+msgid "Delete building"
+msgstr "Odstrániť budovu"
+
+#: flase_app/templates/places/buildings_delete.html:11
+#, python-format
+msgid "Are you sure you want to delete building %(building)s?"
+msgstr "Určite chcete odstrániť budovu %(building)s?"
+
+#: flase_app/templates/places/buildings_form.html:5
+#: flase_app/templates/places/buildings_form.html:10
+msgid "Edit building"
+msgstr "Úprava budovy"
+
+#: flase_app/templates/places/buildings_form.html:5
+#: flase_app/templates/places/buildings_form.html:10
+msgid "New building"
+msgstr "Nová budova"
+
+#: flase_app/templates/places/locations.html:41
+msgid "Add location"
+msgstr "Pridať umiestnenie"
+
+#: flase_app/templates/places/locations_delete.html:5
+#: flase_app/templates/places/locations_delete.html:9
+msgid "Delete location"
+msgstr "Odstrániť umiestnenie"
+
+#: flase_app/templates/places/locations_delete.html:11
+#, python-format
+msgid "Are you sure you want to delete location %(location)s, %(workplace)s?"
+msgstr "Určite chcete odstrániť umiestnenie %(location)s, %(workplace)s?"
+
+#: flase_app/templates/places/locations_form.html:5
+#: flase_app/templates/places/locations_form.html:10
+msgid "Edit location"
+msgstr "Úprava umiestnenia"
+
+#: flase_app/templates/places/locations_form.html:5
+#: flase_app/templates/places/locations_form.html:10
+msgid "New location"
+msgstr "Nové umiestnenie"
+
+#: flase_app/templates/places/workplaces.html:39
+msgid "Add workplace"
+msgstr "Pridať pracovisko"
+
+#: flase_app/templates/places/workplaces_delete.html:5
+#: flase_app/templates/places/workplaces_delete.html:9
+msgid "Delete workplace"
+msgstr "Odstrániť pracovisko"
+
+#: flase_app/templates/places/workplaces_delete.html:11
+#, python-format
+msgid "Are you sure you want to delete workplace %(workplace)s?"
+msgstr "Určite chcete odstrániť pracovisko %(workplace)s?"
+
+#: flase_app/templates/places/workplaces_form.html:5
+#: flase_app/templates/places/workplaces_form.html:10
+msgid "Edit workplace"
+msgstr "Úprava pracoviska"
+
+#: flase_app/templates/places/workplaces_form.html:5
+#: flase_app/templates/places/workplaces_form.html:10
+msgid "New workplace"
+msgstr "Nové pracovisko"
+
+#: flase_app/templates/registration/login.html:7
+#: flase_app/templates/registration/login.html:16
+#: flase_app/templates/registration/login.html:28
+msgid "Log in"
+msgstr "Prihlásiť sa"
+
+#: flase_app/templates/registration/login.html:31
+msgid "Forgotten password?"
+msgstr "Zabudnuté heslo?"
+
+#: flase_app/templates/registration/password_change_done.html:5
+#: flase_app/templates/registration/password_change_done.html:10
+msgid "Password changed successfully"
+msgstr "Heslo bolo úspešne zmenené."
+
+#: flase_app/templates/registration/password_change_form.html:15
+msgid "Change"
+msgstr "Zmeniť"
+
+#: flase_app/templates/registration/password_reset_complete.html:5
+#: flase_app/templates/registration/password_reset_confirm.html:5
+#: flase_app/templates/registration/password_reset_confirm.html:9
+#: flase_app/templates/registration/password_reset_done.html:5
+#: flase_app/templates/registration/password_reset_form.html:5
+#: flase_app/templates/registration/password_reset_form.html:9
+msgid "Forgotten password"
+msgstr "Zabudnuté heslo"
+
+#: flase_app/templates/registration/password_reset_complete.html:9
+msgid "Password reset complete"
+msgstr "Obnova hesla dokončená"
+
+#: flase_app/templates/registration/password_reset_complete.html:10
+msgid "Your new password has been set. You can log in using the new password."
+msgstr "Vaše nové heslo bolo nastavené. Môžete sa prihlásiť pomocou nového hesla."
+
+#: flase_app/templates/registration/password_reset_confirm.html:23
+msgid "The password reset link was invalid, possibly because it has already been used or it has expired. Please request a new password reset."
+msgstr "Odkaz na obnovenie hesla bol neplatný, pravdepodobne preto, že už bol použitý alebo jeho platnosť vypršala. Požiadajte o nové obnovenie hesla."
+
+#: flase_app/templates/registration/password_reset_done.html:9
+msgid "Check your inbox."
+msgstr "Skontrolujte si doručenú poštu."
+
+#: flase_app/templates/registration/password_reset_done.html:10
+msgid "We've emailed you instructions for setting your password."
+msgstr "Pokyny na nastavenie hesla sme vám poslali emailom."
+
+#: flase_app/templates/registration/password_reset_form.html:10
+msgid "Enter your email address below, and we'll email you instructions for setting a new password."
+msgstr "Zadajte svoju emailovú adresu nižšie a my vám zašleme pokyny na nastavenie nového hesla."
+
+#: flase_app/templates/suppliers/delete.html:5
+#: flase_app/templates/suppliers/delete.html:9
+msgid "Delete supplier"
+msgstr "Odstrániť dodávateľa"
+
+#: flase_app/templates/suppliers/delete.html:11
+#, python-format
+msgid "Are you sure you want to delete supplier %(supplier)s?"
+msgstr "Určite chcete odstrániť dodávateľa %(supplier)s?"
+
+#: flase_app/templates/suppliers/form.html:5
+#: flase_app/templates/suppliers/form.html:10
+msgid "Edit supplier"
+msgstr "Úprava dodávateľa"
+
+#: flase_app/templates/suppliers/form.html:5
+#: flase_app/templates/suppliers/form.html:12
+msgid "New supplier"
+msgstr "Nový dodávateľ"
+
+#: flase_app/templates/suppliers/list.html:37
+msgid "Add supplier"
+msgstr "Pridať dodávateľa"
+
+#: flase_app/templates/users/form.html:5 flase_app/templates/users/form.html:10
+msgid "Edit user"
+msgstr "Úprava používateľa"
+
+#: flase_app/templates/users/form.html:5 flase_app/templates/users/form.html:10
+msgid "New user"
+msgstr "Nový používateľ"
+
+#: flase_app/templates/users/list.html:28
+msgid "Inactive"
+msgstr "Neaktívny"
+
+#: flase_app/templates/users/list.html:40
+msgid "Add user"
+msgstr "Pridať používateľa"

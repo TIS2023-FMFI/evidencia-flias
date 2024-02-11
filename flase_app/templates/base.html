@@ -34,7 +34,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                     {% if user.role >= user.Role.ADMIN %}
                     <li class="nav-item active">
@@ -61,17 +61,23 @@
                             <a class="dropdown-item" href="{% url "password_change" %}">{% translate "Change password" %}</a>
 							<form id="postForm" method="post" action="{% url 'logout' %}">
 							  {% csrf_token %}
-							  <button type="submit" class="btn btn-link dropdown-item">Logout</button>
+							  <button type="submit" class="dropdown-item">Logout</button>
 							</form>
                         </div>
                         {% endif %}
                     </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
+                        {# "Language" here is left untranslated as it is somewhat internationally recognized. #}
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">SK</a>
+                            aria-expanded="false"><i class="bi bi-globe-europe-africa"></i> Language</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">SK</a>
-                            <a class="dropdown-item" href="#">EN</a>
+                            <form id="postForm" method="post" action="{% url 'set_language' %}">
+							  {% csrf_token %}
+							  <button type="submit" name="language" value="sk" class="dropdown-item">🇸🇰 SK</button>
+							  <button type="submit" name="language" value="en-us" class="dropdown-item">🇬🇧 EN</button>
+							</form>
                         </div>
                     </li>
                 </ul>

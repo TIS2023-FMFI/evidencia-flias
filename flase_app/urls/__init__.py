@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.i18n import set_language
 
 from flase_app.views import places, cylinder
 from django.contrib.auth.views import LogoutView
@@ -95,4 +96,5 @@ urlpatterns = [
     path("places/locations/<int:pk>/delete/", places.LocationDeleteView.as_view(), name="location_delete"),
     # Redirect
     path('', HomeRedirectView.as_view(), name='home'),
+    path("set_language/", set_language, name="set_language"),
 ]
