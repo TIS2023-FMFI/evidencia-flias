@@ -251,6 +251,8 @@ class CylinderFilterForm(forms.Form):
         widget=forms.Select(),
         label=_("Status"),
     )
+    building = forms.ModelChoiceField(queryset=Building.objects.get_queryset(), required=False, label=_("Building"))
+    workplace = forms.ModelChoiceField(queryset=Workplace.objects.get_queryset(), required=False, label=_("Workplace"))
 
 
 class CylinderLifeUpdateForm(forms.ModelForm):
