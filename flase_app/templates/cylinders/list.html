@@ -93,7 +93,9 @@
                     <td class="text-nowrap">{{ life.volume|default:"--" }} ℓ</td>
                     <td class="text-nowrap">
                         {{ life.pressure|default:"--" }} bar
+                        {% if life.pressure_date %}
                         <div class="fw-light text-muted">{{ life.pressure_date|date }}, {{ life.pressure_date|time }}</div>
+                        {% endif %}
                     </td>
                     <td class="text-nowrap">
                         {{ life.location }}
@@ -128,7 +130,9 @@
                 <p class="card-text mb-1">
                     <strong>{% translate "Current pressure" %}:</strong>
                     {{ life.pressure|default:"--" }} bar
+                    {% if life.pressure_date %}
                     <span class="fw-light text-muted">({{ life.pressure_date|date }}, {{ life.pressure_date|time }})</span>
+                    {% endif %}
                 </p>
                 <p class="card-text mb-1"><strong>{% translate "Current location" %}:</strong> {{ life.location }}</p>
                 <p class="card-text mb-1"><strong>{% translate "Owner" %}:</strong> {{ life.cylinder.owner|default:"--" }}</p>
