@@ -105,6 +105,7 @@ class PressureLogView(EditorRequiredMixin, CreateView):
 
         life = self.cylinder_life
         life.pressure = change.pressure
+        life.pressure_date = change.timestamp
         life.save()
 
         return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': life.id}))

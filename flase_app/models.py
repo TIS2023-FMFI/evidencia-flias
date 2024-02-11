@@ -149,6 +149,7 @@ class CylinderLife(models.Model):
     )
 
     pressure = models.IntegerField(blank=True, null=True)
+    pressure_date = models.DateTimeField(blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.RESTRICT)
     is_connected = models.BooleanField()
     gas = models.ForeignKey(Gas, on_delete=models.RESTRICT, blank=True, null=True)

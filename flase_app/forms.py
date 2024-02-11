@@ -193,7 +193,6 @@ class CylinderLifeCreateForm(forms.ModelForm):
         return life
 
 
-
 class PressureLogForm(forms.ModelForm):
     class Meta:
         model = CylinderChange

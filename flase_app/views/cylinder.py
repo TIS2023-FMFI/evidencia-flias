@@ -181,6 +181,7 @@ class CylinderUndoChangeView(EditorRequiredMixin, View):
                 raise PermissionDenied()
 
             life.pressure = previous_pressure_change.pressure
+            life.pressure_date = previous_pressure_change.timestamp
 
         if latest_change.location:
             previous_location_change = changes.exclude(id=latest_change.id).filter(location__isnull=False).first()
