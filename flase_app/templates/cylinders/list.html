@@ -8,26 +8,6 @@
 {% endblock %}
 
 {% block content %}
-{% block head %}
-<style>
-    .table-responsive table {
-        border-collapse: collapse !important;
-    }
-    .mobile-card-wrapper {
-        display: none;
-    }
-    
-    @media (max-width: 768px) {
-        .table-responsive {
-            display: none;
-        }
-        .mobile-card-wrapper {
-            display: block !important;
-        }
-    }
-</style>
-{% endblock head %}
-
 <div class="container mt-4">
     <h1>{% translate "Cylinders" %}</h1>
 
@@ -78,7 +58,7 @@
         </div>
     </div>
     
-    <div class="table-responsive">
+    <div class="table-responsive d-none d-md-block">
         <table class="table table-striped">
             <thead>
             <tr class="text-nowrap">
@@ -125,28 +105,27 @@
             </tbody>
         </table>
     </div>
-{% for life in object_list %}
-<div class="mobile-card-wrapper mb-3">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{% translate "Cylinder Details" %}</h5>
-            <p class="card-text mb-1"><strong>{% translate "Barcode" %}:</strong> {{ life.cylinder.barcode }}</p>
-            <p class="card-text mb-1"><strong>{% translate "Gas" %}:</strong> {{ life.gas|default:"--" }}</p>
-            <p class="card-text mb-1"><strong>{% translate "Volume" %}:</strong> {{ life.volume|default:"--" }} ℓ</p>
-            <p class="card-text mb-1"><strong>{% translate "Current pressure" %}:</strong> {{ life.pressure|default:"--" }} bar</p>
-            <p class="card-text mb-1"><strong>{% translate "Current location" %}:</strong> {{ life.location }}</p>
-            <p class="card-text mb-1"><strong>{% translate "Owner" %}:</strong> {{ life.cylinder.owner|default:"--" }}</p>
-            <p class="card-text mb-1"><strong>{% translate "Supplier" %}:</strong> {{ life.supplier|default:"--" }}</p>
-            <p class="card-text mb-3"><strong>{% translate "Note" %}:</strong> {{ life.note }}</p>
-            <a href="{% url 'cylinder_life_detail' life.id %}" class="btn btn-primary">
-                <i class="bi bi-eye"></i> {% translate "Detail" %}
-            </a>
+
+    {% for life in object_list %}
+    <div class="mb-3 d-block d-md-none">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{% translate "Cylinder Details" %}</h5>
+                <p class="card-text mb-1"><strong>{% translate "Barcode" %}:</strong> {{ life.cylinder.barcode }}</p>
+                <p class="card-text mb-1"><strong>{% translate "Gas" %}:</strong> {{ life.gas|default:"--" }}</p>
+                <p class="card-text mb-1"><strong>{% translate "Volume" %}:</strong> {{ life.volume|default:"--" }} ℓ</p>
+                <p class="card-text mb-1"><strong>{% translate "Current pressure" %}:</strong> {{ life.pressure|default:"--" }} bar</p>
+                <p class="card-text mb-1"><strong>{% translate "Current location" %}:</strong> {{ life.location }}</p>
+                <p class="card-text mb-1"><strong>{% translate "Owner" %}:</strong> {{ life.cylinder.owner|default:"--" }}</p>
+                <p class="card-text mb-1"><strong>{% translate "Supplier" %}:</strong> {{ life.supplier|default:"--" }}</p>
+                <p class="card-text mb-3"><strong>{% translate "Note" %}:</strong> {{ life.note }}</p>
+                <a href="{% url 'cylinder_life_detail' life.id %}" class="btn btn-primary">
+                    <i class="bi bi-eye"></i> {% translate "Detail" %}
+                </a>
+            </div>
         </div>
     </div>
-</div>
-{% endfor %}
-
-
+    {% endfor %}
 
     {% if user.role >= user.Role.OPERATOR %}
     <a href="{% url 'cylinder_create' %}" class="btn btn-success">
