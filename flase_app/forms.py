@@ -289,7 +289,10 @@ class CylinderLifeUpdateForm(forms.ModelForm):
 class GasForm(forms.ModelForm):
     class Meta:
         model = Gas
-        fields = ["name", "note"]
+        fields = ["name"]
+        labels = {
+            "name": _("Name"),
+        }
 
 
 class BarcodeForm(forms.Form):

@@ -75,7 +75,7 @@ class CylinderQuerySetMixin:
         qs = CylinderLife.objects.filter(is_current=True).select_related("cylinder", "gas", "supplier", "location",
                                                                          "location__workplace",
                                                                          "location__workplace__building",
-                                                                         "cylinder__owner")
+                                                                         "cylinder__owner").order_by("cylinder__barcode")
 
         form = CylinderFilterForm(self.request.GET)
         if form.is_valid():
