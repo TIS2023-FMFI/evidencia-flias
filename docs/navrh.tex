@@ -28,7 +28,31 @@ Databáza sa skladá z viacerých tabuliek, ktoré sú navzájom prepojené cez 
 
 Každá tabuľka je navrhnutá s cieľom optimalizovať ukladanie a prístup k dátam potrebným pre správu a sledovanie fľaši a súvisiacich aktivít.
 
-\subsection{State diagram}
+\subsection{Formáty súborov}
+\subsubsection{Konfigurácia systému}
+
+Systém sa konfiguruje pomocou tzv. premenné prostredia (environment variables).
+Tento systém je vhodný, ak je aplikácia nasadzovaná do kontajnerizovaného prostredia,
+alebo je spravovaný supervisorom, ako napríklad SystemD, ktorý jej vie tieto premenné poskytnúť.
+Pre jednoduchšie nasadzovanie je však možné použiť súbor \texttt{.env}, vo formáte: \texttt{VARIABLE=value}.
+
+Systém podporuje tieto premenné:
+
+\begin{itemize}
+	\item \texttt{SECRET\_KEY} náhodný string používaný na šifrovanie session dát
+	\item \texttt{DEBUG} boolean (predvolene False), ktorý určuje, či Django vypisuje všetky chyby a zapína debugger
+	\item \texttt{ALLOWED\_HOSTS} čiarkou oddelený zoznam domén, na ktorých je náš systém dostupný
+	\item \texttt{DATABASE\_URL} adresa databázy, vrátane prístupových údajov (ak treba), pre celý syntax pozri \href{https://django-environ.readthedocs.io/en/latest/types.html#environ-env-db-url}{dokumentáciu}, predvolene používa SQLite3 databázu \texttt{db.sqlite3}
+	\item \texttt{EMAIL\_FROM} a \texttt{EMAIL\_URL} nastavuje odosielanie emailov. Predvolene sa maily píšu na štandardný výstup, nastavenie SMTP a iných spôsobov nájdete \href{https://django-environ.readthedocs.io/en/latest/types.html#environ-env-email-url}{v dokumentácií}
+\end{itemize}
+
+\subsubsection{CSV export}
+
+Systém poskytuje používateľom možnosť vyexportovať aktuálny stav skladu.
+Výsledok tejto operácie je súbor formátu CSV (hodnoty oddelené čiarkou) s nasledujúcimi stĺpcami:
+barcode, gas, volume, pressure, pressure\_date, location, is\_connected, owner, supplier, note.
+
+\subsection{Stavový diagram}
 \includegraphics[width=\textwidth]{navrh-assets/state}
 
 \section{Návrh používateľského rozhrania}
@@ -102,18 +126,39 @@ Na pravo výsledok merania, dá sa ručne upraviť v prípade zlej detekcie.
 \section{Deployment}
 \includegraphics[width=\textwidth]{navrh-assets/deployment}
 
+Keďže systém vzniká ako webová aplikácia, bude sa nasadzovať na aplikačný server.
+Tento aplikačný server, v našom prípade \textit{gunicorn} alebo \textit{mod\_wsgi} spúšťa samotnú
+Django aplikáciu, ktorá obsluhuje požiadavky. Pred týmto aplikačným serverom sa môže nachádzať aj
+reverzná proxy v podobe webového servera \textit{Apache} alebo \textit{nginx}.
+
+Aplikácia sa bude nasadzovať primárne na server s operačným systémom Linux, avšak vzhľadom na
+medzi-platformovú kompatibilitu jazyka Python by nemal byť problém systém nasadiť aj na systéme Windows.
+
 \section{Použité technológie}
 
 Pri realizácií projektu sme sa rozhodli použiť nasledujúce webové technológie:
 
 \begin{itemize}
-\item Python: primárny programovací jazyk
-\item Django: framework na vývoj webových aplikácií v Pythone
-\item Bootstrap: CSS framework
-\item HTML, JS, CSS
-\item OpenCV: nástroj počítačového videnia
-\item NumPy: nástroj matematických výpočtov v Pythone
-\item PostgreSQL / SQLite3: relačný databázový systém
+\item Python sme si vybrali ako primárny jazyk pre jeho jednoduchosť,
+	vysokú medzi-platformovú kompatibilitu a prítomnosť OpenCV knižnice.
+\item Django je jeden z populárnych webových frameworkov pre Python. 
+	Poskytuje nám kvalitné, bezpečné jadro a flexibilný 
+	systém na prácu s databázou. Django je dlhodobo veľmi stabilné,
+	preto aj neskoršie úpravy systému nebudú sprevádzané problémami.
+\item Na vývoj webového rozhrania sme použili štandardné webové technológie
+	HTML, CSS, JS spolu s CSS frameworkom Bootstrap, ktorý nám ponúka ucelený
+	design systému.
+\item Na vykreslovanie grafov využijeme knižnicu Chart.js a na skenovanie čiarových
+	kódov mobilom využijeme html5-qrcode. Knižnica sa síce nazýva qrcode, ale podporuje
+	aj klasické 1D kódy. Vybrali sme si ju primárne kvôli podpore hardvérovej akcelerácií
+	skenovania kódov.
+\item Pri výbere databázového systému sme zvolili SQLite3. Najmä pre jej jednoduché
+	nasadzovanie do prevádzky a jednoduchú správu (zálohovanie a pod.). Keby sa v budúcnosti
+	preukázala SQLite3 ako nedostatočná, vďaka využitiu Django ORM systému je možné databázu
+	jednoducho vymeniť za Postgres, resp. MySQL.
+\item Na automatické rozoznávanie tlaku z manometrov využijeme knižnice OpenCV na 
+	spracovávanie obrazových dát a NumPy na potrebné matematické výpočty.
+	\href{https://github.com/TIS2023-FMFI/evidencia-flias/tree/Manometre-demo/Demo}{Túto kombináciu sme testovali tu.}
 \end{itemize}
 
 \section{Plán implementácie}
