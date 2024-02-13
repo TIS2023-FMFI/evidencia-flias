@@ -9,6 +9,12 @@
 
     {% if error %}
     <div class="alert alert-danger">{% translate "There is no cylinder with the scanned barcode." %}</div>
+
+    {% if user.role >= user.Role.OPERATOR %}
+    <a href="{% url "cylinder_create" %}?barcode={{ barcode }}" class="btn btn-success mb-4">
+        <i class="bi bi-plus-lg"></i> {% translate "Add cylinder" %}
+    </a>
+    {% endif %}
     {% endif %}
 
     <div id="scanner" style="width: 100%"></div>
@@ -33,7 +39,7 @@
         }
 
         document.getElementById("scanner-start").addEventListener("click", () => {
-            document.getElementById("scanner-start").classList.add("hidden")
+            document.getElementById("scanner-start").classList.add("d-none")
             scanner.start({facingMode: "environment"}, {fps: 10}, onScanSuccess)
         })
     </script>

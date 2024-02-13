@@ -252,5 +252,5 @@ class ScanBarcodeView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         cylinder_life = CylinderLife.objects.filter(cylinder__barcode=form.cleaned_data['barcode']).order_by("-start_date").first()
         if not cylinder_life:
-            return render(self.request, "cylinders/scan_barcode.html", {"error": True})
+            return render(self.request, "cylinders/scan_barcode.html", {"error": True, "barcode": form.cleaned_data['barcode']})
         return redirect("cylinder_life_detail", pk=cylinder_life.id)
