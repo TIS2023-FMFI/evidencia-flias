@@ -123,6 +123,14 @@ Na pravo výsledok merania, dá sa ručne upraviť v prípade zlej detekcie.
 \subsection{Component diagram}
 \includegraphics[width=\textwidth]{navrh-assets/component}
 
+Vo webovom prehliadači má používateľ dostupné komponenty ako zobrazovanie, pridávanie,
+filtrovanie, vyhľadávanie, menenie dát fľaše, sťahovanie fľaší do excelu. Všetky
+komponenety komunikujú s databázou a výsledky sa zobrazia na webe. Pri pridávaní,
+vyhľadávaní a zmene dát flaše je možné požiadať telefón o mobilnú kameru.
+Po odfotení fotografie sa fotografia spracuje buď vo webovom prehliadači, alebo mobil
+komunikuje so serverom, kde sa fotografia spracuje. Po spracovaní sa opäť komunikuje
+s databázou a výsledky sa zobrazia na webe.
+
 \section{Deployment}
 \includegraphics[width=\textwidth]{navrh-assets/deployment}
 
