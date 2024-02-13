@@ -14,8 +14,19 @@
 Systém beží na webovom serveri, ku ktorému používateľ pristupuje cez webový prehliadač. Webový server poskytuje užívateľovi prístup k funkcionalitám systému prostredníctvom HTTPS protokolu. Systém uchováva informácie o plynových fľašiach a používateľoch v databáze. Na komunikáciu s databázou využíva framework Django. Databázové dotazy sú zasielané na server cez SQL protokol. Systém komunikuje s používateľom prostredníctvom grafického rozhrania (GUI) vo webovom prehliadači. GUI poskytuje užívateľovi možnosť nahrávať fotografie manometra, zobrazovať, pridávať, mazať, upravovať a exportovať údaje o plynových fľašiach. Pri pokuse o detekciu manometra systém komunikuje s kamerou daného zariadenia. Pri prvom pokuse o detekciu manometra si systém vyžiada povolenie od používateľa na používanie kamery. Interakcia s kamerou prebieha cez natívne API pre kamery v danom zariadení.
 
 \section{Dátový model}
+\includegraphics[width=\textwidth]{navrh-assets/db}
 
-\includegraphics[page=2,width=\textwidth]{navrh-assets/db}
+Databáza sa skladá z viacerých tabuliek, ktoré sú navzájom prepojené cez cudzie kľúče. Hlavné tabuľky zahŕňajú:
+
+\begin{itemize}
+    \item \textbf{flase\_app\_user}: Obsahuje informácie o používateľoch systému vrátane ich rolí a autentifikačných údajov.
+    \item \textbf{flase\_app\_cylinder}: Uchováva záznamy o jednotlivých fľašiach, ich umiestnení, vlastníkoch a životných cykloch.
+    \item \textbf{flase\_app\_cylinderlife}: Zaznamenáva rôzne stavy fľaši, vrátane údajov o tlaku, plyne a objeme.
+    \item \textbf{flase\_app\_cylinderchange}: Uchováva logy súvisiace s operáciami a udalosťami týkajúcimi sa fľaši.
+    \item \textbf{flase\_app\_supplier}, \textbf{flase\_app\_gas}, \textbf{flase\_app\_owner}, \textbf{flase\_app\_location}, \textbf{flase\_app\_workplace},\textbf{flase\_app\_building}: Tieto tabuľky poskytujú dodatočné informácie o dodávateľoch, vlastníkoch, plynoch, umiestneniach, pracovnom prostredi a budove spojených s fľašami.
+\end{itemize}
+
+Každá tabuľka je navrhnutá s cieľom optimalizovať ukladanie a prístup k dátam potrebným pre správu a sledovanie fľaši a súvisiacich aktivít.
 
 \subsection{State diagram}
 \includegraphics[width=\textwidth]{navrh-assets/state}
