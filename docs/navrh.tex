@@ -55,6 +55,15 @@ barcode, gas, volume, pressure, pressure\_date, location, is\_connected, owner, 
 \subsection{Stavový diagram}
 \includegraphics[width=\textwidth]{navrh-assets/state}
 
+Stavový diagram modeluje správanie plynovej fľaše v systéme. Fľaša je v počiatočnom stave Rented, keď je prenajatá.
+Po prenájme je fľaša s plynom doručená na fakultu, kde nadobúda stav On-site. Oscanovaním čiarového kódu je 
+flaša pridaná do systému a získava stav In Storage, kde je uskladnená, ale práve sa nepoužíva. Stav flaše sa
+môže opakovane meniť medzi In Storage a In Use, poďľa toho či je využivaná alebo nie. Flaša, ktorá je skoro prázdna
+je presunutá zo skladu a pripravená na prepravu, nadobúda stav Ready for Transport. Flaša je v stave Being refilled,
+ak je vybraná pre naplnenie, po naplnení je vrátená do skladu a nadobúda stav In Storage. Ak je fľaša vybraná na navrátenie
+majiteľovi, tak je označená v systéme ako neaktívna a získava stav Disabled in evidence. Po transporte majiteľovi nadobúda
+koncový stav Returned.
+
 \section{Návrh používateľského rozhrania}
 
 \subsection{Prihlasovacia obrazovka}
