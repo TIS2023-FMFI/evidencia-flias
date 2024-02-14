@@ -14,15 +14,30 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">{% translate "Log in" %}</h3>
-                    <form method="post" class="needs-validation" novalidate>
+
+					{% if form.non_field_errors %}
+					    <div class="row mb-3">
+					        {% for err in form.non_field_errors %}
+					            <div class="alert alert-danger">{{ err }}</div>
+					        {% endfor %}
+					    </div>
+					{% endif %}
+                    
+                    <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="id_username">{% translate "Email address" %}</label>
                             <input type="email" class="form-control" id="id_username" name="username" required>
+                            {% if form.username.errors %}
+                                <div class="text-danger">{{ form.username.errors|first }}</div>
+                            {% endif %}
                         </div>
                         <div class="form-group mt-2">
                             <label for="id_password">{% translate "Password" %}</label>
                             <input type="password" class="form-control" id="id_password" name="password" required>
+                            {% if form.password.errors %}
+                                <div class="text-danger">{{ form.password.errors|first }}</div>
+                            {% endif %}
                         </div>
                         <div class="form-group text-center login-button mt-4">
                             <button type="submit" class="btn btn-primary">{% translate "Log in" %}</button>

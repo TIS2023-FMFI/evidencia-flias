@@ -19,12 +19,12 @@
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="/">{% translate "Cylinder Evidence" %}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default"
+                aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <div class="collapse navbar-collapse" id="navbar-default">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                     {% if user.role >= user.Role.ADMIN %}
@@ -59,7 +59,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         {# "Language" here is left untranslated as it is somewhat internationally recognized. #}
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="bi bi-globe-europe-africa"></i> Language</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown03">
                             <form id="postForm" method="post" action="{% url 'set_language' %}">
@@ -74,7 +74,7 @@
 		</div>
 	</nav>
 
-    <div class="container">
+    <div class="container mb-4">
         {% block content %}
         {% endblock %}
     </div>

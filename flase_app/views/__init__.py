@@ -75,6 +75,13 @@ class CylinderCreateView(OperatorRequiredMixin, CreateView):
         kw["cylinder"] = Cylinder.objects.filter(barcode=barcode).first()
         return kw
 
+    def get_initial(self):
+        initial = super().get_initial()
+        barcode = self.request.GET.get("barcode")
+        if barcode:
+            initial["barcode"] = barcode
+        return initial
+
     def get_success_url(self):
         return reverse("cylinder_list")
 
@@ -105,6 +112,7 @@ class PressureLogView(EditorRequiredMixin, CreateView):
 
         life = self.cylinder_life
         life.pressure = change.pressure
+        life.pressure_date = change.timestamp
         life.save()
 
         return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': life.id}))

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Detail fľaše{% endblock %}
+{% block title %}
+    {% translate "Cylinder detail" %}
+{% endblock %}
 
 {% block content %}
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-block d-md-flex justify-content-between align-items-center mb-3">
         <h1>{{ cylinder_life.cylinder.barcode }}</h1>
         {% if cylinder_life.is_current %}
         <div>
@@ -20,7 +22,7 @@
     </div>
     <hr>
 
-    <div class="row">
+    <div class="row g-4">
         <div class="col-sm-4">
             <dl class="row">
                 <dt class="col-sm-5">{% translate "Gas" %}</dt>
@@ -54,7 +56,7 @@
         </div>
 
         <div class="col-sm-8">
-			<canvas id="pressure_chart"></canvas>
+			<canvas id="pressure_chart" style="width: 100%; min-height: 250px;"></canvas>
 
             {{ chart_data|json_script:"chart_data" }}
 
@@ -93,7 +95,7 @@
 		</div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row mt-4 g-4">
         <div class="col-sm-6">
 			<div class="d-flex justify-content-between align-items-center">
 				<h2>{% translate "History" %}</h2>
@@ -101,7 +103,7 @@
                 {% if can_undo %}
 				<form method="post" action="{% url "cylinder_life_undo" pk=cylinder_life.id %}">
 					{% csrf_token %}
-					<button type="submit" class="btn btn-dark">
+					<button type="submit" class="btn btn-dark mb-2">
                         <i class="bi bi-arrow-counterclockwise"></i>
                         {% translate "Revert last change" %}
                     </button>

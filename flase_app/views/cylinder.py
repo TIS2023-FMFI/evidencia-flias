@@ -75,7 +75,7 @@ class CylinderQuerySetMixin:
         qs = CylinderLife.objects.filter(is_current=True).select_related("cylinder", "gas", "supplier", "location",
                                                                          "location__workplace",
                                                                          "location__workplace__building",
-                                                                         "cylinder__owner")
+                                                                         "cylinder__owner").order_by("cylinder__barcode")
 
         form = CylinderFilterForm(self.request.GET)
         if form.is_valid():
@@ -181,6 +181,7 @@ class CylinderUndoChangeView(EditorRequiredMixin, View):
                 raise PermissionDenied()
 
             life.pressure = previous_pressure_change.pressure
+            life.pressure_date = previous_pressure_change.timestamp
 
         if latest_change.location:
             previous_location_change = changes.exclude(id=latest_change.id).filter(location__isnull=False).first()
@@ -251,5 +252,5 @@ class ScanBarcodeView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         cylinder_life = CylinderLife.objects.filter(cylinder__barcode=form.cleaned_data['barcode']).order_by("-start_date").first()
         if not cylinder_life:
-            return render(self.request, "cylinders/scan_barcode.html", {"error": True})
+            return render(self.request, "cylinders/scan_barcode.html", {"error": True, "barcode": form.cleaned_data['barcode']})
         return redirect("cylinder_life_detail", pk=cylinder_life.id)

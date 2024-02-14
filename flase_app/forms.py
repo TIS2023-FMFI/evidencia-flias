@@ -193,7 +193,6 @@ class CylinderLifeCreateForm(forms.ModelForm):
         return life
 
 
-
 class PressureLogForm(forms.ModelForm):
     class Meta:
         model = CylinderChange
@@ -289,7 +288,10 @@ class CylinderLifeUpdateForm(forms.ModelForm):
 class GasForm(forms.ModelForm):
     class Meta:
         model = Gas
-        fields = ["name", "note"]
+        fields = ["name"]
+        labels = {
+            "name": _("Name"),
+        }
 
 
 class BarcodeForm(forms.Form):
