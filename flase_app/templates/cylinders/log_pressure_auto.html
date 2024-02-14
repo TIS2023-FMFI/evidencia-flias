@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{% translate 'Log pressure' %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% translate 'Log pressure' %}</h1>
+
+    <p>{% translate "Barcode" %}: {{ life.cylinder.barcode }}</p>
+
+    <div class="text-center" id="camera-wrapper">
+        <div class="d-inline-block" style="aspect-ratio: 1; overflow: hidden; border-radius: 100%;">
+            <video id="camera" autoplay style=" object-fit: cover; width: 100%; height: 100%;"></video>
+        </div>
+
+        <div class="mt-4">
+            <button class="btn btn-primary btn-lg" id="camera-button"><i class="bi bi-camera"></i></button>
+        </div>
+    </div>
+
+    <form method="post" class="w-full text-center d-none" id="preview-wrapper">
+        <canvas width="1080" height="1080" id="preview" style="border-radius: 100%;"></canvas>
+
+        <input type="hidden" name="image_b64" id="image-field">
+        {% csrf_token %}
+
+        <div class="row mt-4">
+            <div class="col-sm-6 offset-sm-3">
+                {% include "forms/form.html" %}
+            </div>
+        </div>
+
+        <div class="mt-2">
+            <button class="btn btn-primary btn-lg" id="camera-button">{% translate "Save" %}</button>
+        </div>
+    </form>
+
+    <script>
+        const player = document.getElementById('camera');
+        const canvas = document.getElementById('preview');
+        const context = canvas.getContext('2d');
+
+        const constraints = {
+            video: true,
+            facingMode: "environment",
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+            player.srcObject = stream;
+        });
+
+        document.getElementById("camera-button").addEventListener("click", () => {
+            const smaller = Math.min(player.videoWidth, player.videoHeight)
+            const offsetX = (player.videoWidth - smaller) / 2;
+            const offsetY = (player.videoHeight - smaller) / 2;
+            context.drawImage(player, offsetX, offsetY, smaller, smaller, 0, 0, canvas.width, canvas.height);
+            canvas.style.width = player.clientWidth + "px"
+            canvas.style.height = player.clientHeight + "px"
+            player.srcObject.getVideoTracks().forEach(track => track.stop());
+
+            document.getElementById("camera-wrapper").classList.add("d-none")
+            document.getElementById("preview-wrapper").classList.remove("d-none")
+            document.getElementById("image-field").value = canvas.toDataURL("image/jpeg", 0.75)
+        })
+    </script>
+{% endblock content %}

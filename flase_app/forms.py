@@ -202,6 +202,12 @@ class PressureLogForm(forms.ModelForm):
         }
 
 
+class AutomaticPressureLogForm(forms.Form):
+    min = forms.IntegerField(label=_("Minimum"), initial=0)
+    max = forms.IntegerField(label=_("Maximum"))
+    image_b64 = forms.CharField(widget=forms.HiddenInput())
+
+
 class RelocateForm(forms.ModelForm):
     class Meta:
         model = CylinderChange
