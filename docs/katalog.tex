@@ -84,10 +84,15 @@ Tento používateľ si môže pozerať všetky dáta v systéme, vyhľadávať a
 
 Má všetky možnosti ako \ref{gen:users:ro}. Navyše si môže vybrať fľašu alebo naskenovať čiarový kóď fľaše a zadať pre danú fľašu aktuálny stav tlaku manuálnym zadaním, alebo automatickým odčítaním z manometra.
 
+\subsubsection{Používateľ s operátorským prístupom (Operátor)}
+\label{gen:users:operator}
+
+Má všetky možnosti ako \ref{gen:users:ro}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové fľaše do systému, vyraďovať fľaše zo systému.
+
 \subsubsection{Používateľ s administrátorským prístupom (Administrátor)}
 \label{gen:users:admin}
 
-Má všetky možnosti ako \ref{gen:users:meter}. Navyše môže upravovať všetky parametre fliaš, evidovať ich pozíciu, prijímať nové fľaše do systému, vyraďovať fľaše zo systému, pridávať a upravovať používateľov v systéme.
+Má všetky možnosti ako \ref{gen:users:operator}. Navyše môže pridávať a upravovať používateľov v systéme a možnosti pre parametre, u ktorých je výber z možností.
 
 \subsection{Všeobecné obmedzenia}
 \label{gen:constraints}
@@ -128,8 +133,8 @@ Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobiln�
 	\item \label{req:param:location} umiestnenie (výber z možností)
 	\item stav (výber z možností - "prijatá", "vrátená", "vyradená")
 \end{enumerate}
-\item Administrátor môže vytvoriť novú fľašu. Môže ju vytvoriť aj bez uvedenia všetkých parametrov, pri vytváraní stačí uviesť jej čiarový kód.
-\item Administrátor môže kedykoľvek upravovať hodnoty parametrov fľaše.
+\item Operátor môže vytvoriť novú fľašu. Môže ju vytvoriť aj bez uvedenia všetkých parametrov, pri vytváraní stačí uviesť jej čiarový kód a počiatočné umiestnenie.
+\item Operátor môže kedykoľvek upravovať hodnoty parametrov fľaše.
 \item Administrátor môže pridávať, upravovať a mazať možnosti pre parametre "majiteľ" (\ref{req:param:owner}), "dodávateľ" (\ref{req:param:provider}), "plyn" (\ref{req:param:gas}).
 \item \label{req:location_details} Administrátor môže umiestneniu fľaše nastaviť budovu, pracovisko a zodpovednú osobu.
 \item Administrátor môže pridávať, upravovať a mazať možnosti pre "budova", "pracovisko" a "zodpovedná osoba" (\ref{req:location_details}).
@@ -142,6 +147,7 @@ Systém bude vyvíjaný ako webová aplikácia pre stolné počítače a mobiln�
 \item Čitateľ si môže zobraziť informácie o konkrétnej fľaši výberom zo zoznamu alebo naskenovaním jej čiarového kódu pomocou mobilného telefónu alebo čítačky čiarového kódu s emuláciou klávesnice.
 \item Editor môže zaevidovať stav tlaku danej fľaši manuálnym zadaním, nahraním fotografie manometra.
 Systém z poskytnutej fotografie odčíta aktuálny stav manometra. Používateľ môže skontrolovať správnosť hodnoty a v prípade potreby ju upraviť.
+\item Editor môže vrátiť svoju poslednú zmenu do 24 hodín od jej vykonania. Operátor môže vrátiť zmeny všetkých používateľov kedykoľvek.
 \item Editor môže pri poskytovaní fotografie manometra označiť na ciferníku manometra minimálnu a maximálnu hodnotu a uviesť ich číselné hodnoty. Tieto hodnoty potom systém použije pri výpočte aktuálnej hodnoty podľa polohy ručicky.
 \end{enumerate}
 
