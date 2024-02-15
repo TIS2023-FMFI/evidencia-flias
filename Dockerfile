@@ -6,6 +6,13 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONFAULTHANDLER 1
 ENV POETRY_VIRTUALENVS_CREATE 0
 
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && apt update \
+    && apt -y upgrade \
+    && apt -y install python3-opencv \
+    && apt -y clean \
+    && rm -rf /var/lib/apt/lists/* \
+
 RUN pip install poetry
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-root

@@ -54,6 +54,7 @@
             document.getElementById("camera-start").classList.add("d-none")
             navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                 player.srcObject = stream;
+                player.play();
             });
         })
 
