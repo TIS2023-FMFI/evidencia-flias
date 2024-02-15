@@ -16,6 +16,7 @@ from django.views.generic import ListView, UpdateView, CreateView, FormView, \
     TemplateView
 from django.utils.functional import cached_property
 
+from flase_app.detection import detect_pressure
 from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm, \
     BarcodeForm, CylinderLifeCreateForm, PressureLogForm, AutomaticPressureLogForm
 from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
@@ -339,14 +340,15 @@ class AutomaticPressureLogView(EditorRequiredMixin, FormView):
         data = form.cleaned_data["image_b64"].split(";base64,", 1)[1]
         data = base64.b64decode(data)
 
+        output = None
         if settings.FLASE_IMAGE_DIR:
-            file_path = settings.FLASE_IMAGE_DIR
-            os.makedirs(file_path, exist_ok=True)
-            file_path = os.path.join(file_path, f"{secrets.token_hex(16)}.jpg")
+            file_directory = settings.FLASE_IMAGE_DIR
+            os.makedirs(file_directory, exist_ok=True)
+            name = secrets.token_hex(16)
+            file_path = os.path.join(file_directory, f"{name}.jpg")
             with open(file_path, "wb") as f:
                 f.write(data)
+            output = os.path.join(file_directory, f"{name}-cv.jpg")
 
-        # TODO: run detection
-        pressure = 0
-
+        pressure = detect_pressure(data, form.cleaned_data["min"], form.cleaned_data["max"], output)
         return HttpResponseRedirect(reverse('cylinder_life_pressure', kwargs={'pk': self.cylinder_life.id}) + f"?pressure={pressure}")
