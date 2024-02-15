@@ -45,8 +45,7 @@
         const context = canvas.getContext('2d');
 
         const constraints = {
-            video: true,
-            facingMode: "environment",
+            video: {facingMode: "environment"},
         };
 
         document.getElementById("camera-start").addEventListener("click", () => {
