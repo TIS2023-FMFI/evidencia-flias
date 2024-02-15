@@ -11,7 +11,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt -y upgrade \
     && apt -y install python3-opencv \
     && apt -y clean \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip install poetry
 COPY pyproject.toml poetry.lock ./
