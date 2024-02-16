@@ -19,6 +19,15 @@ def average_circle(circles):
     return x, y, r
 
 
+def longest_lines(lines):
+    ordered = []
+    for line in lines:
+        length = distance(*line)
+        ordered.append((length, line))
+    ordered.sort(reverse=True, key=lambda x: x[0])
+    return [x[1] for x in ordered[:2]]
+
+
 def average_line(lines):
     x1 = x2 = y1 = y2 = 0
     l = 0
@@ -37,6 +46,10 @@ def distance(x1, y1, x2, y2):
     return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
 
+def angle_between(x1, y1, x2, y2):
+    return round(np.rad2deg(np.arctan2(y1 - y2, x1 - x2))) + 179
+
+
 def save_img(img, verdict, file):
     if file is None:
         return
@@ -45,16 +58,15 @@ def save_img(img, verdict, file):
 
 
 def detect_pressure(img_bytes, range_min, range_max, output=None):
-    im_data = np.fromstring(img_bytes, np.uint8)
+    im_data = np.frombuffer(img_bytes, np.uint8)
     img = cv2.imdecode(im_data, cv2.IMREAD_COLOR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    thr = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
-    _, thr2 = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+    gray = cv2.equalizeHist(gray)
+
     height, width = img.shape[:2]
 
     # Try to find the gauge
-    canny = cv2.Canny(gray, 100, 200)
-    circles = cv2.HoughCircles(canny, cv2.HOUGH_GRADIENT, 1, 20, minRadius=width // 10)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 50, param1=180, param2=220, minRadius=width // 6)
 
     if circles is None:
         save_img(img, "No circles", output)
@@ -62,11 +74,9 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
 
     filtered_circles = []
     for circle in circles[0]:
-        # if 10 <= circle[2] <= 100:
-        #     continue
-        if width * 0.7 <= circle[2] <= width * 0.4:
+        if circle[2] < width * 0.4:
             continue
-        if distance(circle[0], circle[1], width/2, height/2) > 200:
+        if distance(circle[0], circle[1], width/2, height/2) > 100:
             continue
         filtered_circles.append(circle)
 
@@ -74,8 +84,8 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
         save_img(img, "No circles after filter", output)
         return None
 
-    # for circle in filtered_circles:
-    #     cv2.circle(img, (int(circle[0]), int(circle[1])), int(circle[2]), (0,0,255),2)
+    for circle in filtered_circles:
+        cv2.circle(img, (int(circle[0]), int(circle[1])), int(circle[2]), (0,0,255),2)
 
     cx, cy, radius = average_circle(filtered_circles)
     cv2.circle(img, (cx, cy), radius, (0, 255, 0), 3, cv2.LINE_AA)
@@ -85,21 +95,28 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
     for x in range(width):
         for y in range(height):
             dist = math.sqrt((cx - x)**2 + (cy - y)**2)
-            if abs(dist - radius) <= radius * 0.2:
-                angle = int(np.rad2deg(np.arctan2(cy - y, cx - x))) + 179
-                darkness[angle] += thr[y, x]
+            if radius * 0.70 >= dist >= radius * 0.5:
+                angle = angle_between(cx, cy, x, y)
+
+                b, g, r = img[y, x]
+                rg = int(r) - int(g)
+                rb = int(r) - int(b)
+                delta = 30
+                darkness[angle] += (255 if rg > delta and rb > delta else 0)
+
+                img[y, x, 0] = 0
 
     darkness_prefix = [0]
     for i in range(360*2):
         darkness_prefix.append(darkness_prefix[-1] + darkness[i % 360])
 
     # Find the gauge's cutout
-    cutout_size = 88
+    cutout_size = 89
     cutout_angle = 0
-    cutout_max = 0
+    cutout_max = None
     for start in range(360):
         dark = darkness_prefix[start + cutout_size] - darkness_prefix[start]
-        if dark > cutout_max:
+        if cutout_max is None or dark < cutout_max:
             cutout_angle = start
             cutout_max = dark
 
@@ -113,7 +130,8 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
     cv2.line(img, (cx, cy), max_point, (255,0,0), 2)
     cv2.line(img, (cx, cy), min_point, (255,0,0), 2)
 
-    lines = cv2.HoughLinesP(thr2, 3, np.pi / 180, 100, minLineLength=250, maxLineGap=8)
+    canny = cv2.Canny(gray, 180, 300)
+    lines = cv2.HoughLinesP(canny, 2.5, np.pi / 180, 80, minLineLength=150, maxLineGap=25)
     if lines is None:
         save_img(img, "No lines", output)
         return None
@@ -121,13 +139,22 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
     filtered_lines = []
     for line in lines:
         line = line[0]
-        dist = np.cross(line[2:] - line[:2], np.array([cx, cy]) - line[:2]) / np.linalg.norm(line[2:] - line[:2])
-        if abs(dist) < 50:
+        dist = min(distance(cx, cy, *line[2:]), distance(cx, cy, *line[:2]))
+        dist_center = np.cross(line[2:] - line[:2], np.array([cx, cy]) - line[:2]) / np.linalg.norm(line[2:] - line[:2])
+        color = (255,255,0)
+
+        if abs(dist_center) <= 50 and abs(dist) <= 150:
             filtered_lines.append(line)
+            color = (0,255,255)
+        cv2.line(img, line[:2], line[2:], color, 2)
 
     if not filtered_lines:
         save_img(img, "No lines after filter", output)
         return None
+
+    filtered_lines = longest_lines(filtered_lines)
+    for line in filtered_lines:
+        cv2.line(img, line[:2], line[2:], (0,0,255), 1)
 
     line = average_line(filtered_lines)
     top_x, top_y = line[:2]
@@ -146,6 +173,6 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
         save_img(img, "Value out of range", output)
         return None
 
-    pressure = diff * bar_per_deg
+    pressure = int(diff * bar_per_deg)
     save_img(img, f"{pressure} bar", output)
     return pressure
