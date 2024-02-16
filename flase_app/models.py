@@ -158,10 +158,9 @@ class CylinderLife(models.Model):
     is_current = models.BooleanField()
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(blank=True, null=True)
-    # stav?
-    # dat. prevzatie
-    # dat. zapojenie
-    # dat. odovzdanie?
+
+    manometer_min = models.IntegerField(blank=True, null=True)
+    manometer_max = models.IntegerField(blank=True, null=True)
 
 
 class CylinderChange(models.Model):

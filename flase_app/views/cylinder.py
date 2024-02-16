@@ -329,6 +329,10 @@ class AutomaticPressureLogView(EditorRequiredMixin, FormView):
 
     def get_initial(self):
         initial = super().get_initial()
+        if self.cylinder_life.manometer_min is not None:
+            initial["min"] = self.cylinder_life.manometer_min
+        if self.cylinder_life.manometer_max is not None:
+            initial["max"] = self.cylinder_life.manometer_max
         return initial
 
     def get_context_data(self, **kwargs):
@@ -339,6 +343,11 @@ class AutomaticPressureLogView(EditorRequiredMixin, FormView):
     def form_valid(self, form):
         data = form.cleaned_data["image_b64"].split(";base64,", 1)[1]
         data = base64.b64decode(data)
+
+        life = self.cylinder_life
+        life.manometer_min = form.cleaned_data["min"]
+        life.manometer_max = form.cleaned_data["max"]
+        life.save()
 
         output = None
         if settings.FLASE_IMAGE_DIR:

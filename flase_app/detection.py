@@ -66,7 +66,7 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
     height, width = img.shape[:2]
 
     # Try to find the gauge
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 50, param1=180, param2=220, minRadius=width // 6)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.5, 50, param1=180, param2=220, minRadius=width // 6)
 
     if circles is None:
         save_img(img, "No circles", output)
@@ -95,16 +95,17 @@ def detect_pressure(img_bytes, range_min, range_max, output=None):
     for x in range(width):
         for y in range(height):
             dist = math.sqrt((cx - x)**2 + (cy - y)**2)
-            if radius * 0.70 >= dist >= radius * 0.5:
+            if radius * 0.7 >= dist >= radius * 0.5:
                 angle = angle_between(cx, cy, x, y)
 
                 b, g, r = img[y, x]
                 rg = int(r) - int(g)
                 rb = int(r) - int(b)
                 delta = 30
-                darkness[angle] += (255 if rg > delta and rb > delta else 0)
+                level = (255 if rg > delta and rb > delta else 0)
+                darkness[angle] += level
 
-                img[y, x, 0] = 0
+                img[y, x, 0] = level
 
     darkness_prefix = [0]
     for i in range(360*2):
