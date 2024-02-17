@@ -1,0 +1,131 @@
+\documentclass{zah}
+
+\title{Testovacie scenáre}
+\author{Oliver Laštík, Šimon Strieška, Jozef Špirka, Adam Zahradník}
+
+\begin{document}
+\maketitle
+
+\section{Pridanie a deaktivácia používateľov}
+
+\begin{enumerate}
+	\item Administrátor pridáva nového používateľa v navigačnom menu stránky v záložke 
+	Administrácia -- Používatelia s menom, emailom, heslom a druhom prístupu.
+	
+	\textit{Výsledok:} Nový používateľ je pridaný do systému.
+	
+	\item Administátor zmení používateľove údaje ako meno, email, heslo a druh prístupu používateľovi
+	kliknutím na "Detail" v zozname používateľov.
+
+	\textit{Výsledok:} Existujúcemu používateľovi sa zmenia údaje.
+
+	\item Administrátor deaktivuje existujúceho používateľa kliknutím na tlačidlo „Detail“ 
+	v zozname používateľov a odškrtnutím boxu „Aktívny“.
+
+	\textit{Výsledok:} Existujúci používateľ je deaktivovaný, jeho vykonané zmeny zostanú v systéme zachované.
+
+	\item Deaktivovaný použíavteľ sa pokúša prihlásiť do systému.
+	
+	\textit{Výsledok:} Deaktivovaný používateľ nemôže pristupovať do systému.
+
+\end{enumerate}
+
+
+\section{Prihlasovanie a obnova hesla}
+
+\begin{enumerate}
+	\item Po zadaní webovej adresy do prehliadača sa užívateľovi zobrazí stránka s prihlásením kde sa používateľ prihlási pomocou emailu a hesla.
+
+	\textit{Výsledok:} Používateľ je úspešne prihlásený do systému.
+	
+	\item Prihlásený používateľ zmení svoje heslo pomocou navigačného menu stránky v záložke Používateľ - Zmeniť heslo.
+	
+	\textit{Výsledok:} Používateľ úspešne zmení svoje heslo.
+
+	\item Používateľ, ktorý nie je prihlásený, žiada na prihlasovacej stránke systému o zaslanie emailu na obnovu hesla na email užívateľa.
+	
+	\textit{Výsledok:} Používateľ obdrží email s inštrukciami na obnovu hesla.
+\end{enumerate}
+
+\section{Správa záznamov fliaš}
+
+\begin{enumerate}
+	\item Operátor vytvára novú fľašu pomocou kliknuta v navigačnom menu stránky na záložku Fľaše a v ľavom dolnom rohu stránky na tlačidlo „Pridať fľašu“ len so zadaním čiarového kódu, umiestnenia a vynechaním ostatných parametrov.
+	
+	\textit{Výsledok:} Nová fľaša je úspešne vytvorená.
+	
+	\item Operátor upravuje hodnoty parametrov fľaše po kliknutí na tlačidlo „Detail“ v stĺpci „Akcie“ pre konkrétnu fľašu v zozname fliaš na stránke v navigačnom menu pod menom „Fľaše“.
+	
+	\textit{Výsledok:} Hodnoty parametrov fľaše sú úspešne upravené.
+	
+	\item Administrátor pridáva, upravuje a maže možnosti pre parametre fľaše: „majiteľ“, „dodávateľ“  „plyn“  po kliknutí v navigačnom menu na Administrácia/príslušný parameter.
+	
+	\textit{Výsledok:} Možnosti pre parametre sú úspešne spravované.
+	
+	\item Operátor nastavuje umiestnenie fľaše po kliknutí na tlačidlo „Detail“ konkrétnej fľaše a následne kliknutie na tlačidlo "Zmeniť umiestnenie".
+	
+	\textit{Výsledok:} Umiestnenie fľaše je úspešne nastavené.
+	
+	\item Systém ukladá konkrétne zmeny parametrov jednotlivých fľaší a používateľ si ich pozrie po kliknutí tlačidla „Detail“ pre konkrétnu fľašu v ľavom dolnom rohu stránky pod názvom „História“.
+	
+	\textit{Výsledok:} Zmeny sú uložené systémom a dostupné pre nahliadnutie pre používateľa.
+\end{enumerate}
+
+\section{Interakcia čitateľa so systémom}
+
+\begin{enumerate}
+	\item Čitateľ si zobrazuje zoznam fľaši v systéme pomocou kliknutia v navigačnom menu na položku „Fľaše“.
+	
+	\textit{Výsledok:} Zoznam fľaši je úspešne zobrazený čitateľovi.
+	
+	\item Čitateľ vyhľadáva v zozname pomocou fulltextového vyhľadávania a pomocou filtrov filtruje fľaše na základe ich parametrov.
+	
+	\textit{Výsledok:} Čitateľovi sa zobrazí zoznam fliaš zodpovedajúci vyhľadávania a filtrov.
+	
+	\item Čitateľ si pozerá históriu zmien parametrov a históriu zmien tlaku na grafe pre konkrétnu fľašu v zozname fliaš po kliknutí na tlačidlo „Detail“ v zozname fliaš.
+	
+	\textit{Výsledok:} História zmien je dostupná a presná a história tlaku je vizualizovaná na grafe.
+	
+	\item Čitateľ si zobrazuje informácie o konkrétnej fľaši naskenovaním čiarového kódu na stránke „Fľaše“ po kliknutí na tlačidlo „Scan Barcode“ v pravom hornom rohu stránky.
+	
+	\textit{Výsledok:} Informácie o konkrétnej fľaši sú zobrazené po naskenovaní čiarového kódu.
+\end{enumerate}
+
+\section{Jazykové nastavenia systému}
+
+\begin{enumerate}
+	\item Používateľ si v systéme nastaví anglickú verziu jazyka v navigačnom menu systému v pravom hornom rohu po kliknutí na "Language".
+		
+	\textit{Výsledok:} Systém úspešne zmení jazyk na anglický, všetky texty a ovládacie prvky sú zobrazené v anglickom jazyku.
+	
+	\item Používateľ si v systéme nastaví slovenskú verziu jazyka v navigačnom menu systému v pravom hornom rohu po kliknutí na "Language".
+		
+	\textit{Výsledok:} Systém úspešne zmení jazyk na slovenský, všetky texty a ovládacie prvky sú zobrazené v slovenskom jazyku.
+\end{enumerate}
+
+\section{Prístupnosť systému z rôznych zariadení}
+
+\begin{enumerate}
+	\item Používateľ pristupuje k systému z mobilného zariadenia (smartfón).
+		
+	\textit{Výsledok:} Systém je plne funkčný a prístupný z mobilného zariadenia s adekvátnym užívateľským rozhraním prispôsobeným pre menšie obrazovky.
+	
+	\item Používateľ pristupuje k systému z desktopového počítača alebo notebooku.
+		
+	\textit{Výsledok:} Systém je plne funkčný a prístupný z desktopového počítača alebo notebooku s užívateľským rozhraním optimalizovaným pre väčšie obrazovky.
+\end{enumerate}
+
+\section{Editor upravuje stav tlaku fľaše}
+
+\begin{enumerate}
+	\item Editor eviduje stav tlaku fľaše manuálnym zadaním po kliknutí na tlačidlo „Detail“ v zozname fliaš po na stránke „Fľaše“ a následne kliknutie na tlačidlo „Zaevidovať tlak“ v pravom hornom rohu stránky.
+	
+	\textit{Výsledok:} Stav tlaku fľaše je úspešne zaevidovaný.
+
+	\item Editor zaeviduje stav tlaku fľaše odfotením manometra fľaše. Po odfotení skontroluje fotku a nastavený rozsah manometra.
+
+	\textit{Výsledok:} Systém vypočíta aktuálnu hodnotu tlaku na základe fotografie.
+\end{enumerate}
+
+
+\end{document}
