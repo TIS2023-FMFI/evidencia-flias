@@ -102,6 +102,8 @@ location / {
 }
 ```
 
+Pre jednoduchosť sa v repozitári nachádza aj `Dockerfile`, ktorý obsahuje všetko potrebné pre spustenie projektu pod Gunicorn-om.
+
 [Viac informácií tu](https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/gunicorn/)
 
 #### mod_wsgi
