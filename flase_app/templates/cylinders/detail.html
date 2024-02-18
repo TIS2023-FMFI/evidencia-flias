@@ -15,7 +15,21 @@
             <a href="{% url 'cylinder_life_relocate' cylinder_life.id %}" class="btn btn-warning">{% translate "Change location" %}</a>
             {% endif %}
             {% if user.role >= user.Role.EDITOR %}
-            <a href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}" class="btn btn-danger">{% translate "Log pressure" %}</a>
+                <div class="dropdown d-inline-block">
+                    <a class="btn btn-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        {% translate "Log pressure" %}
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href="{% url 'cylinder_life_pressure' cylinder_life.cylinder.id %}">{% translate "Manually" %}</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'cylinder_life_pressure_auto' cylinder_life.cylinder.id %}">{% translate "From photo" %}</a>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
         </div>
         {% endif %}

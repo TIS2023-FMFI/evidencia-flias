@@ -1,3 +1,8 @@
+import base64
+import os.path
+import secrets
+
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
@@ -11,11 +16,12 @@ from django.views.generic import ListView, UpdateView, CreateView, FormView, \
     TemplateView
 from django.utils.functional import cached_property
 
+from flase_app.detection import detect_pressure
 from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, RelocateForm, \
-    BarcodeForm
+    BarcodeForm, CylinderLifeCreateForm, PressureLogForm, AutomaticPressureLogForm
 from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
 
-from flase_app.models import CylinderLife, CylinderChange
+from flase_app.models import CylinderLife, CylinderChange, Cylinder
 from django.views.generic.detail import DetailView
 import csv
 from django.http import HttpResponse, HttpResponseRedirect
@@ -178,10 +184,11 @@ class CylinderUndoChangeView(EditorRequiredMixin, View):
         if latest_change.pressure:
             previous_pressure_change = changes.exclude(id=latest_change.id).filter(pressure__isnull=False).first()
             if not previous_pressure_change:
-                raise PermissionDenied()
-
-            life.pressure = previous_pressure_change.pressure
-            life.pressure_date = previous_pressure_change.timestamp
+                life.pressure = None
+                life.pressure_date = None
+            else:
+                life.pressure = previous_pressure_change.pressure
+                life.pressure_date = previous_pressure_change.timestamp
 
         if latest_change.location:
             previous_location_change = changes.exclude(id=latest_change.id).filter(location__isnull=False).first()
@@ -254,3 +261,103 @@ class ScanBarcodeView(LoginRequiredMixin, FormView):
         if not cylinder_life:
             return render(self.request, "cylinders/scan_barcode.html", {"error": True, "barcode": form.cleaned_data['barcode']})
         return redirect("cylinder_life_detail", pk=cylinder_life.id)
+
+
+class CylinderCreateView(OperatorRequiredMixin, CreateView):
+    template_name = "cylinders/create.html"
+    form_class = CylinderLifeCreateForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["user"] = self.request.user
+        barcode = self.request.GET.get("barcode")
+        kw["cylinder"] = Cylinder.objects.filter(barcode=barcode).first()
+        return kw
+
+    def get_initial(self):
+        initial = super().get_initial()
+        barcode = self.request.GET.get("barcode")
+        if barcode:
+            initial["barcode"] = barcode
+        return initial
+
+    def get_success_url(self):
+        return reverse("cylinder_list")
+
+
+class PressureLogView(EditorRequiredMixin, CreateView):
+    form_class = PressureLogForm
+    template_name = "cylinders/log_pressure.html"
+
+    @cached_property
+    def cylinder_life(self):
+        return get_object_or_404(CylinderLife, id=self.kwargs["pk"])
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["pressure"] = self.cylinder_life.pressure
+        if "pressure" in self.request.GET:
+            initial["pressure"] = self.request.GET["pressure"]
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["life"] = self.cylinder_life
+        return ctx
+
+    def form_valid(self, form):
+        change = form.save(commit=False)
+        change.user = self.request.user
+        change.life = self.cylinder_life
+        change.save()
+
+        life = self.cylinder_life
+        life.pressure = change.pressure
+        life.pressure_date = change.timestamp
+        life.save()
+
+        return HttpResponseRedirect(reverse('cylinder_life_detail', kwargs={'pk': life.id}))
+
+
+class AutomaticPressureLogView(EditorRequiredMixin, FormView):
+    form_class = AutomaticPressureLogForm
+    template_name = "cylinders/log_pressure_auto.html"
+
+    @cached_property
+    def cylinder_life(self):
+        return get_object_or_404(CylinderLife, id=self.kwargs["pk"])
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if self.cylinder_life.manometer_min is not None:
+            initial["min"] = self.cylinder_life.manometer_min
+        if self.cylinder_life.manometer_max is not None:
+            initial["max"] = self.cylinder_life.manometer_max
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["life"] = self.cylinder_life
+        return ctx
+
+    def form_valid(self, form):
+        data = form.cleaned_data["image_b64"].split(";base64,", 1)[1]
+        data = base64.b64decode(data)
+
+        life = self.cylinder_life
+        life.manometer_min = form.cleaned_data["min"]
+        life.manometer_max = form.cleaned_data["max"]
+        life.save()
+
+        output = None
+        if settings.FLASE_IMAGE_DIR:
+            file_directory = settings.FLASE_IMAGE_DIR
+            os.makedirs(file_directory, exist_ok=True)
+            name = secrets.token_hex(16)
+            file_path = os.path.join(file_directory, f"{name}.jpg")
+            with open(file_path, "wb") as f:
+                f.write(data)
+            output = os.path.join(file_directory, f"{name}-cv.jpg")
+
+        pressure = detect_pressure(data, form.cleaned_data["min"], form.cleaned_data["max"], output)
+        return HttpResponseRedirect(reverse('cylinder_life_pressure', kwargs={'pk': self.cylinder_life.id}) + f"?pressure={pressure}")

@@ -128,3 +128,5 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FLASE_IMAGE_DIR = env("FLASE_IMAGE_DIR", default="")

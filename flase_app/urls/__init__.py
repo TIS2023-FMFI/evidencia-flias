@@ -2,9 +2,7 @@ from django.urls import path
 from django.views.i18n import set_language
 
 from flase_app.views import places, cylinder
-from django.contrib.auth.views import LogoutView
 
-from flase_app import views
 from flase_app.views.gas import (
     GasListView,
     GasCreateView,
@@ -53,12 +51,17 @@ urlpatterns = [
     path("cylinders/", cylinder.CylinderListView.as_view(), name="cylinder_list"),
     path("cylinders/export/", cylinder.CylinderExportView.as_view(), name="cylinder_export"),
     path(
-        "cylinders/create/", views.CylinderCreateView.as_view(), name="cylinder_create"
+        "cylinders/create/", cylinder.CylinderCreateView.as_view(), name="cylinder_create"
     ),
     path(
         "cylinders/life/<int:pk>/pressure/manual/",
-        views.PressureLogView.as_view(),
+        cylinder.PressureLogView.as_view(),
         name="cylinder_life_pressure",
+    ),
+    path(
+        "cylinders/life/<int:pk>/pressure/automatic/",
+        cylinder.AutomaticPressureLogView.as_view(),
+        name="cylinder_life_pressure_auto",
     ),
     path(
         "cylinders/life/<int:pk>/edit/",

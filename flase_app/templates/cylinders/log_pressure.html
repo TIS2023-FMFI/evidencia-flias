@@ -10,6 +10,12 @@
 
     <p>{% translate "Barcode" %}: {{ life.cylinder.barcode }}</p>
 
+    {% if "pressure" in request.GET %}
+    <div class="alert alert-warning">
+        {% translate "The pressure was detected automatically from the photo. This might not be accurate, please check it." %}
+    </div>
+    {% endif %}
+
     <form method="post" class="mt-4">
         {% csrf_token %}
         {% include "forms/form.html" %}
