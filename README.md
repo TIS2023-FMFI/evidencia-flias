@@ -14,7 +14,7 @@ tlak z fotky manometra.
 
 ## Demo video
 
-// TODO: doplnit link / embed
+[Video je zavesené tu](https://drive.google.com/file/d/1UAMW7wRqG9RmjetQ6Mymzxy6X5kxr3f8/view?usp=sharing)
 
 ## Dokumentácia
 
