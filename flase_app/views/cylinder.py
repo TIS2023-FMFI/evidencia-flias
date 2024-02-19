@@ -7,7 +7,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
-from django.forms import Form
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -25,7 +24,7 @@ from flase_app.models import CylinderLife, CylinderChange, Cylinder
 from django.views.generic.detail import DetailView
 import csv
 from django.http import HttpResponse, HttpResponseRedirect
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 class CylinderQuerySetMixin:
@@ -101,28 +100,30 @@ class CylinderListView(LoginRequiredMixin, CylinderQuerySetMixin, ListView):
 
 class CylinderExportView(LoginRequiredMixin, CylinderQuerySetMixin, View):
     def get(self, request, *args, **kwargs):
-        date = datetime.now().date()
-        filename = f"export-cylinders-{date}.csv"
+        date = timezone.localtime().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"cylinders_{date}.csv"
         response = HttpResponse(
             content_type="text/csv",
             headers={"Content-Disposition": 'attachment; filename=' + filename},
         )
 
         writer = csv.writer(response)
-        writer.writerow(
-            ["Gas", "Barcode", "Owner", "Current Location", "Volume", "Supplier", "Notes"])
+        writer.writerow(["barcode", "gas", "volume", "pressure", "pressure_date", "location", "is_connected", "owner", "supplier", "note"])
 
-        # TODO: add remaining data
         for obj in self.get_queryset():
-            writer.writerow([
-                obj.gas.name,
+            obj: CylinderLife
+            writer.writerow(list(map(str, [
                 obj.cylinder.barcode,
-                obj.cylinder.owner.name,
-                obj.location.name,
-                obj.volume,
-                obj.supplier.name,
-                obj.note,
-            ])
+                obj.gas or "",
+                obj.volume or "",
+                obj.pressure or "",
+                obj.pressure_date or "",
+                obj.location,
+                "1" if obj.is_connected else "0",
+                obj.cylinder.owner or "",
+                obj.supplier or "",
+                obj.note or "",
+            ])))
 
         return response
 

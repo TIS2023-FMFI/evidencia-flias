@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-11 23:54+0100\n"
-"PO-Revision-Date: 2024-02-11 23:56+0100\n"
+"POT-Creation-Date: 2024-02-18 23:34+0100\n"
+"PO-Revision-Date: 2024-02-18 23:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: flase_app/forms.py:26 flase_app/forms.py:36 flase_app/forms.py:44
-#: flase_app/forms.py:54 flase_app/forms.py:115 flase_app/forms.py:294
+#: flase_app/forms.py:54 flase_app/forms.py:115 flase_app/forms.py:299
 #: flase_app/templates/gasses/list.html:14
 #: flase_app/templates/owners/list.html:14
 #: flase_app/templates/places/buildings.html:14
@@ -30,7 +30,7 @@ msgstr ""
 msgid "Name"
 msgstr "Názov"
 
-#: flase_app/forms.py:27 flase_app/forms.py:255
+#: flase_app/forms.py:27 flase_app/forms.py:260
 #: flase_app/templates/places/locations.html:15
 msgid "Workplace"
 msgstr "Pracovisko"
@@ -39,7 +39,7 @@ msgstr "Pracovisko"
 msgid "Person responsible"
 msgstr "Zodpovedná osoba"
 
-#: flase_app/forms.py:45 flase_app/forms.py:254
+#: flase_app/forms.py:45 flase_app/forms.py:259
 #: flase_app/templates/places/workplaces.html:15
 msgid "Building"
 msgstr "Budova"
@@ -79,79 +79,88 @@ msgstr "Použite na zablokovanie používateľov. Neaktívny používateľ sa ne
 
 #: flase_app/forms.py:120 flase_app/templates/cylinders/list.html:77
 #: flase_app/templates/cylinders/log_pressure.html:11
+#: flase_app/templates/cylinders/log_pressure_auto.html:11
 msgid "Barcode"
 msgstr "Čiarový kód"
 
-#: flase_app/forms.py:121 flase_app/forms.py:244 flase_app/forms.py:259
-#: flase_app/templates/cylinders/detail.html:40
+#: flase_app/forms.py:121 flase_app/forms.py:249 flase_app/forms.py:264
+#: flase_app/templates/cylinders/detail.html:54
 #: flase_app/templates/cylinders/list.html:82
-#: flase_app/templates/cylinders/list.html:130
+#: flase_app/templates/cylinders/list.html:138
 msgid "Owner"
 msgstr "Majiteľ"
 
-#: flase_app/forms.py:140 flase_app/forms.py:245 flase_app/forms.py:268
-#: flase_app/templates/cylinders/detail.html:31
+#: flase_app/forms.py:140 flase_app/forms.py:250 flase_app/forms.py:273
+#: flase_app/templates/cylinders/detail.html:45
 #: flase_app/templates/cylinders/list.html:79
-#: flase_app/templates/cylinders/list.html:127
+#: flase_app/templates/cylinders/list.html:129
 msgid "Volume"
 msgstr "Objem"
 
-#: flase_app/forms.py:141 flase_app/forms.py:246 flase_app/forms.py:269
-#: flase_app/templates/cylinders/detail.html:43
+#: flase_app/forms.py:141 flase_app/forms.py:251 flase_app/forms.py:274
+#: flase_app/templates/cylinders/detail.html:57
 #: flase_app/templates/cylinders/list.html:83
-#: flase_app/templates/cylinders/list.html:131
+#: flase_app/templates/cylinders/list.html:139
 msgid "Supplier"
 msgstr "Dodávateľ"
 
-#: flase_app/forms.py:142 flase_app/templates/cylinders/detail.html:69
-#: flase_app/templates/cylinders/detail.html:85
-#: flase_app/templates/cylinders/detail.html:128
+#: flase_app/forms.py:142 flase_app/templates/cylinders/detail.html:83
+#: flase_app/templates/cylinders/detail.html:99
+#: flase_app/templates/cylinders/detail.html:142
 msgid "Pressure"
 msgstr "Tlak"
 
-#: flase_app/forms.py:143 flase_app/forms.py:211 flase_app/forms.py:247
-#: flase_app/templates/cylinders/detail.html:37
-#: flase_app/templates/cylinders/detail.html:118
+#: flase_app/forms.py:143 flase_app/forms.py:216 flase_app/forms.py:252
+#: flase_app/templates/cylinders/detail.html:51
+#: flase_app/templates/cylinders/detail.html:132
 msgid "Location"
 msgstr "Umiestnenie"
 
-#: flase_app/forms.py:144 flase_app/forms.py:212 flase_app/forms.py:249
-#: flase_app/templates/cylinders/detail.html:121
-#: flase_app/templates/cylinders/list.html:102
+#: flase_app/forms.py:144 flase_app/forms.py:217 flase_app/forms.py:254
+#: flase_app/templates/cylinders/detail.html:135
+#: flase_app/templates/cylinders/list.html:104
 msgid "Connected"
 msgstr "Pripojená"
 
-#: flase_app/forms.py:145 flase_app/forms.py:243 flase_app/forms.py:267
-#: flase_app/templates/cylinders/detail.html:28
+#: flase_app/forms.py:145 flase_app/forms.py:248 flase_app/forms.py:272
+#: flase_app/templates/cylinders/detail.html:42
 #: flase_app/templates/cylinders/list.html:78
-#: flase_app/templates/cylinders/list.html:126
+#: flase_app/templates/cylinders/list.html:128
 msgid "Gas"
 msgstr "Plyn"
 
-#: flase_app/forms.py:146 flase_app/forms.py:270
-#: flase_app/templates/cylinders/detail.html:49
-#: flase_app/templates/cylinders/detail.html:131
+#: flase_app/forms.py:146 flase_app/forms.py:275
+#: flase_app/templates/cylinders/detail.html:63
+#: flase_app/templates/cylinders/detail.html:145
 #: flase_app/templates/cylinders/list.html:84
-#: flase_app/templates/cylinders/list.html:132
+#: flase_app/templates/cylinders/list.html:140
 msgid "Note"
 msgstr "Poznámka"
 
-#: flase_app/forms.py:202 flase_app/templates/cylinders/detail.html:34
+#: flase_app/forms.py:201 flase_app/templates/cylinders/detail.html:48
 #: flase_app/templates/cylinders/list.html:80
-#: flase_app/templates/cylinders/list.html:128
+#: flase_app/templates/cylinders/list.html:131
 msgid "Current pressure"
 msgstr "Aktuálny tlak"
 
-#: flase_app/forms.py:242
+#: flase_app/forms.py:206
+msgid "Minimum"
+msgstr "Minimum"
+
+#: flase_app/forms.py:207
+msgid "Maximum"
+msgstr "Maximum"
+
+#: flase_app/forms.py:247
 msgid "Search query"
 msgstr "Vyhľadávací dotaz"
 
-#: flase_app/forms.py:249 flase_app/templates/cylinders/detail.html:123
-#: flase_app/templates/cylinders/list.html:104
+#: flase_app/forms.py:254 flase_app/templates/cylinders/detail.html:137
+#: flase_app/templates/cylinders/list.html:106
 msgid "Disconnected"
 msgstr "Odpojená"
 
-#: flase_app/forms.py:252 flase_app/templates/users/list.html:17
+#: flase_app/forms.py:257 flase_app/templates/users/list.html:17
 msgid "Status"
 msgstr "Stav"
 
@@ -219,11 +228,19 @@ msgstr "Pracoviská"
 msgid "Locations"
 msgstr "Umiestnenia"
 
+#: flase_app/templates/base.html:48
+msgid "User"
+msgstr "Používateľ"
+
 #: flase_app/templates/base.html:50
 #: flase_app/templates/registration/password_change_form.html:5
 #: flase_app/templates/registration/password_change_form.html:9
 msgid "Change password"
 msgstr "Zmeniť heslo"
+
+#: flase_app/templates/base.html:53
+msgid "Logout"
+msgstr "Odhlásiť sa"
 
 #: flase_app/templates/cylinder_life/end.html:5
 #: flase_app/templates/cylinder_life/end.html:9
@@ -263,7 +280,8 @@ msgstr "Nechceli ste vytvoriť novú dodávku?"
 #: flase_app/templates/cylinder_life/form.html:21
 #: flase_app/templates/cylinder_life/relocate.html:16
 #: flase_app/templates/cylinders/create.html:21
-#: flase_app/templates/cylinders/log_pressure.html:18
+#: flase_app/templates/cylinders/log_pressure.html:24
+#: flase_app/templates/cylinders/log_pressure_auto.html:38
 #: flase_app/templates/gasses/form.html:20
 #: flase_app/templates/owners/form.html:18
 #: flase_app/templates/places/buildings_form.html:18
@@ -306,31 +324,41 @@ msgstr "Upraviť parametre"
 msgid "Change location"
 msgstr "Zmeniť umiestnenie"
 
-#: flase_app/templates/cylinders/detail.html:18
+#: flase_app/templates/cylinders/detail.html:21
+#: flase_app/templates/cylinders/log_pressure_auto.html:5
+#: flase_app/templates/cylinders/log_pressure_auto.html:9
 msgid "Log pressure"
 msgstr "Zaevidovať tlak"
 
-#: flase_app/templates/cylinders/detail.html:46
+#: flase_app/templates/cylinders/detail.html:26
+msgid "Manually"
+msgstr "Manuálne"
+
+#: flase_app/templates/cylinders/detail.html:29
+msgid "From photo"
+msgstr "Z fotografie"
+
+#: flase_app/templates/cylinders/detail.html:60
 msgid "First use"
 msgstr "Prvé použitie"
 
-#: flase_app/templates/cylinders/detail.html:54
+#: flase_app/templates/cylinders/detail.html:68
 msgid "End this delivery"
 msgstr "Ukončiť túto dodávku"
 
-#: flase_app/templates/cylinders/detail.html:101
+#: flase_app/templates/cylinders/detail.html:115
 msgid "History"
 msgstr "História"
 
-#: flase_app/templates/cylinders/detail.html:108
+#: flase_app/templates/cylinders/detail.html:122
 msgid "Revert last change"
 msgstr "Vrátiť poslednú zmenu"
 
-#: flase_app/templates/cylinders/detail.html:147
+#: flase_app/templates/cylinders/detail.html:161
 msgid "Previous deliveries"
 msgstr "Predchádzajúce dodávky"
 
-#: flase_app/templates/cylinders/detail.html:158
+#: flase_app/templates/cylinders/detail.html:172
 msgid "New delivery"
 msgstr "Nová dodávka"
 
@@ -361,7 +389,7 @@ msgid "Reset"
 msgstr "Reset"
 
 #: flase_app/templates/cylinders/list.html:81
-#: flase_app/templates/cylinders/list.html:129
+#: flase_app/templates/cylinders/list.html:137
 msgid "Current location"
 msgstr "Aktuálne umiestnenie"
 
@@ -376,16 +404,17 @@ msgstr "Aktuálne umiestnenie"
 msgid "Actions"
 msgstr "Akcie"
 
-#: flase_app/templates/cylinders/list.html:112
-#: flase_app/templates/cylinders/list.html:134
+#: flase_app/templates/cylinders/list.html:114
+#: flase_app/templates/cylinders/list.html:142
 msgid "Detail"
 msgstr "Detail"
 
-#: flase_app/templates/cylinders/list.html:143
+#: flase_app/templates/cylinders/list.html:151
+#: flase_app/templates/cylinders/scan_barcode.html:15
 msgid "Add cylinder"
 msgstr "Pridať fľašu"
 
-#: flase_app/templates/cylinders/list.html:148
+#: flase_app/templates/cylinders/list.html:156
 msgid "Export as CSV"
 msgstr "Vyexportovať ako CSV"
 
@@ -394,11 +423,19 @@ msgstr "Vyexportovať ako CSV"
 msgid "Manually log pressure"
 msgstr "Manuálne zaevidovanie tlaku"
 
+#: flase_app/templates/cylinders/log_pressure.html:15
+msgid "The pressure was detected automatically from the photo. This might not be accurate, please check it."
+msgstr "Tlak bol rozoznaný automaticky z fotografie. Rozoznávanie nemusí byť presné. Prosím, skontrolujte ho."
+
+#: flase_app/templates/cylinders/log_pressure_auto.html:13
+msgid "Start camera"
+msgstr "Spustiť kameru"
+
 #: flase_app/templates/cylinders/scan_barcode.html:11
 msgid "There is no cylinder with the scanned barcode."
 msgstr "Neexistuje fľaša s daným kódom."
 
-#: flase_app/templates/cylinders/scan_barcode.html:16
+#: flase_app/templates/cylinders/scan_barcode.html:22
 msgid "Start scanner"
 msgstr "Spustiť skener"
 
