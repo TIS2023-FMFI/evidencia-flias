@@ -161,6 +161,8 @@ class CylinderLifeDetailView(LoginRequiredMixin, DetailView):
         first_use = CylinderChange.objects.filter(life_id=self.object.id, is_connected=True).order_by(
             'timestamp').values_list('timestamp', flat=True).first()
         context['first_use'] = first_use
+        context["disconnect_date"] = CylinderChange.objects.filter(life_id=self.object.id, is_connected=False).order_by(
+            '-timestamp').values_list('timestamp', flat=True).first()
         
         changes = CylinderChange.objects.select_related("user", "location", "location__workplace", "location__workplace__building").filter(life_id=self.object.id).order_by('-timestamp').all()
         context['history'] = changes
