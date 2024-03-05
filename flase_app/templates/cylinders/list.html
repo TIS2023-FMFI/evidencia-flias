@@ -60,6 +60,12 @@
     <label for="{{ filter_form.workplace.id_for_label }}" class="form-label">{{ filter_form.workplace.label }}</label>
     {{ filter_form.workplace|add_class:"form-control" }}
 </div>
+<div class="col-md-6 mb-3">
+    <div class="form-check form-check-inline">
+        {{ filter_form.show_inactive|add_class:"form-check-input" }}
+        <label class="form-check-label" for="{{ filter_form.show_inactive.id_for_label }}">{{ filter_form.show_inactive.label }}</label>
+    </div>
+</div>
 
 
                 <div class="col-12 text-end">
@@ -87,7 +93,7 @@
             </thead>
             <tbody>
             {% for life in object_list %}
-                <tr>
+                <tr class="{% if not life.is_current %}table-warning{% endif %}">
                     <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
                     <td class="text-nowrap">{{ life.gas|default:"--" }}</td>
                     <td class="text-nowrap">{{ life.volume|default:"--" }} ℓ</td>
@@ -98,12 +104,16 @@
                         {% endif %}
                     </td>
                     <td class="text-nowrap">
-                        {{ life.location }}
+                        {% if life.is_current %}
+                            {{ life.location }}
 
-                        {% if life.is_connected %}
-                        <div class="text-success">{% translate "Connected" %}</div>
+                            {% if life.is_connected %}
+                            <div class="text-success">{% translate "Connected" %}</div>
+                            {% else %}
+                            <div class="text-danger">{% translate "Disconnected" %}</div>
+                            {% endif %}
                         {% else %}
-                        <div class="text-danger">{% translate "Disconnected" %}</div>
+                            {% trans "Handed over" %}
                         {% endif %}
                     </td>
                     <td class="text-nowrap">{{ life.cylinder.owner|default:"--" }}</td>

@@ -172,10 +172,11 @@ class CylinderLifeCreateForm(forms.ModelForm):
             cylinder.owner = self.cleaned_data["owner"]
             cylinder.save()
 
-        cylinder.cylinderlife_set.filter(is_current=True).update(is_current=False, end_date=timezone.now())
+        cylinder.cylinderlife_set.filter(is_current=True).update(is_current=False, is_latest=False, end_date=timezone.now())
 
         life.cylinder = cylinder
         life.is_current = True
+        life.is_latest = True
         life.start_date = timezone.now()
         life.save()
 
@@ -258,6 +259,7 @@ class CylinderFilterForm(forms.Form):
     )
     building = forms.ModelChoiceField(queryset=Building.objects.get_queryset(), required=False, label=_("Building"))
     workplace = forms.ModelChoiceField(queryset=Workplace.objects.get_queryset(), required=False, label=_("Workplace"))
+    show_inactive = forms.BooleanField(required=False, label=_("Show handed over cylinders"))
 
 
 class CylinderLifeUpdateForm(forms.ModelForm):

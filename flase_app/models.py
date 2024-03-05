@@ -156,6 +156,7 @@ class CylinderLife(models.Model):
     note = models.CharField(max_length=256, blank=True)
 
     is_current = models.BooleanField()
+    is_latest = models.BooleanField()
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(blank=True, null=True)
 

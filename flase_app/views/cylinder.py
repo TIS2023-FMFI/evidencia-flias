@@ -74,10 +74,13 @@ class CylinderQuerySetMixin:
         if workplace:
             qs = qs.filter(location__workplace=workplace)
 
+        if not form.cleaned_data.get("show_inactive"):
+            qs = qs.filter(is_current=True)
+
         return qs
 
     def get_queryset(self):
-        qs = CylinderLife.objects.filter(is_current=True).select_related("cylinder", "gas", "supplier", "location",
+        qs = CylinderLife.objects.filter(is_latest=True).select_related("cylinder", "gas", "supplier", "location",
                                                                          "location__workplace",
                                                                          "location__workplace__building",
                                                                          "cylinder__owner").order_by("cylinder__barcode")
