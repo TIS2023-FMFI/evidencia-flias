@@ -12,6 +12,7 @@
         <thead>
         <tr>
             <th>{% translate "Name" %}</th>
+            <th>{% translate "Purity" %}</th>
             <th class="text-end">{% translate "Actions" %}</th>
         </tr>
         </thead>
@@ -20,6 +21,7 @@
         {% for gas in object_list %}
             <tr>
                 <td>{{ gas.name }}</td>
+                <td>{{ gas.purity }}</td>
                 <td class="text-end">
                     <a href="{% url 'gas_edit' pk=gas.id %}" class="btn btn-sm btn-primary">
                         <i class="bi bi-pencil"></i> {% translate "Edit" %}
