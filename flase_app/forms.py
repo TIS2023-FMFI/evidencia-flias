@@ -246,7 +246,8 @@ class RelocateForm(forms.ModelForm):
 
 class CylinderFilterForm(forms.Form):
     query = forms.CharField(label=_("Search query"), required=False)
-    gas = forms.ModelChoiceField(queryset=Gas.objects.get_queryset(), required=False, label=_("Gas"))
+    gas_name = forms.ChoiceField(required=False, label=_("Gas"))
+    gas_purity = forms.ChoiceField(required=False, label=_("Gas purity"))
     owner = forms.ModelChoiceField(queryset=Owner.objects.get_queryset(), required=False, label=_("Owner"))
     volume = forms.DecimalField(required=False, label=_("Volume"))
     supplier = forms.ModelChoiceField(queryset=Supplier.objects.get_queryset(), required=False, label=_("Supplier"))
@@ -260,6 +261,15 @@ class CylinderFilterForm(forms.Form):
     building = forms.ModelChoiceField(queryset=Building.objects.get_queryset(), required=False, label=_("Building"))
     workplace = forms.ModelChoiceField(queryset=Workplace.objects.get_queryset(), required=False, label=_("Workplace"))
     show_inactive = forms.BooleanField(required=False, label=_("Show handed over cylinders"))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        gas_names = Gas.objects.values("name").order_by("name").distinct()
+        gas_purities = Gas.objects.values("purity").order_by("purity").distinct()
+        empty = [("", "-------")]
+        self.fields["gas_name"].choices = empty + [(x["name"],x["name"]) for x in gas_names]
+        self.fields["gas_purity"].choices = empty + [(x["purity"],x["purity"]) for x in gas_purities]
 
 
 class CylinderLifeUpdateForm(forms.ModelForm):
@@ -296,9 +306,10 @@ class CylinderLifeUpdateForm(forms.ModelForm):
 class GasForm(forms.ModelForm):
     class Meta:
         model = Gas
-        fields = ["name"]
+        fields = ["name", "purity"]
         labels = {
             "name": _("Name"),
+            "purity": _("Purity"),
         }
 
 

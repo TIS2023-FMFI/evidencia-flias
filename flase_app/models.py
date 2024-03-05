@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.db.models import UniqueConstraint
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -133,12 +134,16 @@ class Cylinder(models.Model):
 
 class Gas(models.Model):
     name = models.CharField(max_length=128)
+    purity = models.FloatField()
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["name", "purity"]
+        constraints = [
+            UniqueConstraint("name", "purity", name="gas__name_purity__unique"),
+        ]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.purity})"
 
 
 class CylinderLife(models.Model):

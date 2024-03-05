@@ -42,9 +42,13 @@ class CylinderQuerySetMixin:
         if query:
             qs = self.query_filter(qs, query)
 
-        gas = form.cleaned_data.get("gas")
-        if gas:
-            qs = qs.filter(gas=gas)
+        gas_name = form.cleaned_data.get("gas_name")
+        if gas_name:
+            qs = qs.filter(gas__name=gas_name)
+
+        gas_purity = form.cleaned_data.get("gas_purity")
+        if gas_purity:
+            qs = qs.filter(gas__purity=gas_purity)
 
         owner = form.cleaned_data.get("owner")
         if owner:
