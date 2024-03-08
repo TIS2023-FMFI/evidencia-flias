@@ -38,6 +38,11 @@
                     {{ filter_form.gas_purity|add_class:"form-control" }}
                 </div>
                 <div class="col-md-6 mb-3">
+                    <label for="{{ filter_form.pressure.id_for_label }}"
+                           class="form-label">{{ filter_form.pressure.label }}</label>
+                    {{ filter_form.pressure|add_class:"form-control" }}
+                </div>
+                <div class="col-md-6 mb-3">
                     <label for="{{ filter_form.volume.id_for_label }}"
                            class="form-label">{{ filter_form.volume.label }}</label>
                     {{ filter_form.volume|add_class:"form-control" }}

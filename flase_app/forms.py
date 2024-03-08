@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.password_validation import validate_password
+from django.core.validators import RegexValidator
 from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -248,6 +249,7 @@ class CylinderFilterForm(forms.Form):
     query = forms.CharField(label=_("Search query"), required=False)
     gas_name = forms.ChoiceField(required=False, label=_("Gas"))
     gas_purity = forms.ChoiceField(required=False, label=_("Gas purity"))
+    pressure = forms.CharField(required=False, label=_("Pressure"), validators=[RegexValidator(r"^(?:[<>]=?)?\d+$")])
     owner = forms.ModelChoiceField(queryset=Owner.objects.get_queryset(), required=False, label=_("Owner"))
     volume = forms.DecimalField(required=False, label=_("Volume"))
     supplier = forms.ModelChoiceField(queryset=Supplier.objects.get_queryset(), required=False, label=_("Supplier"))

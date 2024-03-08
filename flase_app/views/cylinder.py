@@ -50,6 +50,23 @@ class CylinderQuerySetMixin:
         if gas_purity:
             qs = qs.filter(gas__purity=gas_purity)
 
+        pressure = form.cleaned_data.get("pressure")
+        if pressure:
+            rule = ""
+            value = pressure
+
+            if value.startswith("<"):
+                rule = "__lt"
+                value = value[1:]
+            if value.startswith(">"):
+                rule = "__gt"
+                value = value[1:]
+            if value.startswith("="):
+                rule += "e"
+                value = value[1:]
+
+            qs = qs.filter(**{f"pressure{rule}": value})
+
         owner = form.cleaned_data.get("owner")
         if owner:
             qs = qs.filter(cylinder__owner=owner)
