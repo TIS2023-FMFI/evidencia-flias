@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -131,6 +131,7 @@ class CylinderListView(LoginRequiredMixin, CylinderQuerySetMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = CylinderFilterForm(self.request.GET or None)
+        context["owner_stats"] = [(r["cylinder__owner__name"], r["count"]) for r in CylinderLife.objects.filter(id__in=self.get_queryset()).values("cylinder__owner__name").annotate(count=Count("*"))]
         return context
 
 

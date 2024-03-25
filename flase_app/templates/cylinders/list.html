@@ -27,77 +27,77 @@
                     <input type="text" class="form-control" id="query" name="query" placeholder="{% translate 'Search for bottles...' %}" value="{{ filter_form.query.value|default_if_none:'' }}">
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.gas_name.id_for_label }}"
                            class="form-label">{{ filter_form.gas_name.label }}</label>
                     {{ filter_form.gas_name|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.gas_purity.id_for_label }}"
                            class="form-label">{{ filter_form.gas_purity.label }}</label>
                     {{ filter_form.gas_purity|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.pressure.id_for_label }}"
                            class="form-label">{{ filter_form.pressure.label }}</label>
                     {{ filter_form.pressure|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.volume.id_for_label }}"
                            class="form-label">{{ filter_form.volume.label }}</label>
                     {{ filter_form.volume|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.owner.id_for_label }}"
                            class="form-label">{{ filter_form.owner.label }}</label>
                     {{ filter_form.owner|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.supplier.id_for_label }}"
                            class="form-label">{{ filter_form.supplier.label }}</label>
                     {{ filter_form.supplier|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.location.id_for_label }}"
                            class="form-label">{{ filter_form.location.label }}</label>
                     {{ filter_form.location|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.status.id_for_label }}"
                            class="form-label">{{ filter_form.status.label }}</label>
                     {{ filter_form.status|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.building.id_for_label }}"
                            class="form-label">{{ filter_form.building.label }}</label>
                     {{ filter_form.building|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.workplace.id_for_label }}"
                            class="form-label">{{ filter_form.workplace.label }}</label>
                     {{ filter_form.workplace|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.start_date_after.id_for_label }}"
                            class="form-label">{{ filter_form.start_date_after.label }}</label>
                     {{ filter_form.start_date_after|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.start_date_before.id_for_label }}"
                            class="form-label">{{ filter_form.start_date_before.label }}</label>
                     {{ filter_form.start_date_before|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.end_date_after.id_for_label }}"
                            class="form-label">{{ filter_form.end_date_after.label }}</label>
                     {{ filter_form.end_date_after|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="{{ filter_form.end_date_before.id_for_label }}"
                            class="form-label">{{ filter_form.end_date_before.label }}</label>
                     {{ filter_form.end_date_before|add_class:"form-control" }}
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-12 mb-3">
                     <div class="form-check form-check-inline">
                         {{ filter_form.show_inactive|add_class:"form-check-input" }}
                         <label class="form-check-label"
@@ -110,6 +110,22 @@
                     <a href="{% url 'cylinder_list' %}" class="btn btn-secondary">{% translate "Reset" %}</a>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="card my-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            {% translate "Owner overview" %}
+        </div>
+        <div class="card-body">
+            <p>
+                {% for owner, count in owner_stats %}
+                    <b>{{ owner }}:</b> {{ count }}
+                    {% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
+            </p>
+
+            <p class="text-muted mb-0"><i>{% translate "(Showing stats based on currently selected filter.)" %}</i></p>
         </div>
     </div>
     
