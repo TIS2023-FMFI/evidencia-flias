@@ -146,8 +146,13 @@
             </thead>
             <tbody>
             {% for life in object_list %}
-                <tr class="{% if not life.is_current %}table-warning{% endif %}">
-                    <td class="text-nowrap">{{ life.cylinder.barcode }}</td>
+                <tr class="{% if not life.is_current %}table-warning{% elif alert_low and life.pressure <= alert_low %}table-danger{% endif %}">
+                    <td class="text-nowrap">
+                        {{ life.cylinder.barcode }}
+                        {% if alert_low and life.pressure <= alert_low %}
+                        <div class="text-danger small"><i class="bi bi-exclamation-triangle-fill"></i> {% translate "Low pressure" %}</div>
+                        {% endif %}
+                    </td>
                     <td class="text-nowrap">{{ life.gas|default:"--" }}</td>
                     <td class="text-nowrap">{{ life.volume|default:"--" }} ℓ</td>
                     <td class="text-nowrap">

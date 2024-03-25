@@ -15,7 +15,7 @@ from flase_app.models import (
     Location,
     Gas,
     Workplace,
-    Building,
+    Building, Alert,
 )
 
 
@@ -320,6 +320,15 @@ class GasForm(forms.ModelForm):
         labels = {
             "name": _("Name"),
             "purity": _("Purity"),
+        }
+
+
+class AlertForm(forms.ModelForm):
+    class Meta:
+        model = Alert
+        fields = ["pressure_below"]
+        labels = {
+            "pressure_below": _("Trigger on pressure below"),
         }
 
 

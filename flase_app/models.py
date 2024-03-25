@@ -179,3 +179,13 @@ class CylinderChange(models.Model):
         Location, on_delete=models.RESTRICT, blank=True, null=True
     )
     is_connected = models.BooleanField(blank=True, null=True)
+
+
+class Alert(models.Model):
+    pressure_below = models.IntegerField(blank=True, null=True)
+
+    LOW_PRESSURE = 1
+
+    @property
+    def name(self):
+        return _("Low pressure")

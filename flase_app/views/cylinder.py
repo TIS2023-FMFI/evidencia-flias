@@ -20,7 +20,7 @@ from flase_app.forms import CylinderFilterForm, CylinderLifeUpdateForm, Relocate
     BarcodeForm, CylinderLifeCreateForm, PressureLogForm, AutomaticPressureLogForm
 from flase_app.mixins import OperatorRequiredMixin, EditorRequiredMixin
 
-from flase_app.models import CylinderLife, CylinderChange, Cylinder
+from flase_app.models import CylinderLife, CylinderChange, Cylinder, Alert
 from django.views.generic.detail import DetailView
 import csv
 from django.http import HttpResponse, HttpResponseRedirect
@@ -132,6 +132,7 @@ class CylinderListView(LoginRequiredMixin, CylinderQuerySetMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = CylinderFilterForm(self.request.GET or None)
         context["owner_stats"] = [(r["cylinder__owner__name"], r["count"]) for r in CylinderLife.objects.filter(id__in=self.get_queryset()).values("cylinder__owner__name").annotate(count=Count("*"))]
+        context["alert_low"] = Alert.objects.get(pk=Alert.LOW_PRESSURE).pressure_below
         return context
 
 

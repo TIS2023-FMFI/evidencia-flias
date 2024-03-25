@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.i18n import set_language
 
 from flase_app.views import places, cylinder
+from flase_app.views.alerts import AlertUpdateView, AlertListView
 
 from flase_app.views.gas import (
     GasListView,
@@ -99,6 +100,9 @@ urlpatterns = [
     path("places/locations/create/", places.LocationCreateView.as_view(), name="location_create"),
     path("places/locations/<int:pk>/", places.LocationUpdateView.as_view(), name="location_update"),
     path("places/locations/<int:pk>/delete/", places.LocationDeleteView.as_view(), name="location_delete"),
+    # Alerts
+    path('alerts/', AlertListView.as_view(), name='alert_list'),
+    path('alerts/edit/<int:pk>/', AlertUpdateView.as_view(), name='alert_update'),
     # Redirect
     path('', HomeRedirectView.as_view(), name='home'),
     path("set_language/", set_language, name="set_language"),
