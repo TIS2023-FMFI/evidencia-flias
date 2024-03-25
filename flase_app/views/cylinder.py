@@ -95,6 +95,18 @@ class CylinderQuerySetMixin:
         if workplace:
             qs = qs.filter(location__workplace=workplace)
 
+        if start_after := form.cleaned_data.get("start_date_after"):
+            qs = qs.filter(start_date__gte=start_after)
+
+        if start_before := form.cleaned_data.get("start_date_before"):
+            qs = qs.filter(start_date__lte=start_before)
+
+        if end_after := form.cleaned_data.get("end_date_after"):
+            qs = qs.filter(end_date__gte=end_after)
+
+        if end_before := form.cleaned_data.get("end_date_before"):
+            qs = qs.filter(end_date__lte=end_before)
+
         if not form.cleaned_data.get("show_inactive"):
             qs = qs.filter(is_current=True)
 

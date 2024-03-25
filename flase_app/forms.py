@@ -245,6 +245,9 @@ class RelocateForm(forms.ModelForm):
         return change
 
 
+class DateInput(forms.TextInput):
+    input_type = "date"
+
 class CylinderFilterForm(forms.Form):
     query = forms.CharField(label=_("Search query"), required=False)
     gas_name = forms.ChoiceField(required=False, label=_("Gas"))
@@ -263,6 +266,11 @@ class CylinderFilterForm(forms.Form):
     building = forms.ModelChoiceField(queryset=Building.objects.get_queryset(), required=False, label=_("Building"))
     workplace = forms.ModelChoiceField(queryset=Workplace.objects.get_queryset(), required=False, label=_("Workplace"))
     show_inactive = forms.BooleanField(required=False, label=_("Show handed over cylinders"))
+
+    start_date_after = forms.DateField(required=False, label=_("Delivery date after"), widget=DateInput())
+    start_date_before = forms.DateField(required=False, label=_("Delivery date before"), widget=DateInput())
+    end_date_after = forms.DateField(required=False, label=_("End date after"), widget=DateInput())
+    end_date_before = forms.DateField(required=False, label=_("End date before"), widget=DateInput())
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
